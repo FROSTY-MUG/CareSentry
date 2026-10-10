@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CareSentry Bench - Open-Weight Clinical Safety Leaderboard</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 40px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { color: #38bdf8; font-size: 32px; margin-bottom: 8px; }
+  p.subtitle { color: #94a3b8; font-size: 16px; margin-bottom: 30px; }
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; }
+  .stat-card { background: #1e293b; border: 1px solid #334155; padding: 20px; border-radius: 12px; }
+  .stat-card .val { font-size: 28px; font-weight: bold; color: #10b981; }
+  .stat-card .lbl { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; }
+  th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #334155; }
+  th { background: #0f172a; color: #94a3b8; font-size: 13px; text-transform: uppercase; }
+  .badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; background: #065f46; color: #34d399; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🩺 CareSentry Bench — Clinical Safety Leaderboard</h1>
+  <p class="subtitle">105 Synthetic Geriatric Long-Context Clinical Cases • Evaluated Offline</p>
+
+  <div class="card-grid">
+    <div class="stat-card">
+      <div class="val">57.1%</div>
+      <div class="lbl">Violation Detection Recall</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">0.0%</div>
+      <div class="lbl">False-Positive Rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">100.0%</div>
+      <div class="lbl">Mitigation Rescue Rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">2.47 ms</div>
+      <div class="lbl">Average Audit Latency</div>
+    </div>
+  </div>
+
+  <h2>Model Benchmark Standing</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Model / Harness</th>
+        <th>Recall</th>
+        <th>FP Rate</th>
+        <th>Mitigation Rescue</th>
+        <th>Latency</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>#1</strong></td>
+        <td><strong>Qwen/Qwen2.5-1.5B-Instruct + CareSentry Guard</strong></td>
+        <td>57.1%</td>
+        <td>0.0%</td>
+        <td>100.0%</td>
+        <td>2.47 ms</td>
+        <td><span class="badge">VERIFIED</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

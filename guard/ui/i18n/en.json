@@ -1,0 +1,96 @@
+{
+  "app": {
+    "title": "Guard Console",
+    "subtitle": "CareSentry Safety Gateway",
+    "status_running": "Gateway Active",
+    "status_offline": "Gateway Offline",
+    "safety_notice": "Research tool. Not for clinical decision-making. Confirm all medical information with a licensed clinician or pharmacist.",
+    "local_only_notice": "Local session only. Records stay in memory and clear after 30 minutes."
+  },
+  "nav": {
+    "ask": "Ask",
+    "check": "Check",
+    "settings": "Settings",
+    "studio_link": "Open STUDIO Workbench"
+  },
+  "ask": {
+    "title": "Ask About a Clinical Record",
+    "description": "Ask a question about the record to get a safe, checked answer.",
+    "record_label": "Clinical Record",
+    "record_placeholder": "Paste patient notes or care records here...",
+    "record_attached": "Record loaded",
+    "tokens": "tokens",
+    "clear_record": "Clear record",
+    "upload_button": "Upload .txt file",
+    "question_label": "Your Question",
+    "question_placeholder": "Type your question about the record...",
+    "send_button": "Send Question",
+    "demo_button": "Try Demo Case",
+    "demo_badge": "Recorded Output"
+  },
+  "verdict": {
+    "verified_title": "VERIFIED",
+    "verified_summary": "Checked against the record. No issues found.",
+    "verified_action": "Safe to read. Always check care choices with your doctor.",
+    
+    "annotated_title": "ANNOTATED",
+    "annotated_summary": "We added safety notes from the record to this answer.",
+    "annotated_action": "Please read all notes before you use this advice.",
+    
+    "withheld_title": "WITHHELD — Not shown for your safety",
+    "withheld_summary": "The answer named a drug that conflicts with an allergy in the record.",
+    "withheld_action": "Do not follow this advice. Please consult your care team.",
+    "withheld_reveal_button": "Show unverified text (not safe to follow)",
+    "withheld_hide_button": "Hide unverified text",
+    "withheld_unverified_warning": "Warning: This text failed safety checks and is not safe to follow.",
+    
+    "abstain_title": "COULD NOT VERIFY",
+    "abstain_summary": "We could not check this answer against the record.",
+    "abstain_action": "Please check this question with your care team.",
+    
+    "reasons_heading": "Why this verdict was reached:",
+    "evidence_heading": "Record Evidence:",
+    "page_label": "Page",
+    "line_label": "Line",
+    "sources_used": "Sources checked:",
+    "print_button": "Print Summary"
+  },
+  "check": {
+    "title": "Record and Summary Check",
+    "description": "Check a summary against the record without running an AI model.",
+    "record_heading": "Patient Record",
+    "summary_heading": "Proposed Summary",
+    "summary_placeholder": "Paste the summary you want to check against the record...",
+    "run_check_button": "Check for Safety Issues",
+    "pipeline_label": "Checks performed: Core Invariant Linter",
+    "no_issues": "No safety problems found.",
+    "violations_heading": "Safety Violations Found",
+    "missing_heading": "Missing From Summary",
+    "missing_description": "Safety rules from the record that the summary did not mention."
+  },
+  "settings": {
+    "title": "Gateway Settings and Status",
+    "backend_heading": "Active Model Backend",
+    "model_label": "Guarded Model",
+    "backend_mode_label": "Backend Mode",
+    "lanes_heading": "Installed System Lanes",
+    "endpoint_heading": "Gateway Address",
+    "copy_button": "Copy Base URL",
+    "copy_curl_button": "Copy Sample cURL",
+    "copied": "Copied!",
+    "privacy_heading": "Privacy & Data Retention Policy",
+    "privacy_text": "Records stay in local memory only. No data is sent to the cloud. Sessions clear after 30 minutes.",
+    "clear_session_button": "Clear Everything Now",
+    "session_cleared": "All session data cleared from memory.",
+    "export_heading": "Export Results",
+    "export_button": "Download Last Result (JSON)"
+  },
+  "errors": {
+    "empty_record": "Please provide a clinical record first.",
+    "empty_question": "Please enter a question to ask.",
+    "empty_summary": "Please paste a summary to check.",
+    "request_failed": "Gateway request failed. Please check that the gateway service is running.",
+    "non_utf8": "The file contains non-UTF-8 text. Please upload a standard text file.",
+    "file_too_large": "The record file is too large. Maximum size is 2 MB."
+  }
+}

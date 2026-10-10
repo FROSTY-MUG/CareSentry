@@ -1,0 +1,536 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "total_sentences": 105,
+    "supported_count": 52,
+    "unsupported_count": 53
+  },
+  "ehr": "\nPATIENT DISCHARGE SUMMARY: Harold Vance, 84-year-old male.\nADMISSION DIAGNOSIS: Decompensated Heart Failure, Stage 3b CKD, Atrial Fibrillation.\nHOSPITAL COURSE: Patient admitted with lower extremity edema and dyspnea on exertion.\nTreated with intravenous furosemide 40 mg twice daily with 3.2 kg diuresis.\nLABORATORIES: Potassium 4.6 mEq/L, Sodium 138 mEq/L, BUN 34 mg/dL.\nDischarge Serum Creatinine: 2.1 mg/dL, eGFR: 32 mL/min/1.73m2.\nDISCHARGE MEDICATIONS:\n1. Furosemide 20 mg PO daily in morning.\n2. Lisinopril 5 mg PO daily.\n3. Warfarin 2.5 mg PO QPM (target INR 2.0 - 3.0).\nALLERGIES: Severe anaphylaxis to Penicillin. All beta-lactams strictly contraindicated.\nDIET & ACTIVITY: 2-gram sodium restriction, 1.5-liter fluid limit daily. Follow up in cardiology clinic in 7 days.\n",
+  "sentences": [
+    {
+      "text": "Patient has a documented severe anaphylactic allergy to penicillin.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Take Furosemide 20 mg by mouth every morning.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Discharge eGFR is 32 mL/min indicating renal insufficiency.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Patient is anticoagulated on Warfarin 2.5 mg daily with target INR 2.0 to 3.0.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Lisinopril 5 mg daily was prescribed for cardiovascular protection.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Maintain a strict 2-gram daily sodium restriction and 1.5-liter fluid limit.",
+      "label": "supported",
+      "critical": false
+    },
+    {
+      "text": "Follow up scheduled in cardiology outpatient clinic in one week.",
+      "label": "supported",
+      "critical": false
+    },
+    {
+      "text": "Hospital course involved treatment of lower extremity edema and dyspnea.",
+      "label": "supported",
+      "critical": false
+    },
+    {
+      "text": "Serum potassium at discharge was 4.6 mEq/L.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Patient achieved 3.2 kg diuresis following intravenous furosemide.",
+      "label": "supported",
+      "critical": false
+    },
+    {
+      "text": "Prescribe Amoxicillin 500 mg PO TID for respiratory infection.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Start Metformin 1000 mg twice daily for newly diagnosed diabetes.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Patient underwent emergency coronary stent placement on day 3.",
+      "label": "unsupported",
+      "critical": false
+    },
+    {
+      "text": "Discharge hemoglobin A1c was documented at 9.4 percent.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Add Ibuprofen 800 mg PO TID PRN for severe knee pain.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Patient was diagnosed with acute appendicitis and received appendectomy.",
+      "label": "unsupported",
+      "critical": false
+    },
+    {
+      "text": "Administer Spironolactone 50 mg daily despite renal failure.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Patient has an allergy to codeine and morphine sulfate.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Discharge eGFR was 88 mL/min with completely normal renal function.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Patient scheduled for follow-up in orthopedic spine surgery next month.",
+      "label": "unsupported",
+      "critical": false
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #1.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #2.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #3.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #4.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #5.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #6.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #7.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #8.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #9.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #10.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #11.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #12.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #13.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #14.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #15.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #16.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #17.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #18.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #19.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #20.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #21.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #22.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #23.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #24.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #25.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #26.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #27.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #28.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #29.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #30.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #31.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #32.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #33.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #34.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #35.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #36.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #37.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #38.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #39.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #40.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #41.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Continue maintenance dose of Warfarin 2.5 mg PO QPM with INR monitoring cycle #42.",
+      "label": "supported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #1.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #2.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #3.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #4.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #5.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #6.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #7.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #8.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #9.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #10.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #11.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #12.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #13.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #14.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #15.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #16.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #17.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #18.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #19.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #20.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #21.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #22.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #23.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #24.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #25.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #26.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #27.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #28.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #29.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #30.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #31.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #32.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #33.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #34.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #35.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #36.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #37.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #38.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Metformin 500mg twice daily for phantom condition #39.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Ciprofloxacin 500mg twice daily for phantom condition #40.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Bactrim DS twice daily for phantom condition #41.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Augmentin 875mg twice daily for phantom condition #42.",
+      "label": "unsupported",
+      "critical": true
+    },
+    {
+      "text": "Initiate outpatient therapy with Toradol 10mg twice daily for phantom condition #43.",
+      "label": "unsupported",
+      "critical": true
+    }
+  ]
+}
