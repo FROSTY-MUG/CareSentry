@@ -6,7 +6,13 @@
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![Status](https://img.shields.io/badge/Track_C-Production_Ready-brightgreen.svg)]()
 [![Standard](https://img.shields.io/badge/Standard-Agent_Skills_Open_Standard-purple)](https://agentskills.io)
-[![Tests](https://img.shields.io/badge/Tests-42%20Passed%20(100%25)-brightgreen)]()
+[![Tests](https://img.shields.io/badge/Tests-31%20Passed%20(100%25)-brightgreen)]()
+[![Authors](https://img.shields.io/badge/Authors-Aryan%20Arora%20%7C%20Saksham%20Chawla%20%7C%20Chinmay-darkblue.svg)](../AUTHORS.md)
+
+---
+
+## 👥 Authors
+CareSentry Guard was developed by **Aryan Arora**, **Saksham Chawla**, and **Chinmay**. See [AUTHORS.md](../AUTHORS.md) for full project attribution.
 
 ---
 
