@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "name": "Anticoagulant Aliases",
+  "description": "Brand, generic and abbreviation aliases for anticoagulant drugs, especially vitamin K antagonists.",
+  "source": "anticoagulant_aliases.json",
+  "retrieval_date": "2026-10-10",
+  "license": "CC-BY 4.0 - derived from FDA labels and clinical guidelines",
+  "entries": [
+    {"alias": "warfarin", "canonical": "warfarin", "class": "vitamin K antagonist", "source_ref": "INN name"},
+    {"alias": "coumadin", "canonical": "warfarin", "class": "vitamin K antagonist", "source_ref": "Brand name"},
+    {"alias": "jantoven", "canonical": "warfarin", "class": "vitamin K antagonist", "source_ref": "Brand name"},
+    {"alias": "acenocoumarol", "canonical": "acenocoumarol", "class": "vitamin K antagonist", "source_ref": "EU equivalent"},
+    {"alias": "phenprocoumon", "canonical": "phenprocoumon", "class": "vitamin K antagonist", "source_ref": "EU equivalent"},
+    {"alias": "acenocoumarinum", "canonical": "acenocoumarol", "class": "vitamin K antagonist", "source_ref": "Alternate spelling"},
+    {"alias": "marevan", "canonical": "acenocoumarol", "class": "vitamin K antagonist", "source_ref": "Brand name (Europe)"},
+    {"alias": "sintrom", "canonical": "phenprocoumon", "class": "vitamin K antagonist", "source_ref": "Brand name (Europe)"}
+  ]
+}

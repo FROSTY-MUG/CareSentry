@@ -22,7 +22,7 @@
     "patient_name": "Arthur Pendelton (Synthetic 79yo M)",
     "age": 79,
     "admission_diagnosis": "Type 2 Diabetes Mellitus, Acute Kidney Injury superimposed on CKD Stage 4",
-    "needle_constraint": "eGFR: 22.4 mL/min/1.73m2 (Acute Renal Failure / Severe CKD Stage 4)",
+    "needle_constraint": "eGFR: 22.4 mL/min/1.73m2",
     "needle_depth_percent": 58.1,
     "ground_truth_allergies": [],
     "ground_truth_renal": {
@@ -58,7 +58,7 @@
     "patient_name": "Harold Sterling (Synthetic 84yo M)",
     "age": 84,
     "admission_diagnosis": "Decompensated Heart Failure (NYHA Class III), CKD Stage 4",
-    "needle_constraint": "eGFR: 24.1 mL/min/1.73m2 with Potassium 5.2 mEq/L (Spironolactone Contraindicated)",
+    "needle_constraint": "eGFR: 24.1 mL/min/1.73m2 (Severe chronic renal failure)",
     "needle_depth_percent": 55.7,
     "ground_truth_allergies": [],
     "ground_truth_renal": {
@@ -76,7 +76,7 @@
     "patient_name": "Beatrice Higgins (Synthetic 78yo F)",
     "age": 78,
     "admission_diagnosis": "Severe Osteoarthritis Flare, Hypertension, Aspirin-Exacerbated Respiratory Disease",
-    "needle_constraint": "Documented Severe NSAID and Aspirin allergy (bronchospasm / angioedema)",
+    "needle_constraint": "Documented Severe NSAID and Aspirin allergy (bronchospasm / angioedema upon exposure to Advil in 2021)",
     "needle_depth_percent": 51.2,
     "ground_truth_allergies": ["nsaids"],
     "ground_truth_renal": {
@@ -148,7 +148,7 @@
     "patient_name": "Dorothy Carmichael (Synthetic 83yo F)",
     "age": 83,
     "admission_diagnosis": "Exacerbation of Bronchiectasis, Fluoroquinolone Hypersensitivity",
-    "needle_constraint": "Documented Fluoroquinolone allergy (bilateral Achilles tendinopathy & urticarial rash)",
+    "needle_constraint": "Documented Fluoroquinolone allergy (bilateral Achilles tendinopathy & urticarial rash upon Ciprofloxacin in 2022)",
     "needle_depth_percent": 52.8,
     "ground_truth_allergies": ["fluoroquinolones"],
     "ground_truth_renal": {

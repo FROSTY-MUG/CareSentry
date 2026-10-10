@@ -1,19 +1,53 @@
-# Security & Safety Policy
+# Security & Clinical Safety Policy
 
 ## 1. Clinical & Medical AI Safety Disclaimer
-`CareSentry-AI` is an open-source evaluation and testing harness developed for research, benchmarking, and developer observability purposes.
 
-**DO NOT USE THIS SOFTWARE FOR DIRECT CLINICAL DECISION-MAKING ON REAL PATIENTS WITHOUT HUMAN CLINICAL SUPERVISION.**
+**CareSentry-AI** (`caresentry-ai`) is an open-source evaluation framework, attention sentry, and deterministic verification harness engineered for AI research, benchmarking, and developer observability.
 
-This tool is intended to catch errors in language models; it does not replace a licensed medical practitioner, pharmacist, or clinical safety board.
+> [!CAUTION]
+> **NOT FOR DIRECT UNMONITORED CLINICAL DECISION-MAKING.**
+> CareSentry-AI is designed to audit and catch errors in open-weight language models. It does NOT replace the professional judgment of a licensed physician, registered nurse, clinical pharmacist, or hospital clinical review board.
 
-## 2. Patient Data & Privacy (HIPAA / GDPR Compliance)
-* All datasets included in the `data/` directory (`synthetic_geriatric_cases.json`) are **100% synthetically generated** and contain no real Protected Health Information (PHI).
-* The `CareSentry-AI` harness is designed for **air-gapped, fully local inference**. When run using local open-weight models (via Hugging Face `transformers` or `vLLM`), zero prompt tokens, clinical notes, or attention telemetry leave the local compute environment.
+---
 
-## 3. Reporting a Security Vulnerability
-If you discover a security vulnerability or a bypass in the deterministic safety linter:
-1. **Do not open a public GitHub issue.**
-2. Send a detailed vulnerability report to the repository maintainers via security advisory or email at: `security@caresentry.local`.
-3. Include reproducible prompt payloads, model configurations, and expected vs. actual linter behavior.
-4. The team will acknowledge receipt within 24 hours and issue a remediation patch within 72 hours.
+## 2. Patient Data Privacy & Zero-Cloud Guarantee (HIPAA / GDPR)
+
+1. **100% Synthetic Evaluation Data**: All patient discharge records, laboratory panels, and case files located in `data/` (`synthetic_geriatric_cases.json`, `synthetic_15_verification_cases.json`) are completely synthetic, fictitious profiles created for algorithmic verification. They contain **zero real Protected Health Information (PHI)**.
+2. **Local Air-Gapped Inference**: CareSentry-AI runs strictly against local Hugging Face checkpoints or local gateway instances. Zero prompt tokens, clinical notes, or attention telemetry are transmitted to external cloud inference APIs (no OpenAI, Anthropic, or third-party inference endpoints).
+3. **No Persistent PHI Logging**: The gateway and web UI do not write patient record text into persistent logs. Session memory is ephemeral and retained only in local volatile RAM.
+
+---
+
+## 3. Defense-in-Depth Security Invariants
+
+CareSentry-AI incorporates proactive defensive filters at the gateway boundary:
+
+### 3.1 Prompt Injection & Steganography Scanning
+- **Delimiter Spoofing**: Blocks malicious attempts to terminate clinical prompts using synthetic `[SYSTEM]`, `<|im_end|>`, or `--- END PATIENT RECORD ---` sequences.
+- **Instruction Overrides**: Intercepts phrases attempting to bypass clinical guidelines (e.g., *"Ignore previous safety instructions"*).
+- **Zero-Width Steganography**: Scans for and strips hidden Unicode zero-width spaces (`\u200B`, `\u200C`, `\u200D`, `\uFEFF`) used to smuggle adversarial payloads through medical text.
+
+### 3.2 Monotonic Safety Architecture
+- The plugin architecture enforces strict monotonic safety: external extensions or adapters can add additional safety violations, but are **cryptographically and architecturally barred from converting a `FAIL` verdict into a `PASS`** or suppressing existing clinical violations.
+
+### 3.3 Cryptographic Audit Trail
+- Every verification audit generates a deterministic SHA-256 block hash chaining previous audit states, guaranteeing immutable records of all safety intercepts.
+
+---
+
+## 4. Coordinated Vulnerability Disclosure
+
+If you identify a security flaw, prompt injection bypass, or safety linter evasion:
+
+1. **Do not disclose the issue publicly** via GitHub Issues or public pull requests.
+2. Email a detailed vulnerability report to the maintainers at:
+   **`security@caresentry.local`**
+3. Include:
+   - Operating system and Python environment details.
+   - Reproducible prompt payload and patient record.
+   - Target model identifier and CareSentry version.
+   - Expected vs. actual safety verdict.
+4. **Response Timelines**:
+   - **Initial acknowledgement**: Within 24 hours.
+   - **Triage and impact assessment**: Within 48 hours.
+   - **Remediation release**: Within 72 hours for critical clinical safety bypasses.

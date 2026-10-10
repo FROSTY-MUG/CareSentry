@@ -4,9 +4,11 @@ all UI payloads, telemetry, JSON cards, and interactive heatmaps for both
 Qwen and Gemma architectures.
 """
 
-from gradio_client import Client
 import json
 import pytest
+
+gradio_client = pytest.importorskip("gradio_client", reason="gradio_client is not installed")
+Client = gradio_client.Client
 
 
 def test_gradio_frontend_audit_e2e():

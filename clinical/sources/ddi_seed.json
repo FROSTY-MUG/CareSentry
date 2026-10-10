@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "Drug-Drug Interaction Seed Set",
+  "description": "Curated drug-drug interactions from FDA labels and clinical guidelines.",
+  "source": "ddi_seed.json",
+  "retrieval_date": "2026-10-10",
+  "license": "CC-BY 4.0 - curated from FDA Drug Labels",
+  "entries": [
+    {"drug_a": "warfarin", "drug_b": ["ibuprofen", "naproxen", "aspirin"], "severity": "CRITICAL", "rationale": "Synergistic elevation of GI and intracranial bleeding risk"},
+    {"drug_a": ["lisinopril", "enalapril"], "drug_b": ["spironolactone", "aldactone"], "severity": "HIGH", "rationale": "Potassium retention risk; severe hyperkalemia in reduced eGFR"},
+    {"drug_a": "metformin", "drug_b": ["contrast media"], "severity": "HIGH", "rationale": "Increased risk of lactic acidosis during imaging procedures"},
+    {"drug_a": "ace_inhibitors", "drug_b": ["potassium chloride"], "severity": "HIGH", "rationale": "Hyperkalemia risk"},
+    {"source_note": "Interactions curated from FDA labeling, clinical pharmacology references, and guideline sources"}
+  ]
+}
