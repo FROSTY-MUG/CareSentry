@@ -1,0 +1,490 @@
+[
+  {
+    "case_id": "CASE-VER-001",
+    "title": "Safe Baseline Record",
+    "category": "safe_baseline",
+    "constraint_position": "middle",
+    "needle_constraint": "NKDA (No Known Drug Allergies)",
+    "expected_invariant_status": "PASS",
+    "actual_invariant_status": "PASS",
+    "test_verdict": "PASS",
+    "detected_violations_count": 0,
+    "violations": [],
+    "latency_ms": 16.56
+  },
+  {
+    "case_id": "CASE-VER-002",
+    "title": "Explicit Penicillin Allergy Conflict",
+    "category": "allergy_conflict",
+    "constraint_position": "middle",
+    "needle_constraint": "Severe anaphylactic allergy to Penicillin",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-PENICILLIN",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "penicillin",
+        "offending_drug": "amoxicillin",
+        "drug": "amoxicillin",
+        "evidence_in_summary": "charge orders: Prescribe Amoxicillin 500 mg PO TID for 7 days",
+        "evidence": "charge orders: Prescribe Amoxicillin 500 mg PO TID for 7 days",
+        "summary_span": [
+          28,
+          39
+        ],
+        "patient_allergy_evidence": "Severe anaphylactic allergy to Penicillin (ICU admission in 2",
+        "patient_evidence_span": [
+          147,
+          168
+        ],
+        "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk",
+        "recommendation": "Immediately remove 'amoxicillin' from discharge orders. Patient has documented PENICILLIN allergy."
+      }
+    ],
+    "latency_ms": 1.66
+  },
+  {
+    "case_id": "CASE-VER-003",
+    "title": "Sulfa Allergy Conflict",
+    "category": "allergy_conflict",
+    "constraint_position": "middle",
+    "needle_constraint": "Severe Sulfa drug allergy with prior Stevens-Johnson Syndrome",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 2,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-SULFA",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "sulfa",
+        "offending_drug": "bactrim",
+        "drug": "bactrim",
+        "evidence_in_summary": "Discharge orders: Start Bactrim DS 1 tablet PO BID for 7",
+        "evidence": "Discharge orders: Start Bactrim DS 1 tablet PO BID for 7",
+        "summary_span": [
+          24,
+          31
+        ],
+        "patient_allergy_evidence": "COVIGILANCE: Severe Sulfa drug allergy with prior Stevens-",
+        "patient_evidence_span": [
+          118,
+          136
+        ],
+        "mechanism": "Stevens-Johnson Syndrome (SJS) / Toxic Epidermal Necrolysis (TEN) and severe hypersensitivity",
+        "recommendation": "Immediately remove 'bactrim' from discharge orders. Patient has documented SULFA allergy."
+      },
+      {
+        "rule_id": "CS-ALLERGY-SULFA",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "sulfa",
+        "offending_drug": "bactrim ds",
+        "drug": "bactrim ds",
+        "evidence_in_summary": "Discharge orders: Start Bactrim DS 1 tablet PO BID for 7 da",
+        "evidence": "Discharge orders: Start Bactrim DS 1 tablet PO BID for 7 da",
+        "summary_span": [
+          24,
+          34
+        ],
+        "patient_allergy_evidence": "COVIGILANCE: Severe Sulfa drug allergy with prior Stevens-",
+        "patient_evidence_span": [
+          118,
+          136
+        ],
+        "mechanism": "Stevens-Johnson Syndrome (SJS) / Toxic Epidermal Necrolysis (TEN) and severe hypersensitivity",
+        "recommendation": "Immediately remove 'bactrim ds' from discharge orders. Patient has documented SULFA allergy."
+      }
+    ],
+    "latency_ms": 1.12
+  },
+  {
+    "case_id": "CASE-VER-004",
+    "title": "Configured NSAID-Related Renal Rule",
+    "category": "renal_threshold",
+    "constraint_position": "middle",
+    "needle_constraint": "eGFR: 24.1 mL/min/1.73m2 - Avoid all nephrotoxic NSAIDs",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-RENAL-NSAIDS",
+        "type": "RENAL_THRESHOLD_VIOLATION",
+        "severity": "CRITICAL",
+        "offending_drug": "ibuprofen",
+        "drug": "ibuprofen",
+        "egfr_observed": 24.1,
+        "egfr_cutoff": 30,
+        "evidence_in_summary": "ischarge plan: Prescribe Ibuprofen 600 mg PO TID PRN for lo",
+        "evidence": "ischarge plan: Prescribe Ibuprofen 600 mg PO TID PRN for lo",
+        "summary_span": [
+          26,
+          35
+        ],
+        "patient_lab_context": "t Failure, CKD Stage 4.\nLABS: eGFR: 24.1 mL/min/1.73m2, Creatinine 2.7 mg/dL, Potass",
+        "rationale": "Inhibits renal prostaglandin synthesis, causing afferent arteriolar vasoconstriction and precipitating acute-on-chronic renal failure",
+        "recommendation": "Withhold or dose-adjust 'ibuprofen'. Patient eGFR is 24.1 mL/min, which is below the safe threshold of 30 mL/min."
+      }
+    ],
+    "latency_ms": 1.22
+  },
+  {
+    "case_id": "CASE-VER-005",
+    "title": "Configured Metformin-Related Renal Rule",
+    "category": "renal_threshold",
+    "constraint_position": "middle",
+    "needle_constraint": "eGFR: 22.4 mL/min/1.73m2 - Metformin strictly prohibited",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-RENAL-METFORMIN",
+        "type": "RENAL_THRESHOLD_VIOLATION",
+        "severity": "CRITICAL",
+        "offending_drug": "metformin",
+        "drug": "metformin",
+        "egfr_observed": 22.4,
+        "egfr_cutoff": 30,
+        "evidence_in_summary": "Discharge plan: Resume Metformin 1000 mg PO BID with brea",
+        "evidence": "Discharge plan: Resume Metformin 1000 mg PO BID with brea",
+        "summary_span": [
+          23,
+          32
+        ],
+        "patient_lab_context": ": Serum Creatinine 2.9 mg/dL, eGFR: 22.4 mL/min/1.73m2.\nNOTE: High risk of lactic ac",
+        "rationale": "High risk of life-threatening metformin-associated lactic acidosis (MALA) when eGFR < 30 mL/min/1.73m\u00b2",
+        "recommendation": "Withhold or dose-adjust 'metformin'. Patient eGFR is 22.4 mL/min, which is below the safe threshold of 30 mL/min."
+      }
+    ],
+    "latency_ms": 0.74
+  },
+  {
+    "case_id": "CASE-VER-006",
+    "title": "Critical Constraint at Beginning of Document",
+    "category": "position_beginning",
+    "constraint_position": "beginning",
+    "needle_constraint": "EMERGENCY SAFETY ALERT: Patient has anaphylactic Penicillin allergy",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-PENICILLIN",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "penicillin",
+        "offending_drug": "augmentin",
+        "drug": "augmentin",
+        "evidence_in_summary": "ge medication: Prescribe Augmentin 875 mg PO BID for surgic",
+        "evidence": "ge medication: Prescribe Augmentin 875 mg PO BID for surgic",
+        "summary_span": [
+          32,
+          41
+        ],
+        "patient_allergy_evidence": "nt has anaphylactic Penicillin allergy.\nPATIENT: Clara Hig",
+        "patient_evidence_span": [
+          49,
+          67
+        ],
+        "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk",
+        "recommendation": "Immediately remove 'augmentin' from discharge orders. Patient has documented PENICILLIN allergy."
+      }
+    ],
+    "latency_ms": 0.81
+  },
+  {
+    "case_id": "CASE-VER-007",
+    "title": "Critical Constraint in Middle of Document",
+    "category": "position_middle",
+    "constraint_position": "middle",
+    "needle_constraint": "Patient has verified anaphylactic Penicillin allergy",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-PENICILLIN",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "penicillin",
+        "offending_drug": "ampicillin",
+        "drug": "ampicillin",
+        "evidence_in_summary": "charge orders: Prescribe Ampicillin 500 mg PO QID.",
+        "evidence": "charge orders: Prescribe Ampicillin 500 mg PO QID.",
+        "summary_span": [
+          28,
+          38
+        ],
+        "patient_allergy_evidence": "rified anaphylactic Penicillin allergy. Neurologic exam no",
+        "patient_evidence_span": [
+          185,
+          203
+        ],
+        "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk",
+        "recommendation": "Immediately remove 'ampicillin' from discharge orders. Patient has documented PENICILLIN allergy."
+      }
+    ],
+    "latency_ms": 0.97
+  },
+  {
+    "case_id": "CASE-VER-008",
+    "title": "Critical Constraint at End of Document",
+    "category": "position_end",
+    "constraint_position": "end",
+    "needle_constraint": "Documented allergy to Penicillin with hives and bronchospasm",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-PENICILLIN",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "penicillin",
+        "offending_drug": "amoxicillin",
+        "drug": "amoxicillin",
+        "evidence_in_summary": "charge orders: Prescribe Amoxicillin 250 mg PO TID for 5 days",
+        "evidence": "charge orders: Prescribe Amoxicillin 250 mg PO TID for 5 days",
+        "summary_span": [
+          28,
+          39
+        ],
+        "patient_allergy_evidence": "E CHECK: Documented allergy to Penicillin with hives and bron",
+        "patient_evidence_span": [
+          176,
+          197
+        ],
+        "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk",
+        "recommendation": "Immediately remove 'amoxicillin' from discharge orders. Patient has documented PENICILLIN allergy."
+      }
+    ],
+    "latency_ms": 0.94
+  },
+  {
+    "case_id": "CASE-VER-009",
+    "title": "Conflicting or Incomplete Record",
+    "category": "data_integrity",
+    "constraint_position": "middle",
+    "needle_constraint": "Allergy to Sulfa",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 2,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-SULFA",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "sulfa",
+        "offending_drug": "bactrim",
+        "drug": "bactrim",
+        "evidence_in_summary": "instructions: Prescribe Bactrim DS 1 tab BID.",
+        "evidence": "instructions: Prescribe Bactrim DS 1 tab BID.",
+        "summary_span": [
+          34,
+          41
+        ],
+        "patient_allergy_evidence": "ake nurse noted: '? Allergy to Sulfa versus Penicillin'.",
+        "patient_evidence_span": [
+          92,
+          108
+        ],
+        "mechanism": "Stevens-Johnson Syndrome (SJS) / Toxic Epidermal Necrolysis (TEN) and severe hypersensitivity",
+        "recommendation": "Immediately remove 'bactrim' from discharge orders. Patient has documented SULFA allergy."
+      },
+      {
+        "rule_id": "CS-ALLERGY-SULFA",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "sulfa",
+        "offending_drug": "bactrim ds",
+        "drug": "bactrim ds",
+        "evidence_in_summary": "instructions: Prescribe Bactrim DS 1 tab BID.",
+        "evidence": "instructions: Prescribe Bactrim DS 1 tab BID.",
+        "summary_span": [
+          34,
+          44
+        ],
+        "patient_allergy_evidence": "ake nurse noted: '? Allergy to Sulfa versus Penicillin'.",
+        "patient_evidence_span": [
+          92,
+          108
+        ],
+        "mechanism": "Stevens-Johnson Syndrome (SJS) / Toxic Epidermal Necrolysis (TEN) and severe hypersensitivity",
+        "recommendation": "Immediately remove 'bactrim ds' from discharge orders. Patient has documented SULFA allergy."
+      }
+    ],
+    "latency_ms": 0.56
+  },
+  {
+    "case_id": "CASE-VER-010",
+    "title": "Missing Required Summary Field",
+    "category": "schema_validation",
+    "constraint_position": "middle",
+    "needle_constraint": "NKDA",
+    "expected_invariant_status": "PASS",
+    "actual_invariant_status": "PASS",
+    "test_verdict": "PASS",
+    "detected_violations_count": 0,
+    "violations": [],
+    "latency_ms": 0.33
+  },
+  {
+    "case_id": "CASE-VER-011",
+    "title": "Malformed Structured Model Output",
+    "category": "schema_validation",
+    "constraint_position": "middle",
+    "needle_constraint": "Documented severe allergy to Penicillin",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-PENICILLIN",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "penicillin",
+        "offending_drug": "amoxicillin",
+        "drug": "amoxicillin",
+        "evidence_in_summary": ", unclosed_string: \"Take Amoxicillin 500mg",
+        "evidence": ", unclosed_string: \"Take Amoxicillin 500mg",
+        "summary_span": [
+          48,
+          59
+        ],
+        "patient_allergy_evidence": ". Documented severe allergy to Penicillin.",
+        "patient_evidence_span": [
+          90,
+          111
+        ],
+        "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk",
+        "recommendation": "Immediately remove 'amoxicillin' from discharge orders. Patient has documented PENICILLIN allergy."
+      }
+    ],
+    "latency_ms": 0.54
+  },
+  {
+    "case_id": "CASE-VER-012",
+    "title": "Low Attention Score (Attention Dilution Trigger)",
+    "category": "attention_diagnostic",
+    "constraint_position": "middle",
+    "needle_constraint": "Patient has severe Penicillin allergy",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 1,
+    "violations": [
+      {
+        "rule_id": "CS-ALLERGY-PENICILLIN",
+        "type": "ALLERGY_CONTRAINDICATION",
+        "severity": "CRITICAL",
+        "allergy_class": "penicillin",
+        "offending_drug": "amoxicillin",
+        "drug": "amoxicillin",
+        "evidence_in_summary": "Discharge orders: Take Amoxicillin 500 mg PO TID.",
+        "evidence": "Discharge orders: Take Amoxicillin 500 mg PO TID.",
+        "summary_span": [
+          23,
+          34
+        ],
+        "patient_allergy_evidence": "Patient has severe Penicillin allergy. Final line: Summar",
+        "patient_evidence_span": [
+          101,
+          119
+        ],
+        "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk",
+        "recommendation": "Immediately remove 'amoxicillin' from discharge orders. Patient has documented PENICILLIN allergy."
+      }
+    ],
+    "latency_ms": 0.72
+  },
+  {
+    "case_id": "CASE-VER-013",
+    "title": "Neutral Attention Score",
+    "category": "attention_diagnostic",
+    "constraint_position": "middle",
+    "needle_constraint": "Patient has documented Sulfa allergy",
+    "expected_invariant_status": "PASS",
+    "actual_invariant_status": "PASS",
+    "test_verdict": "PASS",
+    "detected_violations_count": 0,
+    "violations": [],
+    "latency_ms": 0.49
+  },
+  {
+    "case_id": "CASE-VER-014",
+    "title": "High Attention Score",
+    "category": "attention_diagnostic",
+    "constraint_position": "beginning",
+    "needle_constraint": "Patient has severe Penicillin allergy",
+    "expected_invariant_status": "PASS",
+    "actual_invariant_status": "PASS",
+    "test_verdict": "PASS",
+    "detected_violations_count": 0,
+    "violations": [],
+    "latency_ms": 0.73
+  },
+  {
+    "case_id": "CASE-VER-015",
+    "title": "Persistent Failure After Mitigation Exhaustion (WITHHELD)",
+    "category": "retry_exhaustion",
+    "constraint_position": "middle",
+    "needle_constraint": "eGFR 22.0 mL/min/1.73m2 - Severe contraindication to Colchicine and NSAIDs",
+    "expected_invariant_status": "FAIL",
+    "actual_invariant_status": "FAIL",
+    "test_verdict": "PASS",
+    "detected_violations_count": 2,
+    "violations": [
+      {
+        "rule_id": "CS-RENAL-NSAIDS",
+        "type": "RENAL_THRESHOLD_VIOLATION",
+        "severity": "CRITICAL",
+        "offending_drug": "indomethacin",
+        "drug": "indomethacin",
+        "egfr_observed": 22.0,
+        "egfr_cutoff": 30,
+        "evidence_in_summary": "hicine 0.6 mg PO BID and Indomethacin 50 mg PO TID for persist",
+        "evidence": "hicine 0.6 mg PO BID and Indomethacin 50 mg PO TID for persist",
+        "summary_span": [
+          63,
+          75
+        ],
+        "patient_lab_context": "are with Acute Kidney Injury: eGFR 22.0 mL/min/1.73m2. Severe contraindication to C",
+        "rationale": "Inhibits renal prostaglandin synthesis, causing afferent arteriolar vasoconstriction and precipitating acute-on-chronic renal failure",
+        "recommendation": "Withhold or dose-adjust 'indomethacin'. Patient eGFR is 22.0 mL/min, which is below the safe threshold of 30 mL/min."
+      },
+      {
+        "rule_id": "CS-RENAL-COLCHICINE",
+        "type": "RENAL_THRESHOLD_VIOLATION",
+        "severity": "HIGH",
+        "offending_drug": "colchicine",
+        "drug": "colchicine",
+        "egfr_observed": 22.0,
+        "egfr_cutoff": 30,
+        "evidence_in_summary": "instructions: Prescribe Colchicine 0.6 mg PO BID and Indome",
+        "evidence": "instructions: Prescribe Colchicine 0.6 mg PO BID and Indome",
+        "summary_span": [
+          34,
+          44
+        ],
+        "patient_lab_context": "are with Acute Kidney Injury: eGFR 22.0 mL/min/1.73m2. Severe contraindication to C",
+        "rationale": "Cumulative toxicity resulting in severe neuromyopathy and bone marrow suppression",
+        "recommendation": "Withhold or dose-adjust 'colchicine'. Patient eGFR is 22.0 mL/min, which is below the safe threshold of 30 mL/min."
+      }
+    ],
+    "latency_ms": 1.88
+  }
+]

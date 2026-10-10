@@ -1,0 +1,71 @@
+name: Verification & Hackathon Acceptance Gate
+
+on:
+  push:
+    branches: [ main, track-a2/core-1.1 ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    name: CareSentry-AI Verification (100-Point Rubric)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest jsonschema
+          pip install -e .
+
+      - name: Gate 1 & 2: Run Unit & Verification Test Suite
+        run: |
+          pytest --junitxml=verification/evidence/unit_test_results.xml -v
+
+      - name: Gate 3: Execute Evidence Generator & Synthetic Integration
+        run: |
+          python scripts/generate_verification_evidence.py
+
+      - name: Gate 4: Agent Skill Specification Compliance Check
+        run: |
+          python -c "
+          from pathlib import Path
+          skill_file = Path('.agents/skills/caresentry/SKILL.md')
+          assert skill_file.exists(), 'SKILL.md must exist'
+          content = skill_file.read_text(encoding='utf-8')
+          assert 'standard: agent-skills.io/v1' in content, 'Missing agent-skills.io/v1 standard'
+          assert 'name: caresentry-audit' in content, 'Missing name header'
+          print('Agent Skill validation passed!')
+          "
+
+      - name: Gate 5: License & Open Source Integrity Audit
+        run: |
+          python -c "
+          import json
+          from pathlib import Path
+          audit_file = Path('verification/evidence/license_audit.json')
+          assert audit_file.exists(), 'license_audit.json must exist'
+          data = json.loads(audit_file.read_text(encoding='utf-8'))
+          assert data['license_is_apache_2_0'] is True, 'License must be Apache-2.0'
+          assert data['status'] == 'COMPLIANT', 'License audit must be COMPLIANT'
+          print('License audit passed!')
+          "
+
+      - name: Archive Verification Evidence Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-evidence-py${{ matrix.python-version }}
+          path: verification/evidence/

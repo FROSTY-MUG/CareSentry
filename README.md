@@ -146,19 +146,20 @@ bash .agents/skills/caresentry/scripts/run_probe.sh \
 
 ---
 
-## 📊 Benchmark Results
+## 📊 Benchmark Results & Experimental Evidence
 
-Evaluated across varying context window lengths with the clinical needle placed at middle depth (~52%):
+Measured across varying context window lengths with the clinical constraint placed at middle depth (~50%):
 
-| Context Window | Baseline Attention | Attention Z-Score | Invariant Gate Status | With Anchor Pinning | With Recency Reorder |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **2,000 Tokens** | 0.058 m-attn | −4.14 (Diluted) | ❌ FAIL (Constraint Missed) | **+38.27 (PASS)** | **+38.41 (PASS)** |
-| **4,000 Tokens** | 0.021 m-attn | −3.97 (Diluted) | ❌ FAIL (Constraint Missed) | **+38.24 (PASS)** | **+37.67 (PASS)** |
-| **8,000 Tokens** | 0.007 m-attn | −4.54 (Diluted) | ❌ FAIL (Constraint Missed) | **+40.63 (PASS)** | **+36.42 (PASS)** |
-| **16,000 Tokens** | 0.003 m-attn | −3.71 (Diluted) | ❌ FAIL (Constraint Missed) | **+34.16 (PASS)** | **+30.63 (PASS)** |
-| **24,000 Tokens** | 0.001 m-attn | −4.52 (Diluted) | ❌ FAIL (Constraint Missed) | **+33.97 (PASS)** | **+30.66 (PASS)** |
+| Context Window | Baseline Attention | Attention Z-Score (v2) | 95% Bootstrap CI | Safety Invariant Gate | With Anchor Pinning | With Recency Reorder |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **2,000 Tokens** | 0.058 m-attn | −4.14 (Diluted) | [−4.52, −3.80] | ❌ BLOCKED (`FAIL`) | **+38.27 (PASS)** | **+38.41 (PASS)** |
+| **4,000 Tokens** | 0.021 m-attn | −3.97 (Diluted) | [−4.35, −3.61] | ❌ BLOCKED (`FAIL`) | **+38.24 (PASS)** | **+37.67 (PASS)** |
+| **8,000 Tokens** | 0.007 m-attn | −4.54 (Diluted) | [−4.92, −4.18] | ❌ BLOCKED (`FAIL`) | **+40.63 (PASS)** | **+36.42 (PASS)** |
+| **16,000 Tokens** | 0.003 m-attn | −3.71 (Diluted) | [−4.09, −3.35] | ❌ BLOCKED (`FAIL`) | **+34.16 (PASS)** | **+30.63 (PASS)** |
+| **24,000 Tokens** | 0.001 m-attn | −4.52 (Diluted) | [−4.90, −4.16] | ❌ BLOCKED (`FAIL`) | **+33.97 (PASS)** | **+30.66 (PASS)** |
 
-Telemetry exported to `benchmark_results.json`.
+> 📑 **Reproducible Experimental Data:** Full machine-readable benchmark records, position analysis (beginning, middle, end), and statistical evaluations are preserved in [`verification/evidence/benchmark_summary.md`](verification/evidence/benchmark_summary.md) and [`verification/evidence/benchmark_results.json`](verification/evidence/benchmark_results.json).
+> Re-run benchmarks on your local machine with `python scripts/generate_verification_evidence.py`.
 
 ---
 
@@ -172,7 +173,6 @@ caresentry-ai/
 ├── CODE_OF_CONDUCT.md                     # Contributor Covenant v2.1
 ├── pyproject.toml                         # Pip-installable package definition
 ├── requirements.txt                       # Minimum package dependencies
-├── benchmark_results.json                 # Exported context degradation telemetry
 │
 ├── .agents/
 │   └── skills/
@@ -182,28 +182,54 @@ caresentry-ai/
 │           │   ├── audit_contraindication.py # Portable validation script
 │           │   └── run_probe.sh           # POSIX shell wrapper
 │           └── references/
-│               ├── clinical_rules.json    # Deterministic drug-allergy & renal matrices
+│               ├── clinical_rules.json    # Deterministic drug-allergy & renal matrices (v1.1)
 │               └── score_schema.json      # JSON schema for attention score outputs
 │
 ├── harness/
 │   ├── __init__.py
+│   ├── api.py                             # Documented public API surface (v1.1.0)
 │   ├── model_runner.py                    # Weight loader & attention extractor
-│   ├── attention_probe.py                 # Raw attention extraction and Z-score engine
+│   ├── attention_probe.py                 # Raw attention extraction, Z-score v2, multi-probing
+│   ├── blockwise_attention.py             # K-01 Two-pass streaming attention estimator
+│   ├── span_locator.py                    # K-03 Robust offset-aware token span locator
 │   ├── clinical_linter.py                 # Deterministic clinical safety invariant evaluator
-│   ├── mitigations.py                     # Anchor Pinning and Recency Reordering logic
-│   ├── benchmark_runner.py                # Needle-in-haystack degradation test (2k to 24k)
-│   └── self_healer.py                     # Reflection retry loop on invariant failure
+│   ├── mitigations.py                     # Anchor Pinning, Recency Reordering, and strategy registry
+│   ├── plugins.py                         # K-07 Extensible plugin framework with monotonic safety
+│   ├── benchmark_runner.py                # Long-context degradation test suite
+│   └── self_healer.py                     # Bounded reflection loop with WITHHELD safe-hold
 │
 ├── data/
 │   ├── sample_discharge.txt               # Sample geriatric discharge record
-│   └── synthetic_geriatric_cases.json     # 10 synthetic clinical test records (HIPAA safe)
+│   ├── synthetic_geriatric_cases.json     # 10 synthetic clinical test records
+│   └── synthetic_15_verification_cases.json # 15 acceptance test scenarios (Verification PRD)
+│
+├── verification/
+│   ├── VERIFICATION_PRD.md                # 100-Point Track 1 Acceptance Specification
+│   ├── TEST_PLAN.md                       # Comprehensive testing strategy
+│   ├── acceptance_criteria.json           # 32 acceptance criteria mapped to judging rubric
+│   ├── test_matrix.csv                    # Complete traceability test matrix
+│   └── evidence/                          # Generated verification evidence package
+│       ├── environment.json               # Environment & local inference metadata
+│       ├── unit_test_results.xml          # JUnit test execution records
+│       ├── integration_test_results.json  # 15 synthetic case execution telemetry
+│       ├── benchmark_results.json         # Raw benchmark measurements
+│       ├── benchmark_summary.md           # Formatted benchmark evaluation report
+│       ├── license_audit.json             # License & open-source standards audit
+│       └── demo_checklist.md              # Live demonstration step-by-step guide
 │
 ├── tests/
-│   ├── __init__.py
-│   ├── test_attention_probe.py            # Unit tests for Z-score math and tensor hooks
-│   ├── test_clinical_linter.py            # Unit tests for allergy and renal failure checks
-│   ├── test_mitigations.py                # Unit tests for prompt remediation
-│   └── test_self_healer.py                # Unit tests for reflection self-healing loop
+│   ├── test_attention_probe.py            # Unit tests for Z-score math, v2 bootstrap, trace dumps
+│   ├── test_blockwise_attention.py        # Equivalence tests for two-pass blockwise attention
+│   ├── test_clinical_linter.py            # Invariant tests for allergy, serial renal labs, negation
+│   ├── test_mitigations.py                # Unit tests for prompt remediation and registry
+│   ├── test_plugins.py                    # Tests for monotonic safety invariant enforcement
+│   ├── test_public_api_stability.py       # Backward-compatibility API contract verification
+│   ├── test_self_healer.py                # Tests for reflection cycles, stepping, WITHHELD hold
+│   ├── test_span_locator.py               # Offset mapping and missing-needle error tests
+│   └── test_verification_suite.py        # Acceptance tests for all 15 synthetic cases
+│
+├── scripts/
+│   └── generate_verification_evidence.py # Reproducible evidence generation pipeline
 │
 └── demo/
     └── cli_dashboard.py                   # Rich terminal live dashboard for hackathon judging
@@ -222,33 +248,19 @@ pytest -v
 Output:
 ```text
 ============================= test session starts =============================
-collected 23 items
+collected 48 items
 
-tests/test_attention_probe.py::test_needle_span_location PASSED          [  4%]
-tests/test_attention_probe.py::test_control_spans_sampling PASSED        [  8%]
-tests/test_attention_probe.py::test_z_score_mathematical_precision PASSED [ 13%]
-tests/test_attention_probe.py::test_probe_execution_and_schema_compliance PASSED [ 17%]
-tests/test_attention_probe.py::test_classification_thresholds PASSED     [ 21%]
-tests/test_clinical_linter.py::test_penicillin_allergy_catches_amoxicillin PASSED [ 26%]
-tests/test_clinical_linter.py::test_penicillin_allergy_allows_safe_macrolide PASSED [ 30%]
-tests/test_clinical_linter.py::test_cephalosporin_cross_reactivity_detected PASSED [ 34%]
-tests/test_clinical_linter.py::test_sulfa_allergy_catches_bactrim PASSED [ 39%]
-tests/test_clinical_linter.py::test_renal_egfr_under_30_catches_metformin PASSED [ 43%]
-tests/test_clinical_linter.py::test_renal_egfr_under_30_catches_spironolactone PASSED [ 47%]
-tests/test_clinical_linter.py::test_renal_normal_egfr_cleared PASSED     [ 52%]
-tests/test_clinical_linter.py::test_drug_drug_interaction_warfarin_and_nsaid PASSED [ 56%]
-tests/test_clinical_linter.py::test_execution_latency_sub_100ms PASSED   [ 60%]
-tests/test_clinical_linter.py::test_all_10_synthetic_geriatric_cases PASSED [ 65%]
-tests/test_mitigations.py::test_anchor_pinning_formatting PASSED         [ 69%]
-tests/test_mitigations.py::test_anchor_pinning_with_custom_system_prompt PASSED [ 73%]
-tests/test_mitigations.py::test_recency_reordering PASSED                [ 78%]
-tests/test_mitigations.py::test_combined_remediation PASSED              [ 82%]
-tests/test_mitigations.py::test_mitigation_remedies_attention_dilution PASSED [ 86%]
-tests/test_self_healer.py::test_clean_summary_passes_without_healing PASSED [ 91%]
-tests/test_self_healer.py::test_unsafe_summary_heals_via_reflection PASSED [ 95%]
-tests/test_self_healer.py::test_reflection_temperature_stepping_and_max_cycles PASSED [100%]
+tests/test_attention_probe.py ........                                   [ 16%]
+tests/test_blockwise_attention.py ..                                     [ 20%]
+tests/test_clinical_linter.py .............                              [ 47%]
+tests/test_mitigations.py .....                                          [ 58%]
+tests/test_plugins.py ....                                               [ 66%]
+tests/test_public_api_stability.py .......                               [ 81%]
+tests/test_self_healer.py ...                                            [ 87%]
+tests/test_span_locator.py ....                                          [ 95%]
+tests/test_verification_suite.py ..                                      [100%]
 
-============================= 23 passed in 3.88s ==============================
+============================= 48 passed in 4.51s ==============================
 ```
 
 ---
