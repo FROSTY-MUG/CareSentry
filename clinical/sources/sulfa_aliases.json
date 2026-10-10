@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "name": "Sulfa Aliases",
+  "description": "Brand, generic and abbreviation aliases for sulfonamide drugs.",
+  "source": "sulfa_aliases.json",
+  "retrieval_date": "2026-10-10",
+  "license": "CC-BY 4.0 - derived from FDA Orange Book",
+  "entries": [
+    {"alias": "sulfa", "canonical": "sulfonamide", "class": "sulfa", "source_ref": "FDA class"},
+    {"alias": "sulfonamide", "canonical": "sulfonamide", "class": "sulfa", "source_ref": "FDA class"},
+    {"alias": "sulfonamides", "canonical": "sulfonamide", "class": "sulfa", "source_ref": "Plural form"},
+    {"alias": "bactrim", "canonical": "sulfamethoxazole-trimethoprim", "class": "sulfa", "source_ref": "Brand name"},
+    {"alias": "septra", "canonical": "sulfamethoxazole-trimethoprim", "class": "sulfa", "source_ref": "Brand name"},
+    {"alias": "tmp-smx", "canonical": "sulfamethoxazole-trimethoprim", "class": "sulfa", "source_ref": "Abbreviation"},
+    {"alias": "sulfasalazine", "canonical": "salazopyrin", "class": "sulfa", "source_ref": "FDA ATC"},
+    {"alias": "sulfadiazine", "canonical": "sulfadiazine", "class": "sulfa", "source_ref": "FDA ATC"},
+    {"alias": "sulfisoxazole", "canonical": "sulfisoxazole", "class": "sulfa", "source_ref": "FDA ATC"},
+    {"alias": "zonegran", "canonical": "zonisamide", "class": "sulfa", "source_ref": "Brand name"},
+    {"alias": "zonisamide", "canonical": "zonisamide", "class": "sulfa", "source_ref": "Anticonvulsant"},
+    {"alias": "smx", "canonical": "trimethoprim-sulfamethoxazole", "class": "sulfa", "source_ref": "Abbreviation"}
+  ]
+}

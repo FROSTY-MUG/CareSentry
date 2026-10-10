@@ -123,6 +123,11 @@ def run_live_case_demo(case_idx: int = 0) -> None:
         # Baseline probe (needle buried in middle)
         doc = case["clinical_record"]
         needle = case["needle_constraint"]
+        if needle not in doc:
+            for cand in [needle.split("(")[0].strip(), needle.split(")")[0].strip()]:
+                if cand and cand in doc:
+                    needle = cand
+                    break
         res_baseline = probe.probe(prompt=doc, needle=needle, is_pinned=False)
 
         # Remediated probe (System Anchor Pinning)

@@ -188,7 +188,12 @@ class ModelRunner:
                     logger.warning("bitsandbytes not installed; falling back to standard precision.")
 
             if self.device_str == "auto":
-                device_target = "cuda" if torch.cuda.is_available() else "cpu"
+                if torch.cuda.is_available():
+                    device_target = "cuda"
+                elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+                    device_target = "mps"
+                else:
+                    device_target = "cpu"
             else:
                 device_target = self.device_str
 

@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "Spironolactone Aliases",
+  "description": "Brand, generic and abbreviation aliases for spironolactone.",
+  "source": "spironolactone_aliases.json",
+  "retrieval_date": "2026-10-10",
+  "license": "Public domain - FDA Orange Book",
+  "entries": [
+    {"alias": "spironolactone", "canonical": "spironolactone", "class": "aldosterone antagonist", "source_ref": "INN name"},
+    {"alias": "aldactone", "canonical": "spironolactone", "class": "aldosterone antagonist", "source_ref": "Brand name"},
+    {"alias": "carospir", "canonical": "spironolactone", "class": "aldosterone antagonist", "source_ref": "Brand name"},
+    {"alias": "spironolactone hct", "canonical": "spironolactone-hydrochlorothiazide", "class": "aldosterone antagonist", "source_ref": "Combination"},
+    {"alias": "spiro", "canonical": "spironolactone", "class": "aldosterone antagonist", "source_ref": "Abbreviation"}
+  ]
+}
