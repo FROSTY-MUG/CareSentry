@@ -1,0 +1,14 @@
+{
+  "benchmark": "CareSentry Guard Prompt-Injection Evaluation",
+  "total_samples": 170,
+  "benign_samples": 85,
+  "malicious_samples": 85,
+  "true_positives": 83,
+  "false_positives": 0,
+  "true_negatives": 85,
+  "false_negatives": 2,
+  "precision": 1.0,
+  "recall": 0.9765,
+  "false_positive_rate": 0.0,
+  "f1_score": 0.9881
+}

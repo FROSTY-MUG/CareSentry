@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "caresentry-guard"
+version = "1.0.0"
+description = "Deterministic Clinical Safety Gateway, Prompt-Injection Scanner, Constrained Decoding & Grounding Guard for Open-Weight Models"
+readme = "README_GUARD.md"
+authors = [{ name = "CareSentry Open Team" }]
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.0.0",
+    "numpy>=1.24.0",
+    "pydantic>=2.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.22.0",
+    "httpx>=0.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "rich>=13.0.0",
+    "transformers>=4.40.0",
+]
+
+[project.scripts]
+caresentry-guard = "caresentry_guard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
