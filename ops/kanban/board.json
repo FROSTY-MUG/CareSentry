@@ -1,0 +1,184 @@
+{
+  "project": "CareSentry-AI",
+  "last_updated": "2026-10-10",
+  "columns": {
+    "Backlog": [
+      {
+        "id": "F-07",
+        "title": "Causal inference engine",
+        "lane": "CLINICAL",
+        "description": "Causal reasoning module for clinical decision support — counterfactual analysis and treatment effect estimation.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      },
+      {
+        "id": "F-08",
+        "title": "Per-head model analysis",
+        "lane": "CORE",
+        "description": "Per-head attention/weight inspection and visualization for transformer model debugging.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      },
+      {
+        "id": "F-09",
+        "title": "Model registry",
+        "lane": "CORE",
+        "description": "Versioned model registry with metadata, lineage, and artifact storage for reproducible deployments.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      },
+      {
+        "id": "F-10",
+        "title": "Quantization pipeline",
+        "lane": "CORE",
+        "description": "INT8/FP8 quantization and compression pipeline for faster inference and reduced memory footprint.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      },
+      {
+        "id": "F-12",
+        "title": "MCP server",
+        "lane": "STUDIO",
+        "description": "Model Context Protocol server exposing CareSentry tools and models to external agents and IDEs.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      },
+      {
+        "id": "F-13",
+        "title": "Audit log",
+        "lane": "GUARD",
+        "description": "Immutable audit trail for all model interactions, guardrail triggers, and clinical decisions.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      },
+      {
+        "id": "G-07",
+        "title": "Position-bias fingerprint",
+        "lane": "GUARD",
+        "description": "Detect and fingerprint position-bias artifacts in model outputs to ensure fair clinical recommendations.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      },
+      {
+        "id": "O-03",
+        "title": "Nightly regression suite",
+        "lane": "CORE",
+        "description": "Automated nightly regression tests across all model pipelines, guardrails, and integration points.",
+        "status": "Backlog",
+        "checkpoint": "CP0"
+      }
+    ],
+    "In Progress": [
+      {
+        "id": "S-00",
+        "title": "Research desk",
+        "lane": "STUDIO",
+        "description": "Central research workspace for literature tracking, experiment logging, and hypothesis management.",
+        "status": "In Progress",
+        "checkpoint": "CP1"
+      },
+      {
+        "id": "F-05",
+        "title": "Evaluation suite",
+        "lane": "CORE",
+        "description": "Comprehensive evaluation framework with metrics, datasets, and reporting for model validation.",
+        "status": "In Progress",
+        "checkpoint": "CP2"
+      },
+      {
+        "id": "F-06",
+        "title": "Heatmap visualization",
+        "lane": "CLINICAL",
+        "description": "Interactive heatmap rendering for clinical data patterns, model confidence, and attention maps.",
+        "status": "In Progress",
+        "checkpoint": "CP2"
+      },
+      {
+        "id": "F-11",
+        "title": "Web UI",
+        "lane": "STUDIO",
+        "description": "Browser-based studio interface for model interaction, evaluation, and results exploration.",
+        "status": "In Progress",
+        "checkpoint": "CP2"
+      },
+      {
+        "id": "O-01",
+        "title": "Integration check",
+        "lane": "CORE",
+        "description": "End-to-end integration validation across model serving, guardrails, and studio components.",
+        "status": "In Progress",
+        "checkpoint": "CP2"
+      },
+      {
+        "id": "O-02",
+        "title": "Table renderer",
+        "lane": "STUDIO",
+        "description": "Dynamic table component for rendering structured evaluation results and clinical data in the web UI.",
+        "status": "In Progress",
+        "checkpoint": "CP2"
+      }
+    ],
+    "Blocked": [
+      {
+        "id": "NF4",
+        "title": "Windows NF4 quantization check",
+        "lane": "CORE",
+        "description": "Validate NF4 (4-bit NormalFloat) quantization on Windows GPU stacks. Blocked pending compatible hardware availability.",
+        "status": "Blocked",
+        "checkpoint": "CP0",
+        "blocker": "Requires specific GPU hardware not yet provisioned"
+      },
+      {
+        "id": "G-13",
+        "title": "Guard benchmark submission",
+        "lane": "GUARD",
+        "description": "Submit guardrail evaluation results to external benchmark suite. Blocked until guard bench harness is stable.",
+        "status": "Blocked",
+        "checkpoint": "CP1",
+        "blocker": "Depends on guard bench harness stabilization"
+      }
+    ],
+    "Done": [
+      {
+        "id": "gpu_lock",
+        "title": "GPU resource lock manager",
+        "lane": "STUDIO",
+        "description": "Distributed GPU lock mechanism preventing concurrent training/inference jobs from conflicting on shared hardware.",
+        "status": "Done",
+        "checkpoint": "CP4"
+      },
+      {
+        "id": "ownership_check",
+        "title": "Resource ownership validator",
+        "lane": "STUDIO",
+        "description": "Validates that users have permission to access and modify the resources (datasets, models, experiments) they target.",
+        "status": "Done",
+        "checkpoint": "CP4"
+      },
+      {
+        "id": "kanban",
+        "title": "Kanban board",
+        "lane": "STUDIO",
+        "description": "This board — a JSON-backed project tracking system for CareSentry-AI feature and ops work.",
+        "status": "Done",
+        "checkpoint": "CP4"
+      }
+    ]
+  },
+  "summary": {
+    "total_cards": 18,
+    "by_status": {
+      "Backlog": 8,
+      "In Progress": 6,
+      "Blocked": 2,
+      "Done": 3
+    },
+    "by_lane": {
+      "CORE": 7,
+      "CLINICAL": 2,
+      "GUARD": 3,
+      "STUDIO": 5,
+      "FREEBUFF": 0
+    }
+  }
+}
