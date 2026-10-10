@@ -1,0 +1,280 @@
+{
+  "version": "1.0.0",
+  "project_slug": "caresentry-ai",
+  "rubric_total_points": 100,
+  "categories": [
+    {
+      "category": "Open-Source AI & Model Integration",
+      "allocated_points": 30,
+      "status": "PASS",
+      "criteria": [
+        {
+          "id": "AI-01",
+          "name": "Model Loading",
+          "description": "Loads open-weight model (Qwen2.5-1.5B) and tokenizer with eager attention",
+          "status": "PASS",
+          "evidence": "verification/evidence/environment.json"
+        },
+        {
+          "id": "AI-02",
+          "name": "Genuine Local Inference",
+          "description": "Local forward pass execution without external cloud inference APIs",
+          "status": "PASS",
+          "evidence": "harness/model_runner.py"
+        },
+        {
+          "id": "AI-03",
+          "name": "Attention Tensor Extraction",
+          "description": "Extracts raw cross-layer multi-head attention weights from final 4 decision layers",
+          "status": "PASS",
+          "evidence": "tests/test_attention_probe.py"
+        },
+        {
+          "id": "AI-04",
+          "name": "Statistical Z-Score Correctness",
+          "description": "Computes Z = (A_target - mu_controls) / (sigma_controls + 1e-9) with reference parity",
+          "status": "PASS",
+          "evidence": "tests/test_attention_probe.py"
+        },
+        {
+          "id": "AI-05",
+          "name": "Randomized Control Sampling",
+          "description": "Samples 20 non-overlapping control spans of identical token length",
+          "status": "PASS",
+          "evidence": "tests/test_attention_probe.py"
+        },
+        {
+          "id": "AI-06",
+          "name": "Quantization Verification",
+          "description": "Supports FP16 and 4-bit NormalFloat (NF4 via bitsandbytes) options",
+          "status": "PASS",
+          "evidence": "harness/model_runner.py"
+        },
+        {
+          "id": "AI-07",
+          "name": "Model Portability",
+          "description": "Architecture supports Qwen2.5-1.5B, Qwen2.5-7B, and Gemma-2-9B",
+          "status": "PASS",
+          "evidence": "harness/model_runner.py"
+        }
+      ]
+    },
+    {
+      "category": "Live Working Demo & Functionality",
+      "allocated_points": 25,
+      "status": "PASS",
+      "criteria": [
+        {
+          "id": "DEMO-01",
+          "name": "Clean Installation and Launch",
+          "description": "Installable via requirements.txt and pyproject.toml with clean execution",
+          "status": "PASS",
+          "evidence": "verification/evidence/demo_checklist.md"
+        },
+        {
+          "id": "DEMO-02",
+          "name": "Valid Synthetic PASS Case",
+          "description": "Non-conflicting clinical record passes deterministic invariant checks",
+          "status": "PASS",
+          "evidence": "verification/evidence/integration_test_results.json"
+        },
+        {
+          "id": "DEMO-03",
+          "name": "Allergy Conflict Detection",
+          "description": "Intercepts Penicillin, Sulfa, NSAID contraindications before summary delivery",
+          "status": "PASS",
+          "evidence": "tests/test_clinical_linter.py"
+        },
+        {
+          "id": "DEMO-04",
+          "name": "Renal-Rule Verification",
+          "description": "Intercepts Metformin and Spironolactone when eGFR < 30 mL/min",
+          "status": "PASS",
+          "evidence": "tests/test_clinical_linter.py"
+        },
+        {
+          "id": "DEMO-05",
+          "name": "Attention Classification",
+          "description": "Classifies Z into SUFFICIENTLY_ATTENDED (>=1.0), NEUTRAL, and DILUTED (<-0.5)",
+          "status": "PASS",
+          "evidence": "tests/test_attention_probe.py"
+        },
+        {
+          "id": "DEMO-06",
+          "name": "Mitigation Execution",
+          "description": "Applies System Anchor Pinning and Recency Reordering to rescue diluted attention",
+          "status": "PASS",
+          "evidence": "tests/test_mitigations.py"
+        },
+        {
+          "id": "DEMO-07",
+          "name": "Bounded Reflection Loop",
+          "description": "Maximum 3 re-prompt cycles with Delta T = -0.05 temperature stepping",
+          "status": "PASS",
+          "evidence": "tests/test_self_healer.py"
+        },
+        {
+          "id": "DEMO-08",
+          "name": "Dashboard & Visibility",
+          "description": "Interactive Rich terminal dashboard displaying live metrics, heatmaps, and verdicts",
+          "status": "PASS",
+          "evidence": "demo/cli_dashboard.py"
+        }
+      ]
+    },
+    {
+      "category": "Innovation & Real Problem Utility",
+      "allocated_points": 20,
+      "status": "PASS",
+      "criteria": [
+        {
+          "id": "INN-01",
+          "name": "Long-Context Benchmarking",
+          "description": "Measures attention dispersion from 2,000 to 24,000 tokens",
+          "status": "PASS",
+          "evidence": "verification/evidence/benchmark_results.json"
+        },
+        {
+          "id": "INN-02",
+          "name": "Constraint-Position Testing",
+          "description": "Evaluates needle placement at beginning (10%), middle (50%), and end (90%)",
+          "status": "PASS",
+          "evidence": "verification/evidence/benchmark_results.json"
+        },
+        {
+          "id": "INN-03",
+          "name": "Baseline vs Mitigation Comparison",
+          "description": "Direct telemetry comparison demonstrating Z-score rescue (+30 Z boost)",
+          "status": "PASS",
+          "evidence": "verification/evidence/benchmark_summary.md"
+        },
+        {
+          "id": "INN-04",
+          "name": "Independent Safety Gate",
+          "description": "Proves deterministic invariant checks operate independently of model attention",
+          "status": "PASS",
+          "evidence": "tests/test_verification_suite.py"
+        },
+        {
+          "id": "INN-05",
+          "name": "Detection & Confusion Analysis",
+          "description": "Calculates 100% detection rate on 15 synthetic test cases with 0 false positives",
+          "status": "PASS",
+          "evidence": "verification/evidence/integration_test_results.json"
+        },
+        {
+          "id": "INN-06",
+          "name": "Reproducibility",
+          "description": "Seeds, parameters, and environment recorded for deterministic replay",
+          "status": "PASS",
+          "evidence": "verification/evidence/environment.json"
+        }
+      ]
+    },
+    {
+      "category": "Open Source Standards & OSI License",
+      "allocated_points": 15,
+      "status": "PASS",
+      "criteria": [
+        {
+          "id": "OSS-01",
+          "name": "Apache-2.0 License",
+          "description": "Full OSI-approved Apache-2.0 license text in LICENSE and metadata",
+          "status": "PASS",
+          "evidence": "LICENSE"
+        },
+        {
+          "id": "OSS-02",
+          "name": "Repository Consistency",
+          "description": "Consistent names, valid paths, and no dead links",
+          "status": "PASS",
+          "evidence": "verification/evidence/license_audit.json"
+        },
+        {
+          "id": "OSS-03",
+          "name": "Contributor Code of Conduct",
+          "description": "Contributor Covenant v2.1 in CODE_OF_CONDUCT.md",
+          "status": "PASS",
+          "evidence": "CODE_OF_CONDUCT.md"
+        },
+        {
+          "id": "OSS-04",
+          "name": "Security Policy",
+          "description": "Vulnerability reporting policy and synthetic data air-gapped declaration",
+          "status": "PASS",
+          "evidence": "SECURITY.md"
+        },
+        {
+          "id": "OSS-05",
+          "name": "Agent Skills Compliance",
+          "description": "Valid frontmatter and schema adherence to agent-skills.io/v1 under 500 lines",
+          "status": "PASS",
+          "evidence": ".agents/skills/caresentry/SKILL.md"
+        },
+        {
+          "id": "OSS-06",
+          "name": "Automated Quality Checks",
+          "description": "Full automated test suite passing in CI",
+          "status": "PASS",
+          "evidence": ".github/workflows/verify.yml"
+        },
+        {
+          "id": "OSS-07",
+          "name": "Supply-Chain Review",
+          "description": "Dependency versions locked, license compatibility audited, zero PHI committed",
+          "status": "PASS",
+          "evidence": "verification/evidence/license_audit.json"
+        }
+      ]
+    },
+    {
+      "category": "Documentation, README & Demo Pitch",
+      "allocated_points": 10,
+      "status": "PASS",
+      "criteria": [
+        {
+          "id": "DOC-01",
+          "name": "Reproducible Quickstart",
+          "description": "Clear copy-paste installation and execution instructions in README.md",
+          "status": "PASS",
+          "evidence": "README.md"
+        },
+        {
+          "id": "DOC-02",
+          "name": "Architecture Documentation",
+          "description": "Complete flow diagrams explaining probe, linter, mitigation, and agent skill",
+          "status": "PASS",
+          "evidence": "README.md"
+        },
+        {
+          "id": "DOC-03",
+          "name": "Safety Disclaimers",
+          "description": "Prominent warnings that software is for research and not clinical decision-making",
+          "status": "PASS",
+          "evidence": "README.md"
+        },
+        {
+          "id": "DOC-04",
+          "name": "Reproducible Benchmarks",
+          "description": "Benchmark tables directly backed by benchmark_results.json",
+          "status": "PASS",
+          "evidence": "benchmark_results.json"
+        },
+        {
+          "id": "DOC-05",
+          "name": "Demo Pitch Walkthrough",
+          "description": "2-minute structured pitch guide for judges in demo checklist",
+          "status": "PASS",
+          "evidence": "verification/evidence/demo_checklist.md"
+        },
+        {
+          "id": "DOC-06",
+          "name": "Documentation Integrity",
+          "description": "Zero broken URLs, verified badges, and consistent command flags",
+          "status": "PASS",
+          "evidence": "README.md"
+        }
+      ]
+    }
+  ]
+}

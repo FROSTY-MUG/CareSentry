@@ -1,0 +1,35 @@
+Test_ID,Category,Requirement,Test_Module_or_Script,Status,Evidence_File
+AI-01,Open-Source AI & Model Integration,Model Loading & Tokenizer Init,harness/model_runner.py,PASS,verification/evidence/environment.json
+AI-02,Open-Source AI & Model Integration,Local Forward Inference Execution,harness/model_runner.py,PASS,verification/evidence/environment.json
+AI-03,Open-Source AI & Model Integration,Attention Tensor Extraction Across 4 Layers,tests/test_attention_probe.py,PASS,verification/evidence/unit_test_results.xml
+AI-04,Open-Source AI & Model Integration,Statistical Z-Score Correctness (eps=1e-9),tests/test_attention_probe.py,PASS,verification/evidence/unit_test_results.xml
+AI-05,Open-Source AI & Model Integration,Randomized Control Span Sampling (N=20),tests/test_attention_probe.py,PASS,verification/evidence/unit_test_results.xml
+AI-06,Open-Source AI & Model Integration,FP16 and 4-Bit NF4 Quantization Support,harness/model_runner.py,PASS,verification/evidence/environment.json
+AI-07,Open-Source AI & Model Integration,Multi-Model Architecture Compatibility,harness/model_runner.py,PASS,verification/evidence/environment.json
+DEMO-01,Live Working Demo & Functionality,Clean pip Installation and Launch,requirements.txt,PASS,verification/evidence/demo_checklist.md
+DEMO-02,Live Working Demo & Functionality,Valid Synthetic Record PASS Execution,tests/test_verification_suite.py,PASS,verification/evidence/integration_test_results.json
+DEMO-03,Live Working Demo & Functionality,Allergy Conflict Intercept (Penicillin/Sulfa),tests/test_clinical_linter.py,PASS,verification/evidence/unit_test_results.xml
+DEMO-04,Live Working Demo & Functionality,Renal-Rule Threshold Intercept (eGFR < 30),tests/test_clinical_linter.py,PASS,verification/evidence/unit_test_results.xml
+DEMO-05,Live Working Demo & Functionality,Attention Threshold Classification (+1.0/-0.5),tests/test_attention_probe.py,PASS,verification/evidence/unit_test_results.xml
+DEMO-06,Live Working Demo & Functionality,Mitigation Execution (Pinning & Reordering),tests/test_mitigations.py,PASS,verification/evidence/unit_test_results.xml
+DEMO-07,Live Working Demo & Functionality,Bounded Reflection Loop & Temperature Drop,tests/test_self_healer.py,PASS,verification/evidence/unit_test_results.xml
+DEMO-08,Live Working Demo & Functionality,Rich Live Terminal Dashboard Visualization,demo/cli_dashboard.py,PASS,verification/evidence/demo_checklist.md
+INN-01,Innovation & Real Problem Utility,Long-Context Benchmarks (2k to 24k Tokens),harness/benchmark_runner.py,PASS,verification/evidence/benchmark_results.json
+INN-02,Innovation & Real Problem Utility,Constraint Placement Testing (Begin/Mid/End),tests/test_verification_suite.py,PASS,verification/evidence/benchmark_results.json
+INN-03,Innovation & Real Problem Utility,Baseline vs Remediated Attention Gain,harness/benchmark_runner.py,PASS,verification/evidence/benchmark_summary.md
+INN-04,Innovation & Real Problem Utility,Safety Gate Independence from Attention Scores,tests/test_verification_suite.py,PASS,verification/evidence/integration_test_results.json
+INN-05,Innovation & Real Problem Utility,Detection Rate & False-Positive Analysis,tests/test_verification_suite.py,PASS,verification/evidence/integration_test_results.json
+INN-06,Innovation & Real Problem Utility,Deterministic Reproducibility via Fixed Seeds,tests/test_verification_suite.py,PASS,verification/evidence/environment.json
+OSS-01,Open Source Standards & OSI License,OSI Apache-2.0 License Full Text,LICENSE,PASS,verification/evidence/license_audit.json
+OSS-02,Open Source Standards & OSI License,Repository Consistency & Valid Link Audit,pyproject.toml,PASS,verification/evidence/license_audit.json
+OSS-03,Open Source Standards & OSI License,Contributor Covenant v2.1 Policy,CODE_OF_CONDUCT.md,PASS,verification/evidence/license_audit.json
+OSS-04,Open Source Standards & OSI License,Security & Air-Gapped Privacy Policy,SECURITY.md,PASS,verification/evidence/license_audit.json
+OSS-05,Open Source Standards & OSI License,Agent Skills Specification (agent-skills.io/v1),.agents/skills/caresentry/SKILL.md,PASS,verification/evidence/license_audit.json
+OSS-06,Open Source Standards & OSI License,Automated Quality Checks in CI,.github/workflows/verify.yml,PASS,verification/evidence/license_audit.json
+OSS-07,Open Source Standards & OSI License,Supply-Chain & License Compatibility Audit,requirements.txt,PASS,verification/evidence/license_audit.json
+DOC-01,Documentation, README & Demo Pitch,Reproducible Quickstart Guide,README.md,PASS,verification/evidence/demo_checklist.md
+DOC-02,Documentation, README & Demo Pitch,Comprehensive Architecture Flow Diagrams,README.md,PASS,verification/evidence/demo_checklist.md
+DOC-03,Documentation, README & Demo Pitch,Prominent Clinical AI Safety Disclaimers,README.md,PASS,verification/evidence/demo_checklist.md
+DOC-04,Documentation, README & Demo Pitch,Empirical Benchmark Telemetry Verification,benchmark_results.json,PASS,verification/evidence/benchmark_summary.md
+DOC-05,Documentation, README & Demo Pitch,Structured 2-Minute Demo Pitch Guide,verification/evidence/demo_checklist.md,PASS,verification/evidence/demo_checklist.md
+DOC-06,Documentation, README & Demo Pitch,Documentation Integrity & Badges,README.md,PASS,verification/evidence/demo_checklist.md

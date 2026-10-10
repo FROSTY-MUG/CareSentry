@@ -164,7 +164,14 @@ class SelfHealingLoop:
                 healed = True
                 break
 
-        final_status = "PASS" if healed else "FAIL"
+        final_status = "PASS" if healed else "WITHHELD"
+        if not healed:
+            final_summary = (
+                "[WITHHELD BY CARESENTRY SAFETY GATE: Unresolved clinical invariant violations persist. "
+                "Summary withheld from patient release for clinical safety review.]"
+            )
+        else:
+            final_summary = current_summary
 
         return ReflectionResult(
             initial_status=initial_status,
@@ -173,7 +180,7 @@ class SelfHealingLoop:
             total_cycles_run=len(cycles_log) - 1,
             max_cycles=self.max_cycles,
             final_temperature=round(current_temp, 3),
-            final_summary=current_summary,
+            final_summary=final_summary,
             cycles=cycles_log,
             remaining_violations=current_violations,
         )

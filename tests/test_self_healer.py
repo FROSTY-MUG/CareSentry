@@ -46,7 +46,8 @@ def test_reflection_temperature_stepping_and_max_cycles():
     result = loop.run(raw_ehr, "Initial bad summary with Amoxicillin", generator_callback=stubborn_generator)
     
     assert result.initial_status == "FAIL"
-    assert result.final_status == "FAIL"
+    assert result.final_status == "WITHHELD"
+    assert "WITHHELD BY CARESENTRY SAFETY GATE" in result.final_summary
     assert result.healed is False
     assert result.total_cycles_run == 3
     # Check temperatures across cycles: 0.70 -> 0.65 -> 0.60 -> 0.55
