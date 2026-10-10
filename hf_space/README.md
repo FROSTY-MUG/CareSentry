@@ -8,7 +8,7 @@ sdk_version: 5.20.1
 app_file: app.py
 pinned: false
 license: apache-2.0
-short_description: Offline clinical safety verification and attention-anchoring gate for open-weight medical models.
+short_description: Clinical safety sentry and attention-anchoring gate.
 ---
 
 # 🛡️ CareSentry-AI: Clinical Safety Sentry & Attention-Anchoring Gate

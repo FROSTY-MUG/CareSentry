@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareSentry Guard Console</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+  <!-- Print-Only Header (U-13) -->
+  <div class="print-header">
+    <h2>CareSentry-AI Guard Console — Verified Safety Report</h2>
+    <p><strong>Notice:</strong> Research tool. Not for clinical decision-making. Confirm all medical information with a licensed clinician or pharmacist.</p>
+    <p><small id="printTimestamp"></small></p>
+  </div>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="top-bar-content">
+      <div class="brand-section">
+        <span class="brand-logo" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </span>
+        <h1 class="brand-title">Guard Console</h1>
+        <div class="status-badge" id="statusBadge" aria-live="polite">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Checking Gateway...</span>
+        </div>
+      </div>
+      
+      <div class="safety-banner" role="note">
+        <strong>Safety Notice:</strong> Research tool. Not for clinical decision-making. Confirm all medical information with a licensed clinician or pharmacist.
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" role="tablist" aria-label="Guard Console Sections">
+      <button class="tab-btn active" role="tab" id="tabAsk" aria-selected="true" aria-controls="panelAsk">Ask</button>
+      <button class="tab-btn" role="tab" id="tabCheck" aria-selected="false" aria-controls="panelCheck">Check</button>
+      <button class="tab-btn" role="tab" id="tabAttention" aria-selected="false" aria-controls="panelAttention">Attention 3D</button>
+      <button class="tab-btn" role="tab" id="tabSettings" aria-selected="false" aria-controls="panelSettings">Settings</button>
+    </nav>
+
+    <!-- ASK SCREEN (U-02, U-03, U-10) -->
+    <section class="screen-panel active" id="panelAsk" role="tabpanel" aria-labelledby="tabAsk">
+      <div class="card">
+        <div class="record-bar">
+          <div>
+            <span class="record-badge" id="recordStatusBadge">Record: Not attached</span>
+            <span class="demo-badge" id="demoBadge" style="display:none;">Recorded Output</span>
+          </div>
+          <div class="record-actions" style="display:flex; gap:8px;">
+            <button class="btn-secondary" id="demoBtn" type="button">Try Demo Case</button>
+            <button class="btn-secondary" id="clearRecordBtn" type="button" style="display:none;">Clear Record</button>
+          </div>
+        </div>
+
+        <div id="recordInputSection">
+          <label class="input-label" for="recordInput">Patient Record (EHR / Discharge Packet):</label>
+          <textarea class="text-input" id="recordInput" rows="4" placeholder="Paste patient records, allergy documentation, or medication notes here..."></textarea>
+          <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
+            <input type="file" id="recordFileInput" accept=".txt" style="display:none;">
+            <button class="btn-secondary" id="uploadFileBtn" type="button">Upload .txt File</button>
+            <span id="recordUploadMsg" style="font-size:0.85rem; color:var(--text-muted);"></span>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <label class="input-label" for="questionInput">Ask a Question About This Record:</label>
+          <div style="display:flex; gap:12px;">
+            <textarea class="text-input" id="questionInput" rows="2" style="min-height:48px;" placeholder="What antibiotic should I give for the chest infection?"></textarea>
+            <button class="btn-primary" id="sendBtn" type="button" style="align-self:flex-end; height:48px;">Send</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Chat / Verdict Timeline -->
+      <div class="chat-timeline" id="chatTimeline">
+        <!-- Rendered conversation and verdict cards appear here -->
+      </div>
+    </section>
+
+    <!-- CHECK SCREEN (U-04) -->
+    <section class="screen-panel" id="panelCheck" role="tabpanel" aria-labelledby="tabCheck">
+      <div class="card" style="margin-bottom:20px;">
+        <h2 class="card-title">Audit-Only Record and Summary Check</h2>
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">
+          Run our deterministic clinical linter pipeline directly on a record and candidate summary. No AI model required.
+        </p>
+
+        <div class="layout-grid layout-grid-dual">
+          <div>
+            <label class="input-label" for="checkRecordInput">1. Clinical Record:</label>
+            <textarea class="text-input" id="checkRecordInput" rows="8" placeholder="Paste source patient record here..."></textarea>
+          </div>
+          <div>
+            <label class="input-label" for="checkSummaryInput">2. Proposed Summary to Check:</label>
+            <textarea class="text-input" id="checkSummaryInput" rows="8" placeholder="Paste summary or instruction to evaluate..."></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <button class="btn-primary" id="runCheckBtn" type="button">Check for Safety Issues</button>
+        </div>
+      </div>
+
+      <!-- Check Results Area -->
+      <div id="checkResultsContainer" style="display:none;"></div>
+    </section>
+
+    <!-- ATTENTION 3D VISUALIZER SCREEN -->
+    <section class="screen-panel" id="panelAttention" role="tabpanel" aria-labelledby="tabAttention">
+      <div class="card" style="margin-bottom: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div>
+            <h2 class="card-title" style="margin-bottom:4px;">3D Transformer Attention Stream & Layer Inspector</h2>
+            <p style="font-size:0.9rem; color:var(--text-muted);">
+              Inspect raw multi-head self-attention across 28 layers of open-weight models. Witness the mathematical "Lost-in-the-Middle" dispersion and deterministic anchoring remediation.
+            </p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn-secondary" id="btnModeDiluted" type="button" style="border-color:var(--state-withheld-border); color:var(--state-withheld); font-weight:600;">
+              ⚠️ Diluted (Lost in Middle, Z = -1.74)
+            </button>
+            <button class="btn-secondary" id="btnModeAnchored" type="button" style="border-color:var(--state-verified-border); color:var(--state-verified); font-weight:600;">
+              ✅ Anchored Gate (Z = +38.27)
+            </button>
+            <button class="btn-secondary" id="btnModeReordered" type="button" style="border-color:var(--focus-ring); color:var(--focus-ring); font-weight:600;">
+              🔄 Recency Reordered (Z = +30.63)
+            </button>
+          </div>
+        </div>
+
+        <!-- Controls Bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px; padding:10px 14px; background:var(--bg-tertiary); border-radius:6px; border:1px solid var(--border-subtle);">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <label for="visualizerModelSelect" style="font-size:0.85rem; font-weight:600; color:var(--text-secondary);">Model Architecture:</label>
+            <select id="visualizerModelSelect" class="text-input" style="padding:4px 10px; font-size:0.85rem; width:auto; height:34px;">
+              <option value="Qwen/Qwen2.5-1.5B-Instruct" selected>Qwen/Qwen2.5-1.5B-Instruct (28 Layers, 12 Heads)</option>
+              <option value="Qwen/Qwen2.5-0.5B-Instruct">Qwen/Qwen2.5-0.5B-Instruct (24 Layers, 14 Heads)</option>
+              <option value="google/gemma-2-2b-it">google/gemma-2-2b-it (26 Layers, 8 Heads)</option>
+              <option value="meta-llama/Llama-3.2-1B-Instruct">meta-llama/Llama-3.2-1B-Instruct (16 Layers, 32 Heads)</option>
+            </select>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.8rem; color:var(--text-muted);">🖱️ Click & Drag to Orbit 3D</span>
+            <button class="btn-secondary" id="btnResetCamera" type="button" style="padding:4px 10px; font-size:0.8rem; height:30px;">Reset View</button>
+          </div>
+        </div>
+
+        <!-- 3D Canvas Container -->
+        <div style="position:relative; width:100%; height:440px; background:#0b0f17; border-radius:8px; border:1px solid var(--border-subtle); overflow:hidden; box-shadow:inset 0 2px 10px rgba(0,0,0,0.5);">
+          <canvas id="attentionCanvas3D" style="width:100%; height:100%; display:block; cursor:grab;"></canvas>
+        </div>
+
+        <!-- Telemetry Details Grid -->
+        <div class="layout-grid layout-grid-dual" style="margin-top:16px;">
+          <div style="padding:14px; background:var(--bg-tertiary); border-radius:6px; border:1px solid var(--border-subtle);">
+            <h3 style="font-size:0.95rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">Terminal Decision Layers (L24 – L27)</h3>
+            <p id="decisionLayersDesc" style="font-size:0.85rem; color:var(--text-secondary); line-height:1.5;">
+              In standard unmitigated prompts over 10k tokens, attention to critical middle constraints (e.g., Penicillin allergy, eGFR &lt; 30) dilutes below background noise (<strong style="color:var(--state-withheld);">Z = -1.74</strong>). The model generates contraindicated medications with high fluency.
+            </p>
+          </div>
+          <div style="padding:14px; background:var(--bg-tertiary); border-radius:6px; border:1px solid var(--border-subtle);">
+            <h3 style="font-size:0.95rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">Remediation Mechanics</h3>
+            <p id="remediationDesc" style="font-size:0.85rem; color:var(--text-secondary); line-height:1.5;">
+              CareSentry Attention-Anchoring injects verified constraint prompts into the terminal decision boundary, mathematically elevating cross-head attention (<strong style="color:var(--state-verified);">Z = +38.27</strong>) and preventing catastrophic clinical hallucination.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS SCREEN (U-05, U-07, U-11) -->
+    <section class="screen-panel" id="panelSettings" role="tabpanel" aria-labelledby="tabSettings">
+      <div class="layout-grid">
+        <div class="card">
+          <h2 class="card-title">Gateway Configuration & System Status</h2>
+          
+          <div class="settings-row">
+            <span class="settings-label">Guarded Model ID:</span>
+            <span class="settings-value" id="settingsModelId">Qwen/Qwen2.5-1.5B-Instruct</span>
+          </div>
+          <div class="settings-row">
+            <span class="settings-label">Backend Execution Mode:</span>
+            <span class="settings-value" id="settingsBackendMode">Deterministic Safety Policy</span>
+          </div>
+          <div class="settings-row">
+            <span class="settings-label">Gateway Version:</span>
+            <span class="settings-value" id="settingsVersion">1.0.0</span>
+          </div>
+          <div class="settings-row">
+            <span class="settings-label">Active Port:</span>
+            <span class="settings-value">127.0.0.1:8787</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Installed Architectural Lanes</h2>
+          <div id="installedLanesContainer">
+            <!-- Populated dynamically via /ui/api/status -->
+            <p style="color:var(--text-muted);">Detecting installed lanes...</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Developer Integration Endpoint</h2>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:8px;">
+            The gateway is fully drop-in compatible with standard OpenAI SDKs:
+          </p>
+          <div class="code-snippet" id="curlSnippet">curl http://127.0.0.1:8787/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{"model":"Qwen/Qwen2.5-1.5B-Instruct","messages":[{"role":"user","content":"Is amoxicillin safe?"}]}'</div>
+          <div style="display:flex; gap:12px; margin-top:8px;">
+            <button class="btn-secondary" id="copyUrlBtn" type="button">Copy Base URL</button>
+            <button class="btn-secondary" id="copyCurlBtn" type="button">Copy Sample cURL</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Privacy and Session Retention</h2>
+          <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:12px;">
+            Records are held in process memory only on your local machine. No records are written to disk, sent to external cloud servers, or persisted across browser closures. Sessions expire automatically after 30 minutes of inactivity.
+          </p>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <button class="btn-danger" id="clearSessionBtn" type="button">Clear Everything Now</button>
+            <button class="btn-secondary" id="exportResultBtn" type="button">Export Last Result (JSON)</button>
+            <span id="sessionStatusMsg" style="font-size:0.85rem; color:var(--text-muted);"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <span>CareSentry Guard Console v1.0.0</span> &bull; 
+        <span>Local-only execution</span>
+      </div>
+      <div>
+        <!-- Link to STUDIO workbench (port 7860), displayed only if port responds -->
+        <a href="http://127.0.0.1:7860" id="studioWorkbenchLink" class="footer-link" target="_blank" rel="noopener noreferrer" style="display:none;">
+          Open the STUDIO workbench &rarr;
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="attention_visualizer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
