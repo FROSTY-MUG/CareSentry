@@ -33,12 +33,17 @@ class ModelRunnerShim:
         quantization: str = "fp16",
         device: str = "auto",
         fallback_mode: bool = False,
+        force_simulation: Optional[bool] = None,
     ):
         self.model_id = model_id
         self.quantization = quantization
         self.device = device
         self.fallback_mode = fallback_mode
         self._runner = None
+
+        if force_simulation is None:
+            import torch
+            force_simulation = not torch.cuda.is_available()
 
         if not fallback_mode:
             try:
@@ -47,6 +52,7 @@ class ModelRunnerShim:
                     model_id=model_id,
                     quantization=quantization if quantization in ["none", "fp16", "4bit_nf4"] else "fp16",
                     device=device,
+                    force_simulation=force_simulation,
                 )
             except Exception as e:
                 logger.warning(

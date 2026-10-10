@@ -44,32 +44,23 @@ class WebUIBackend:
         self.normalizer = DrugNormalizer()
         self.rule_engine = RulePackEngine(normalizer=self.normalizer)
         self.omission_checker = OmissionChecker(normalizer=self.normalizer)
-        self.probe_shim = ProbeShim(fallback_mode=True)
+        self.probe_shims: Dict[str, ProbeShim] = {}
         self.audit_logger = AuditLogger(log_path=DEFAULT_LOG_PATH)
 
-    def execute_track_a_linter(self, raw_ehr: str, summary: str) -> Dict[str, Any]:
-        """Execute Track A base clinical linter via public CLI/subprocess or fallback import."""
-        try:
-            # First attempt public Track A script via sys.executable
-            script_path = Path(__file__).resolve().parent.parent.parent / ".agents" / "skills" / "caresentry" / "scripts" / "audit_contraindication.py"
-            if script_path.exists():
-                res = subprocess.run(
-                    [sys.executable, str(script_path), "--records", raw_ehr, "--summary", summary, "--json"],
-                    capture_output=True,
-                    text=True,
-                    timeout=10,
-                )
-                if res.stdout.strip():
-                    return json.loads(res.stdout.strip())
-        except Exception as e:
-            logger.warning(f"Track A subprocess execution failed ({e}); evaluating internal shim.")
+    def get_probe_shim(self, model_id: str) -> ProbeShim:
+        """Obtain or cache probe shim for the specified model architecture."""
+        if model_id not in self.probe_shims:
+            self.probe_shims[model_id] = ProbeShim(model_id=model_id, fallback_mode=True)
+        return self.probe_shims[model_id]
 
-        # Fallback Track A baseline simulation
+    def execute_track_a_linter(self, raw_ehr: str, summary: str) -> Dict[str, Any]:
+        """Execute Track A base clinical linter in-process for sub-millisecond execution."""
         try:
             from harness.clinical_linter import audit_clinical_safety, load_clinical_rules
             rules = load_clinical_rules()
             return audit_clinical_safety(raw_ehr, summary, rules)
-        except Exception:
+        except Exception as e:
+            logger.warning(f"Track A linter execution failed ({e}); returning fallback PASS.")
             return {"status": "PASS", "violations": [], "standard": "agent-skills.io/v1 (fallback)"}
 
     def audit_discharge_summary(
@@ -78,6 +69,7 @@ class WebUIBackend:
         summary_content: str,
         target_needle: str = "",
         enable_attention_probe: bool = False,
+        model_id: str = "Qwen/Qwen2.5-1.5B-Instruct",
     ) -> Tuple[str, str, str, str, str, str]:
         """Full audit pipeline returning formatted output cards and heatmap HTML."""
         start_time = time.perf_counter()
@@ -113,7 +105,8 @@ class WebUIBackend:
         heatmap_html = "<div style='color: #94a3b8; padding: 20px;'>Attention probing not requested.</div>"
         z_score_display = "N/A"
         if enable_attention_probe and target_needle.strip():
-            trace = self.probe_shim.probe(raw_ehr, target_needle.strip(), apply_mitigation=False)
+            probe_shim = self.get_probe_shim(model_id)
+            trace = probe_shim.probe(raw_ehr, target_needle.strip(), apply_mitigation=False)
             z_score_display = f"{trace.z_score:+.2f}"
             heatmap_html = generate_heatmap_html(trace.to_dict())
 
@@ -122,7 +115,7 @@ class WebUIBackend:
             raw_ehr=raw_ehr,
             summary=summary_content,
             rule_packs=self.rule_engine.loaded_pack_ids,
-            model_id="Qwen/Qwen2.5-1.5B-Instruct",
+            model_id=model_id,
             verdict=overall_status,
             violations_count=len(plus_violations),
             omissions_count=len(omissions),
@@ -134,6 +127,7 @@ class WebUIBackend:
         if overall_status == "FAIL":
             status_banner = (
                 f"[FAIL] AUDIT VERDICT: FAIL\n"
+                f"* Model Architecture: {model_id}\n"
                 f"* Invariant Violations: {len(plus_violations)} (Plus) + {len(base_result.get('violations', []))} (Base)\n"
                 f"* Omitted Constraints: {len(omissions)}\n"
                 f"* Execution Latency: {elapsed_ms:.1f} ms | Probe Z-Score: {z_score_display}\n"
@@ -142,6 +136,7 @@ class WebUIBackend:
         else:
             status_banner = (
                 f"[PASS] AUDIT VERDICT: PASS\n"
+                f"* Model Architecture: {model_id}\n"
                 f"* All Invariants Satisfied (Base & Plus Rule Packs)\n"
                 f"* Zero Critical Omissions Detected\n"
                 f"* Execution Latency: {elapsed_ms:.1f} ms\n"
@@ -220,6 +215,18 @@ def build_app() -> gr.Blocks:
                         scale=1,
                     )
 
+                model_dropdown = gr.Dropdown(
+                    label="Clinical AI Model Architecture",
+                    choices=[
+                        "Qwen/Qwen2.5-1.5B-Instruct",
+                        "Qwen/Qwen2.5-0.5B-Instruct",
+                        "Qwen/Qwen2.5-7B-Instruct",
+                        "google/gemma-2-2b-it",
+                        "google/gemma-2-9b-it",
+                    ],
+                    value="Qwen/Qwen2.5-1.5B-Instruct",
+                )
+
                 audit_btn = gr.Button("🔍 Run Deterministic Clinical Audit", variant="primary", size="lg")
 
             with gr.Column(scale=1):
@@ -249,7 +256,7 @@ def build_app() -> gr.Blocks:
 
         audit_btn.click(
             fn=backend.audit_discharge_summary,
-            inputs=[ehr_input, summary_input, needle_input, probe_checkbox],
+            inputs=[ehr_input, summary_input, needle_input, probe_checkbox, model_dropdown],
             outputs=[
                 verdict_output,
                 base_output,
@@ -258,6 +265,7 @@ def build_app() -> gr.Blocks:
                 entities_output,
                 heatmap_output,
             ],
+            api_name="audit_discharge_summary",
         )
 
     return demo

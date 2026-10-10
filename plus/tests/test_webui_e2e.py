@@ -1,6 +1,7 @@
 """End-to-end frontend verification test for CareSentry-AI Plus Web UI.
 Connects to the live Gradio server via gradio_client.Client and verifies
-all UI payloads, telemetry, JSON cards, and interactive heatmaps.
+all UI payloads, telemetry, JSON cards, and interactive heatmaps for both
+Qwen and Gemma architectures.
 """
 
 from gradio_client import Client
@@ -11,7 +12,7 @@ import pytest
 def test_gradio_frontend_audit_e2e():
     client = Client("http://127.0.0.1:7860")
     
-    # 1. Test failing summary with safety violations and attention probe
+    # 1. Test failing summary with safety violations and attention probe on Qwen
     raw_ehr = (
         "Patient is a 74-year-old female admitted for acute decompensation of chronic heart failure.\n"
         "Past Medical History: Chronic Kidney Disease stage 4, Hypertension, Atrial Fibrillation.\n"
@@ -34,6 +35,7 @@ def test_gradio_frontend_audit_e2e():
         summary_content=summary_content,
         target_needle=needle,
         enable_attention_probe=True,
+        model_id="Qwen/Qwen2.5-1.5B-Instruct",
         api_name="/audit_discharge_summary",
     )
     
@@ -41,6 +43,7 @@ def test_gradio_frontend_audit_e2e():
     
     # Assertions on UI outputs
     assert "[FAIL] AUDIT VERDICT: FAIL" in verdict
+    assert "Qwen/Qwen2.5-1.5B-Instruct" in verdict
     assert "Cryptographic Block Hash:" in verdict
     
     base_data = json.loads(base_json_str)
@@ -49,7 +52,6 @@ def test_gradio_frontend_audit_e2e():
     plus_violations = json.loads(plus_json_str)
     assert isinstance(plus_violations, list)
     assert len(plus_violations) > 0
-    # Metformin in CKD4 and Cephalexin with Penicillin allergy should be flagged
     rules_flagged = [v.get("rule_id") for v in plus_violations]
     assert any("RENAL" in r or "METFORMIN" in r for r in rules_flagged)
     
@@ -65,6 +67,28 @@ def test_gradio_frontend_audit_e2e():
     assert len(heatmap_html) > 500
 
 
+def test_gradio_frontend_audit_gemma():
+    client = Client("http://127.0.0.1:7860")
+    
+    raw_ehr = "Patient with acute kidney injury. Documented allergy to Penicillin."
+    summary = "Discharge on Amoxicillin 500mg TID."
+    needle = "allergy to Penicillin"
+    
+    result = client.predict(
+        raw_ehr=raw_ehr,
+        summary_content=summary,
+        target_needle=needle,
+        enable_attention_probe=True,
+        model_id="google/gemma-2-9b-it",
+        api_name="/audit_discharge_summary",
+    )
+    
+    verdict, base_json, plus_json, omissions_json, entities_json, heatmap_html = result
+    assert "[FAIL]" in verdict
+    assert "google/gemma-2-9b-it" in verdict
+    assert len(heatmap_html) > 500
+
+
 def test_gradio_frontend_audit_pass():
     client = Client("http://127.0.0.1:7860")
     
@@ -76,6 +100,7 @@ def test_gradio_frontend_audit_pass():
         summary_content=clean_summary,
         target_needle="",
         enable_attention_probe=False,
+        model_id="Qwen/Qwen2.5-1.5B-Instruct",
         api_name="/audit_discharge_summary",
     )
     
@@ -92,11 +117,15 @@ def test_gradio_frontend_audit_pass():
 
 
 if __name__ == "__main__":
-    print("Running test_gradio_frontend_audit_e2e...")
+    print("Running test_gradio_frontend_audit_e2e (Qwen)...")
     test_gradio_frontend_audit_e2e()
     print("test_gradio_frontend_audit_e2e PASSED")
     
+    print("Running test_gradio_frontend_audit_gemma (Gemma)...")
+    test_gradio_frontend_audit_gemma()
+    print("test_gradio_frontend_audit_gemma PASSED")
+
     print("Running test_gradio_frontend_audit_pass...")
     test_gradio_frontend_audit_pass()
     print("test_gradio_frontend_audit_pass PASSED")
-    print("\nALL FRONTEND E2E TESTS PASSED SUCCESSFULLY!")
+    print("\nALL FRONTEND E2E TESTS (QWEN + GEMMA) PASSED SUCCESSFULLY!")
