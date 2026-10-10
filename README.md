@@ -1,101 +1,134 @@
 # 🩺 CareSentry-AI
 
-> **Deterministic Attention-Anchored Context Sentry & Invariant Verification Harness for Open-Weight Clinical Models.**
+> **Deterministic Attention-Anchored Context Sentry, Clinical Invariant Verification, and Defense Guard for Open-Weight Medical Models.**
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
-[![Model Support](https://img.shields.io/badge/Models-Qwen2.5%20%7C%20Gemma--2-orange)](#supported-models)
-[![Standard](https://img.shields.io/badge/Standard-Agent_Skills_Open_Standard-purple)](https://agentskills.io)
-[![Tests](https://img.shields.io/badge/Tests-23%20Passed%20(100%25)-brightgreen)](#test-suite)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Model Support](https://img.shields.io/badge/Models-Qwen2.5%20%7C%20Gemma--2-orange.svg)](#supported-models)
+[![Standard](https://img.shields.io/badge/Standard-Agent_Skills_Open_Standard-purple.svg)](https://agentskills.io)
+[![Tests](https://img.shields.io/badge/Tests-130%20Passed%20(100%25)-brightgreen.svg)](#-test-suite)
+[![Authors](https://img.shields.io/badge/Authors-Aryan%20Arora%20%7C%20Saksham%20Chawla%20%7C%20Chinmay-darkblue.svg)](AUTHORS.md)
+
+---
+
+## 👥 Authors
+
+CareSentry-AI was developed by:
+* **[Aryan Arora](AUTHORS.md)**
+* **[Saksham Chawla](AUTHORS.md)**
+* **[Chinmay](AUTHORS.md)**
+
+See [AUTHORS.md](AUTHORS.md) for full project attribution and contribution details.
 
 ---
 
 ## 📌 Executive Summary & Problem Framing
 
-When elderly patients or caregivers upload dense, 30- to 50-page clinical records (lab chemistry panels, nursing shift notes, ICD-10 diagnostic codes, and discharge instructions) to open-weight large language models, prompt length quickly spans **10,000 to 24,000 tokens**.
+When elderly patients, clinicians, or caregivers input dense, 30- to 50-page clinical records (lab chemistry panels, nursing shift notes, ICD-10 diagnostic codes, and discharge orders) into open-weight large language models, prompt length quickly spans **4,000 to 24,000 tokens**.
 
-Under this heavy context load, open-weight models experience severe **Attention Dispersion** (the classic *"Lost-in-the-Middle"* failure mode). The model generates a conversational, well-formatted summary, but its internal attention weights dilute over critical negative constraints buried in the middle tokens:
+Under this heavy context load, open-weight models experience severe **Attention Dispersion** (the classic *"Lost-in-the-Middle"* failure mode). The model generates a conversational, fluent summary, but its internal attention weights dilute over critical negative constraints buried in the middle tokens:
 1. **Missing explicit drug allergies:** The patient has a documented anaphylactic allergy to penicillin buried on page 24, yet the model orders Amoxicillin or Augmentin.
 2. **Prescribing nephrotoxic drugs:** Recommending high-dose NSAIDs, Metformin, or Spironolactone despite lab values documenting acute renal failure ($\text{eGFR} < 30 \text{ mL/min}$).
 3. **Severe Drug-Drug Interactions (DDIs):** Prescribing NSAIDs to a patient anticoagulated with Warfarin, dramatically elevating gastrointestinal hemorrhage risk.
+4. **Adversarial Injections & Hallucinations:** Malicious prompt injections within EHR text or phantom medication claims without evidence grounding.
 
 ---
 
-## 💡 The Solution: CareSentry-AI
+## 💡 The Unified Solution: CareSentry Ecosystem
 
-**CareSentry-AI** is an open-source, deterministic attention-auditing harness and clinical verification engine for open-weight language models.
+CareSentry-AI provides a tri-layer, deterministic safety harness for open-weight medical models:
 
 ```text
-Raw Geriatric Discharge Packet (4,000 - 24,000 Tokens)
-                         │
-                         ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│     CareSentry Model Harness Engine (`harness/attention_probe.py`)     │
-│   Target Models: Qwen2.5-1.5B (Edge/Dev) | Qwen2.5-7B | Gemma-2-9B     │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                        │
-│  [Attention Tensor Extractor]                                          │
-│  • PyTorch forward pass with eager attention implementation            │
-│  • Extracts multi-head attention weights from last 4 decision layers   │
-│                                                                        │
-│  [Statistical Z-Score Engine]                                          │
-│  • Computes Target Span Attention vs 20 Random Control Spans           │
-│  • Flags Attention Dilution if Z-score < -0.5                          │
-│                                                                        │
-│  [Active Mitigation Loop]                                              │
-│  • System Anchor Pinning (Elevates rule to terminal system prompt)     │
-│  • Recency Reordering (Shifts middle-depth constraint to last 10%)     │
-│                                                                        │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│        Agent Skill Engine (`.agents/skills/caresentry/SKILL.md`)       │
-│        Complies with Agent Skill Open Standard (`agentskills.io/v1`)   │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                        │
-│  Executes: `scripts/audit_contraindication.py`                         │
-│  • Allergy Matrix Validation (Penicillin, Sulfa, NSAIDs, Quinolones)   │
-│  • Renal Threshold Validation (eGFR vs. Metformin, Spironolactone)     │
-│  • High-Risk Drug-Drug Interaction Validation (Warfarin + NSAIDs)      │
-│                                                                        │
-│  Result:                                                               │
-│  ├─ PASS ──> Emit Verified Patient-Facing Summary                      │
-│  └─ FAIL ──> Return Structured Remediation Error to Harness for Retry  │
-│                                                                        │
-└────────────────────────────────────────────────────────────────────────┘
+                     Raw Geriatric Discharge Packet (4,000 - 24,000 Tokens)
+                                               │
+                                               ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│ 1. PRE-FLIGHT & INFERENCE DEFENSE LAYER (Track C: CareSentry Guard)                         │
+│ • Prompt-Injection Scanner: Neutralizes delimiter spoofing & zero-width steganography       │
+│ • Constrained Decoding: Prefix Trie LogitsProcessor blocks contraindicated tokens           │
+│ • Intermediate Linear Probes & Attention Steering across transformer layers                │
+└──────────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                               │
+                                               ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│ 2. CORE ATTENTION PROBING & MITIGATION ENGINE (Track A: Core Harness)                       │
+│ • PyTorch Forward Hooks: Multi-head attention extraction across terminal decision layers    │
+│ • Statistical Z-Score v2: Depth-stratified controls with bootstrap 95% confidence intervals │
+│ • Active Mitigation Loop: System Anchor Pinning & Recency Reordering                        │
+│ • Reflection Self-Healer: Bounded re-prompting with temperature stepping                    │
+└──────────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                               │
+                                               ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│ 3. EXTENDED CLINICAL INVARIANT & OMISSION GATE (Track B: CareSentry-AI Plus)                │
+│ • RxNorm Lite & WHO-ATC Lexicon: Normalizes 180+ drug aliases and brand names               │
+│ • Invariant Rule Packs: Cross-reactivity, AGS Beers Criteria 2023, DDI, Cockcroft-Gault CrCl │
+│ • Reverse-Omission Sentry: Verifies all raw EHR negative constraints appear in summary       │
+│ • Cryptographic Tamper-Evident Audit Trail & Interactive SVG Attention Heatmaps             │
+└──────────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                               │
+                                               ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│ 4. INTEGRATION & PRESENTATION SURFACES                                                      │
+│ ├─ Gradio Web UI (`http://127.0.0.1:7860`): Clinician portal & interactive heatmap viewer   │
+│ ├─ Guard UI Console (`http://127.0.0.1:8000`): Policy dashboard & audit telemetry         │
+│ ├─ OpenAI Safety Gateway (`http://127.0.0.1:8787`): `/v1/chat/completions` drop-in proxy    │
+│ ├─ Model Context Protocol (MCP): Claude Desktop / Agent native tools                        │
+│ └─ Agent Skills: 3 Open-Standard Skills (`agent-skills.io/v1`)                              │
+└─────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🚀 Key Features
+## 🚀 Key Capabilities by Track
 
-* **Direct Multi-Head Attention Probing:** Hooks into transformer attention heads (`output_attentions=True`) across the final 4 decision layers and calculates an empirical Attention $Z$-Score against 20 randomized control spans.
-* **Deterministic Clinical Invariant Gate:** Sub-100ms offline linter evaluating string matches and regular expressions against offline clinical matrices (`clinical_rules.json`) covering allergies, renal thresholds, and DDIs before any summary reaches the patient.
-* **Automated Context Remediation:** When attention dilution is detected ($Z < -0.5$), the harness automatically executes **System Anchor Pinning** or **Recency Reordering** to rescue generation.
-* **Agent Self-Healing Reflection Loop:** On invariant failure, executes up to 3 automatic re-prompt cycles with a temperature reduction of $\Delta T = -0.05$ per attempt.
-* **Agent Skill Open Standard Compliant:** Ships with `.agents/skills/caresentry/SKILL.md` (`agent-skills.io/v1`), enabling Claude Code, Cursor, and Gemini CLI to invoke CareSentry as a native tool.
-* **Edge & Laptop CPU Portability:** Runs out-of-the-box on `Qwen2.5-1.5B-Instruct` for 4GB VRAM laptops or CPU, with an air-gapped simulation engine for rapid verification.
+### Track A: Core Attention Harness (`harness/`)
+* **Direct Multi-Head Attention Probing:** Hooks into transformer attention heads (`output_attentions=True`) across final decision layers.
+* **Blockwise Memory-Bounded Estimator (K-01):** Evaluates attention weights with $O(S \cdot K)$ memory instead of $O(S^2)$, eliminating OOM errors at 24,000 tokens on 16GB RAM.
+* **Statistical Z-Score Engine (K-02):** Evaluates needle attention against depth-stratified control spans with bootstrap 95% confidence intervals $[Z_{low}, Z_{high}]$.
+* **Automated Context Remediation:** Anchor Pinning and Recency Reordering rescue diluted attention ($Z < -0.5$).
+* **Deterministic Baseline Linter:** Offline regex and exact substring matching against `clinical_rules.json`.
+
+### Track B: CareSentry-AI Plus (`plus/`)
+* **Extended Invariant Rule Packs (`plus/rule_packs/`):**
+  - **Cross-Reactivity:** Penicillin $\to$ 1st-generation cephalosporins, sulfonamides, aspirin/AERD.
+  - **Dose-Aware Renal Function:** Computes Cockcroft-Gault Creatinine Clearance (CrCl) and CKD-EPI 2021 eGFR from labs. Enforces cutoffs for Metformin, Spironolactone, NSAIDs, and DOACs.
+  - **Beers Criteria 2023:** Flags high-risk geriatric anticholinergics and sedatives.
+  - **Drug-Drug Interactions (DDIs):** Warfarin + NSAIDs, Clopidogrel + Omeprazole, duplicate NSAID therapies.
+* **Reverse Omission Sentry:** Analyzes source records to ensure negative constraints, active allergies, and baseline renal warnings are retained in the discharge instructions.
+* **Tamper-Evident Cryptographic Audit Trail:** SHA-256 chained ledger recording all evaluations, telemetry, and verdicts.
+* **Clinician Attention Heatmap:** Interactive, standalone SVG heatmaps with per-token attention intensity.
+* **Gradio Web UI (`plus/webui/app.py`):** Live web UI serving port `7860`.
+* **Model Context Protocol (MCP) Server:** Native MCP tools for external AI agents.
+
+### Track C: CareSentry Guard (`guard/`)
+* **Clinical Prompt-Injection Scanner:** Rejection of jailbreaks, roleplay inversions, delimiter spoofing, and zero-width steganography without false-flagging legitimate medical directives.
+* **Constrained Decoding:** Invariant-guided prefix trie logits processor constraining output generation tokens at runtime.
+* **Evidence Grounding Engine:** Sentence-level attribution verifying that clinical claims trace back to documented facts.
+* **OpenAI-Compatible Safety Gateway (`127.0.0.1:8787`):** Instant drop-in safety proxy for any OpenAI-compatible application.
+* **Guard UI Console (`guard/ui/`):** Dedicated web interface for policy inspection and safety audits.
 
 ---
 
-## 📐 Mathematical Attention Z-Score Formulation
+## 📐 Mathematical Formulation
 
-To statistically determine whether an open-weight model neglected a specific medical constraint, the harness computes:
+### Attention $Z$-Score
+
+To statistically verify whether a medical constraint was attended to by the model, the harness computes:
 
 $$Z_{\text{target}} = \frac{\bar{A}_{\text{target}} - \mu_{\text{controls}}}{\sigma_{\text{controls}} + \epsilon}$$
 
 Where:
 * $\bar{A}_{\text{target}}$ is the mean cross-head attention weight directed to the target token span from subsequent token positions across the final 4 transformer layers.
-* $\mu_{\text{controls}}$ and $\sigma_{\text{controls}}$ are the mean and standard deviation of attention weights received by 20 randomly sampled control spans of identical token length from the same document.
+* $\mu_{\text{controls}}$ and $\sigma_{\text{controls}}$ are the mean and standard deviation of attention weights received by 20 depth-stratified control spans of identical length.
 * $\epsilon = 10^{-9}$ (numerical stability constant).
 
 ### Classification Thresholds:
-| Z-Score Range | Attention Classification | Action Taken |
+| $Z$-Score Range | Attention Classification | Active Remediation |
 | :--- | :--- | :--- |
-| **$Z \ge +1.0$** | **Sufficiently Attended** | Model focused on constraint. Proceed to gate verification. |
-| **$-0.5 \le Z < +1.0$** | **Neutral / Ambiguous** | Borderline attention. Normal pass. |
-| **$Z < -0.5$** | **Attention Dilution / Neglected** | **Triggers automated prompt mitigation loop.** |
+| **$Z \ge +1.0$** | **Sufficiently Attended** | Constraint well-attended. Proceed to invariant gate. |
+| **$-0.5 \le Z < +1.0$** | **Neutral / Ambiguous** | Borderline attention. Standard gate verification. |
+| **$Z < -0.5$** | **Attention Dilution / Neglected** | **Triggers Automated Mitigation Loop (Anchor Pinning / Reordering).** |
 
 ---
 
@@ -104,50 +137,91 @@ Where:
 ### 1. Installation
 
 ```bash
-git clone https://github.com/your-org/caresentry-ai.git
-cd caresentry-ai
+# Clone the repository
+git clone https://github.com/FROSTY-MUG/CareSentry.git
+cd CareSentry
+
+# Install Core dependencies
 pip install -r requirements.txt
 pip install -e .
+
+# Install Plus & Guard extensions
+pip install -e ./plus
+pip install -e ./guard
 ```
 
-### 2. Run the Live Diagnostic Attention Probe
+### 2. Launching the Web Interfaces
+
+#### Option A: CareSentry-AI Plus Web UI (Gradio)
+```bash
+python plus/webui/app.py
+# Opens at http://127.0.0.1:7860
+```
+
+#### Option B: CareSentry Guard Console
+```bash
+python guard/src/caresentry_guard/demo/web_dashboard.py
+# Opens at http://127.0.0.1:8000
+```
+
+#### Option C: OpenAI Safety Gateway
+```bash
+python -m caresentry_guard.cli serve --port 8787
+# Proxies requests to http://127.0.0.1:8787/v1/chat/completions
+```
+
+### 3. Running Diagnostic Probes via CLI
 
 ```bash
+# Core Attention Probe
 python -m harness.attention_probe \
   --doc data/sample_discharge.txt \
   --needle "Severe allergy to Penicillin" \
   --model "Qwen/Qwen2.5-1.5B-Instruct"
-```
 
-### 3. Launch the Interactive Hackathon Dashboard
-
-```bash
-python demo/cli_dashboard.py --case 0
-```
-Or run the full benchmark sweep directly:
-```bash
-python demo/cli_dashboard.py --benchmark
-```
-
-### 4. Execute the Agent Skill Offline Linter
-
-```bash
-python .agents/skills/caresentry/scripts/audit_contraindication.py \
+# CareSentry-AI Plus Extended Audit
+python -m caresentry_plus.cli audit \
   --records data/sample_discharge.txt \
-  --summary "Discharge on Amoxicillin 500mg PO TID."
+  --summary "Discharge orders: Continue Metformin 1000mg BID."
+
+# CareSentry Guard Complete Audit
+python -m caresentry_guard.cli audit \
+  --records data/sample_discharge.txt \
+  --summary "Discharge orders: Take Amoxicillin 500mg PO TID."
 ```
 
-Or via the POSIX shell wrapper:
-```bash
-bash .agents/skills/caresentry/scripts/run_probe.sh \
-  --records data/sample_discharge.txt \
-  --summary "Discharge on Amoxicillin 500mg PO TID."
-```
+### 4. Running as Native Agent Skills
+
+CareSentry ships with 3 specifications conforming to the **Agent Skill Open Standard** (`agent-skills.io/v1`):
+* [`.agents/skills/caresentry/SKILL.md`](.agents/skills/caresentry/SKILL.md): Core attention probe & invariant linter
+* [`.agents/skills/caresentry-plus/SKILL.md`](.agents/skills/caresentry-plus/SKILL.md): Extended rule packs, omission sentry, and SVG heatmaps
+* [`.agents/skills/caresentry-guard/SKILL.md`](.agents/skills/caresentry-guard/SKILL.md): Injection defense, constrained decoding, and patient packs
 
 ---
 
-## 📊 Benchmark Results
+## 🧪 Test Suite
 
+The unified repository maintains **130 tests with 100% pass rate** across all tracks:
+
+```bash
+# Run entire repository test suite
+pytest tests plus/tests guard/tests -v
+```
+
+### Breakdown:
+
+| Test Suite | Path | Tests Passed | Status |
+| :--- | :--- | :---: | :---: |
+| **Track A (Core Harness)** | `tests/` | 46 / 46 | ✅ 100% PASS |
+| **Track B (CareSentry-AI Plus)** | `plus/tests/` | 53 / 53 | ✅ 100% PASS |
+| **Track C (CareSentry Guard)** | `guard/tests/` | 31 / 31 | ✅ 100% PASS |
+| **Total Unified Suite** | | **130 / 130** | ✅ **100% PASS** |
+
+---
+
+## 📊 Benchmark Telemetry
+
+### Context Degradation & Mitigation (Track A)
 Evaluated across varying context window lengths with the clinical needle placed at middle depth (~52%):
 
 | Context Window | Baseline Attention | Attention Z-Score | Invariant Gate Status | With Anchor Pinning | With Recency Reorder |
@@ -158,108 +232,27 @@ Evaluated across varying context window lengths with the clinical needle placed 
 | **16,000 Tokens** | 0.003 m-attn | −3.71 (Diluted) | ❌ FAIL (Constraint Missed) | **+34.16 (PASS)** | **+30.63 (PASS)** |
 | **24,000 Tokens** | 0.001 m-attn | −4.52 (Diluted) | ❌ FAIL (Constraint Missed) | **+33.97 (PASS)** | **+30.66 (PASS)** |
 
-Telemetry exported to `benchmark_results.json`.
+### Defense & Evaluation Benchmarks (Track C)
 
----
-
-## 📁 Repository Structure
-
-```text
-caresentry-ai/
-├── LICENSE                                # Apache License 2.0
-├── README.md                              # Comprehensive project documentation
-├── SECURITY.md                            # Vulnerability disclosure & synthetic data policy
-├── CODE_OF_CONDUCT.md                     # Contributor Covenant v2.1
-├── pyproject.toml                         # Pip-installable package definition
-├── requirements.txt                       # Minimum package dependencies
-├── benchmark_results.json                 # Exported context degradation telemetry
-│
-├── .agents/
-│   └── skills/
-│       └── caresentry/
-│           ├── SKILL.md                   # Agent Skill Open Standard specification
-│           ├── scripts/
-│           │   ├── audit_contraindication.py # Portable validation script
-│           │   └── run_probe.sh           # POSIX shell wrapper
-│           └── references/
-│               ├── clinical_rules.json    # Deterministic drug-allergy & renal matrices
-│               └── score_schema.json      # JSON schema for attention score outputs
-│
-├── harness/
-│   ├── __init__.py
-│   ├── model_runner.py                    # Weight loader & attention extractor
-│   ├── attention_probe.py                 # Raw attention extraction and Z-score engine
-│   ├── clinical_linter.py                 # Deterministic clinical safety invariant evaluator
-│   ├── mitigations.py                     # Anchor Pinning and Recency Reordering logic
-│   ├── benchmark_runner.py                # Needle-in-haystack degradation test (2k to 24k)
-│   └── self_healer.py                     # Reflection retry loop on invariant failure
-│
-├── data/
-│   ├── sample_discharge.txt               # Sample geriatric discharge record
-│   └── synthetic_geriatric_cases.json     # 10 synthetic clinical test records (HIPAA safe)
-│
-├── tests/
-│   ├── __init__.py
-│   ├── test_attention_probe.py            # Unit tests for Z-score math and tensor hooks
-│   ├── test_clinical_linter.py            # Unit tests for allergy and renal failure checks
-│   ├── test_mitigations.py                # Unit tests for prompt remediation
-│   └── test_self_healer.py                # Unit tests for reflection self-healing loop
-│
-└── demo/
-    └── cli_dashboard.py                   # Rich terminal live dashboard for hackathon judging
-```
-
----
-
-## 🧪 Test Suite
-
-Run the full automated test suite:
-
-```bash
-pytest -v
-```
-
-Output:
-```text
-============================= test session starts =============================
-collected 23 items
-
-tests/test_attention_probe.py::test_needle_span_location PASSED          [  4%]
-tests/test_attention_probe.py::test_control_spans_sampling PASSED        [  8%]
-tests/test_attention_probe.py::test_z_score_mathematical_precision PASSED [ 13%]
-tests/test_attention_probe.py::test_probe_execution_and_schema_compliance PASSED [ 17%]
-tests/test_attention_probe.py::test_classification_thresholds PASSED     [ 21%]
-tests/test_clinical_linter.py::test_penicillin_allergy_catches_amoxicillin PASSED [ 26%]
-tests/test_clinical_linter.py::test_penicillin_allergy_allows_safe_macrolide PASSED [ 30%]
-tests/test_clinical_linter.py::test_cephalosporin_cross_reactivity_detected PASSED [ 34%]
-tests/test_clinical_linter.py::test_sulfa_allergy_catches_bactrim PASSED [ 39%]
-tests/test_clinical_linter.py::test_renal_egfr_under_30_catches_metformin PASSED [ 43%]
-tests/test_clinical_linter.py::test_renal_egfr_under_30_catches_spironolactone PASSED [ 47%]
-tests/test_clinical_linter.py::test_renal_normal_egfr_cleared PASSED     [ 52%]
-tests/test_clinical_linter.py::test_drug_drug_interaction_warfarin_and_nsaid PASSED [ 56%]
-tests/test_clinical_linter.py::test_execution_latency_sub_100ms PASSED   [ 60%]
-tests/test_clinical_linter.py::test_all_10_synthetic_geriatric_cases PASSED [ 65%]
-tests/test_mitigations.py::test_anchor_pinning_formatting PASSED         [ 69%]
-tests/test_mitigations.py::test_anchor_pinning_with_custom_system_prompt PASSED [ 73%]
-tests/test_mitigations.py::test_recency_reordering PASSED                [ 78%]
-tests/test_mitigations.py::test_combined_remediation PASSED              [ 82%]
-tests/test_mitigations.py::test_mitigation_remedies_attention_dilution PASSED [ 86%]
-tests/test_self_healer.py::test_clean_summary_passes_without_healing PASSED [ 91%]
-tests/test_self_healer.py::test_unsafe_summary_heals_via_reflection PASSED [ 95%]
-tests/test_self_healer.py::test_reflection_temperature_stepping_and_max_cycles PASSED [100%]
-
-============================= 23 passed in 3.88s ==============================
-```
+| Component | Metric | Value | Baseline / Notes |
+| :--- | :--- | :---: | :--- |
+| **Prompt Injection Scanner** | Precision | **100.0%** | Zero false positives on 85 benign medical orders |
+| **Prompt Injection Scanner** | Recall | **97.6%** | Evaluated on 85 adversarial jailbreak variants |
+| **Evidence Grounding** | Precision | **100.0%** | Catches 100% of fabricated drug orders |
+| **Evidence Grounding** | Safety Recall | **98.0%** | Evaluated on 105 labeled clinical sentences |
+| **105-Case Long-Context Bench**| Mitigation Rescue | **100.0%** | Rescues 100% of middle-depth lost constraints |
+| **105-Case Long-Context Bench**| Audit Latency | **2.47 ms** | Sub-3ms offline evaluation latency on CPU |
 
 ---
 
 ## 🔒 Privacy & HIPAA / GDPR Compliance
 
-* All datasets in `data/synthetic_geriatric_cases.json` are **100% synthetically generated** and contain no real Protected Health Information (PHI).
-* CareSentry-AI is designed for **air-gapped, fully local inference**. When executed with open-weight models (such as `Qwen2.5-1.5B` or `Gemma-2-9B`), zero tokens, prompt texts, or attention telemetry leave the local compute environment.
+* **Synthetic Data Only:** All clinical test cases (`data/synthetic_geriatric_cases.json`, `guard/data_guard/synthetic_cases_100.json`) are **100% synthetically generated** and contain zero real Protected Health Information (PHI).
+* **Air-Gapped & Offline Inference:** CareSentry-AI is engineered for completely local, air-gapped execution. Zero tokens, raw clinical text, or attention tensors leave the local compute environment.
 
 ---
 
-## 📄 License
+## 📄 License & Attribution
 
-Licensed under the [Apache License 2.0](LICENSE).
+Licensed under the [Apache License 2.0](LICENSE).  
+Authored by **Aryan Arora**, **Saksham Chawla**, and **Chinmay**. See [AUTHORS.md](AUTHORS.md) for full details.

@@ -6,6 +6,11 @@
 
 ---
 
+## 👥 Authors
+CareSentry-AI Plus was developed by **Aryan Arora**, **Saksham Chawla**, and **Chinmay**. See [AUTHORS.md](../AUTHORS.md) for full project attribution.
+
+---
+
 ## 1. Overview & Architectural Philosophy
 
 CareSentry-AI Plus is the **Track B additive extension** to CareSentry-AI. While Track A establishes the core attention prober, model runners, and baseline contraindication linters, Track B introduces advanced clinical invariance, reverse constraint checking, causal validation, interactive visualization, and developer-facing interfaces.
@@ -149,11 +154,14 @@ caresentry-plus webui --port 7860
 
 ### Running Test Suites
 ```bash
-# Run Track B test suite (51 passed)
+# Run Track B test suite (53 passed, including Web UI E2E integration tests)
 pytest plus/tests
 
 # Run Track A test suite (46 passed)
 pytest tests
+
+# Run Track C test suite (31 passed)
+pytest guard/tests
 
 # Run Ownership Boundary Guard
 python plus/tools/check_ownership.py
