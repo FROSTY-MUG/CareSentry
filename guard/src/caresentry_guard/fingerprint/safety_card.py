@@ -39,7 +39,7 @@ class ContextSafetyCard:
             "",
             "> **Diagnostic Profile:** Empirical Attention Retention & Lost-in-the-Middle Vulnerability Map.",
             "",
-            f"- **Safe Context Horizon:** $\le {self.safe_context_horizon_tokens:,}$ tokens (Z-Score $\ge 0.0$)",
+            f"- **Safe Context Horizon:** $\\le {self.safe_context_horizon_tokens:,}$ tokens (Z-Score $\\ge 0.0$)",
             f"- **Critical Vulnerability Zone:** {self.critical_dropoff_depth_range} context depth",
             f"- **Harness Directive:** {self.recommendation}",
             "",
