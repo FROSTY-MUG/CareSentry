@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "description": "CareSentry-AI lane ownership matrix. Each lane owns the paths listed under its key.",
+  "lanes": {
+    "core": [
+      "harness/",
+      "tests/",
+      "demo/",
+      "data/",
+      "pyproject.toml",
+      "requirements.txt",
+      "README.md",
+      "benchmark_results.json",
+      ".agents/skills/caresentry/"
+    ],
+    "clinical": [
+      "clinical/",
+      ".agents/skills/caresentry/references/clinical_rules.json"
+    ],
+    "guard": [
+      "guard/",
+      ".agents/skills/caresentry-guard/"
+    ],
+    "studio": [
+      "studio/",
+      "eval/",
+      "ops/",
+      "docs/site/",
+      ".agents/skills/caresentry-studio/",
+      ".github/workflows/studio-*.yml"
+    ],
+    "freebuff": [
+      "freebuff/"
+    ]
+  },
+  "exceptions": [
+    {
+      "lane": "studio",
+      "path": "clinical/sources/",
+      "rule": "Read-only except for adding new source files (sources drop). Never edit existing source files."
+    },
+    {
+      "lane": "studio",
+      "path": "clinical/docs/SOURCES_LOG.md",
+      "rule": "Append-only. Never edit existing rows."
+    }
+  ]
+}
