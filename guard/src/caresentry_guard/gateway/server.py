@@ -180,3 +180,13 @@ async def chat_completions(req: ChatCompletionRequest, response: Response) -> Di
             "audit_metadata": decision.audit_metadata,
         },
     }
+
+
+# Mount Guard Console UI (Track C Web Console)
+try:
+    from caresentry_guard.gateway.ui_routes import mount_ui_static, router as ui_router
+    mount_ui_static(app)
+    app.include_router(ui_router)
+except Exception as _ui_err:
+    logger.warning("Could not mount Guard Console UI: %s", _ui_err)
+
