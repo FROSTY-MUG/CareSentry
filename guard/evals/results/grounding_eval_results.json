@@ -1,0 +1,12 @@
+{
+  "benchmark": "CareSentry Guard Evidence Grounding Evaluation",
+  "total_sentences": 105,
+  "true_positives": 52,
+  "false_positives": 0,
+  "true_negatives": 52,
+  "false_negatives": 1,
+  "hallucination_detection_precision": 1.0,
+  "hallucination_detection_recall": 0.9811,
+  "f1_score": 0.9905,
+  "safety_critical_recall": 0.98
+}
