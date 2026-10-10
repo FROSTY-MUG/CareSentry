@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-10-10T08:05:43.251670+00:00",
+  "os": "Windows",
+  "os_release": "11",
+  "os_version": "10.0.26200",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+  "python_version": "3.12.6",
+  "pytorch_version": "2.7.1+cpu",
+  "cuda_available": false,
+  "cuda_version": null,
+  "primary_device": "CPU (Standard Local Execution)",
+  "target_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "supported_models": [
+    "Qwen/Qwen2.5-1.5B-Instruct",
+    "Qwen/Qwen2.5-7B-Instruct",
+    "google/gemma-2-9b-it"
+  ],
+  "attention_implementation": "eager / blockwise / simulated",
+  "air_gapped_offline_ready": true,
+  "verified_standards": [
+    "agent-skills.io/v1",
+    "attention_trace.v1",
+    "Apache-2.0"
+  ]
+}

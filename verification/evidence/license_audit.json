@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-10-10T08:05:57.083415+00:00",
+  "declared_license": "Apache-2.0",
+  "osi_approved": true,
+  "license_file_present": true,
+  "license_is_apache_2_0": true,
+  "spdx_identifier": "Apache-2.0",
+  "pyproject_license_match": true,
+  "security_policy_present": true,
+  "code_of_conduct_present": true,
+  "readme_present": true,
+  "agent_skill_present": true,
+  "agent_skills_standard": "agent-skills.io/v1",
+  "status": "COMPLIANT"
+}

@@ -1,0 +1,681 @@
+{
+  "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "sample_count": 45,
+  "benchmark_records": [
+    {
+      "context_tokens": 2000,
+      "constraint_position": "beginning",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -4.4846,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -4.9297,
+        -4.0283
+      ],
+      "p_value": 1.0,
+      "latency_ms": 67.19
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "beginning",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 49.8017,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        49.3511,
+        50.2291
+      ],
+      "p_value": 0.001,
+      "latency_ms": 37.73
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "beginning",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 40.2252,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        39.7794,
+        40.674
+      ],
+      "p_value": 0.001,
+      "latency_ms": 43.58
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "middle",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -16.8544,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -17.2978,
+        -16.4404
+      ],
+      "p_value": 1.0,
+      "latency_ms": 42.87
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "middle",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 55.5425,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        55.078,
+        55.9872
+      ],
+      "p_value": 0.001,
+      "latency_ms": 37.78
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "middle",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 220.658,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        220.2127,
+        221.0645
+      ],
+      "p_value": 0.001,
+      "latency_ms": 38.75
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "end",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -3.9875,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -4.424,
+        -3.5602
+      ],
+      "p_value": 1.0,
+      "latency_ms": 49.77
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "end",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 53.876,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        53.453,
+        54.3242
+      ],
+      "p_value": 0.001,
+      "latency_ms": 50.97
+    },
+    {
+      "context_tokens": 2000,
+      "constraint_position": "end",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 47.3711,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        46.9707,
+        47.8152
+      ],
+      "p_value": 0.001,
+      "latency_ms": 50.12
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "beginning",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -6.1137,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -6.5623,
+        -5.7077
+      ],
+      "p_value": 1.0,
+      "latency_ms": 55.48
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "beginning",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 53.7031,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        53.2477,
+        54.1134
+      ],
+      "p_value": 0.001,
+      "latency_ms": 57.22
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "beginning",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 37.3667,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        36.8973,
+        37.7693
+      ],
+      "p_value": 0.001,
+      "latency_ms": 59.67
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "middle",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -24.3069,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -24.7639,
+        -23.8689
+      ],
+      "p_value": 1.0,
+      "latency_ms": 57.45
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "middle",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 68.7278,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        68.2971,
+        69.1484
+      ],
+      "p_value": 0.001,
+      "latency_ms": 47.54
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "middle",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 213.0578,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        212.6514,
+        213.4794
+      ],
+      "p_value": 0.001,
+      "latency_ms": 51.1
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "end",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -7.4281,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -7.8534,
+        -6.9891
+      ],
+      "p_value": 1.0,
+      "latency_ms": 51.49
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "end",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 47.0458,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        46.6353,
+        47.4898
+      ],
+      "p_value": 0.001,
+      "latency_ms": 45.34
+    },
+    {
+      "context_tokens": 4000,
+      "constraint_position": "end",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 54.5973,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        54.1282,
+        55.0443
+      ],
+      "p_value": 0.001,
+      "latency_ms": 51.49
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "beginning",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -7.3637,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -7.7905,
+        -6.9345
+      ],
+      "p_value": 1.0,
+      "latency_ms": 65.91
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "beginning",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 67.0005,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        66.5607,
+        67.4215
+      ],
+      "p_value": 0.001,
+      "latency_ms": 66.85
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "beginning",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 38.0123,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        37.5869,
+        38.4345
+      ],
+      "p_value": 0.001,
+      "latency_ms": 81.84
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "middle",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -20.2987,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -20.7493,
+        -19.8655
+      ],
+      "p_value": 1.0,
+      "latency_ms": 79.31
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "middle",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 60.1213,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        59.7054,
+        60.5421
+      ],
+      "p_value": 0.001,
+      "latency_ms": 73.65
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "middle",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 245.9255,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        245.4536,
+        246.3246
+      ],
+      "p_value": 0.001,
+      "latency_ms": 81.39
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "end",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -6.5541,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -6.9857,
+        -6.1317
+      ],
+      "p_value": 1.0,
+      "latency_ms": 81.48
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "end",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 46.9742,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        46.5413,
+        47.4145
+      ],
+      "p_value": 0.001,
+      "latency_ms": 70.85
+    },
+    {
+      "context_tokens": 8000,
+      "constraint_position": "end",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 45.974,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        45.5182,
+        46.4559
+      ],
+      "p_value": 0.001,
+      "latency_ms": 86.3
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "beginning",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -7.5207,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -7.9835,
+        -7.0862
+      ],
+      "p_value": 1.0,
+      "latency_ms": 118.78
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "beginning",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 55.06,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        54.6188,
+        55.4902
+      ],
+      "p_value": 0.001,
+      "latency_ms": 135.55
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "beginning",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 45.2632,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        44.8307,
+        45.7323
+      ],
+      "p_value": 0.001,
+      "latency_ms": 146.94
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "middle",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -19.2627,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -19.7346,
+        -18.8564
+      ],
+      "p_value": 1.0,
+      "latency_ms": 138.07
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "middle",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 57.1881,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        56.7127,
+        57.618
+      ],
+      "p_value": 0.001,
+      "latency_ms": 113.16
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "middle",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 286.0465,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        285.639,
+        286.4735
+      ],
+      "p_value": 0.001,
+      "latency_ms": 145.21
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "end",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -7.5441,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -7.9922,
+        -7.0542
+      ],
+      "p_value": 1.0,
+      "latency_ms": 143.75
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "end",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 49.3848,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        48.9405,
+        49.7967
+      ],
+      "p_value": 0.001,
+      "latency_ms": 134.5
+    },
+    {
+      "context_tokens": 16000,
+      "constraint_position": "end",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 51.2752,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        50.8437,
+        51.7106
+      ],
+      "p_value": 0.001,
+      "latency_ms": 182.68
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "beginning",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -9.0043,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -9.4701,
+        -8.5604
+      ],
+      "p_value": 1.0,
+      "latency_ms": 192.6
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "beginning",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 50.3583,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        49.868,
+        50.7966
+      ],
+      "p_value": 0.001,
+      "latency_ms": 157.67
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "beginning",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 40.7414,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        40.3025,
+        41.1686
+      ],
+      "p_value": 0.001,
+      "latency_ms": 200.41
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "middle",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -25.4653,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -25.8976,
+        -24.9866
+      ],
+      "p_value": 1.0,
+      "latency_ms": 196.19
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "middle",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 46.3825,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        45.9893,
+        46.8296
+      ],
+      "p_value": 0.001,
+      "latency_ms": 156.79
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "middle",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 169.6473,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        169.1988,
+        170.0662
+      ],
+      "p_value": 0.001,
+      "latency_ms": 201.48
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "end",
+      "mitigation": "none",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": -7.3828,
+      "classification": "DILUTED",
+      "mitigation_triggered": true,
+      "z_ci_95": [
+        -7.8366,
+        -6.9654
+      ],
+      "p_value": 1.0,
+      "latency_ms": 274.78
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "end",
+      "mitigation": "anchor_pinning",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 60.3461,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        59.8461,
+        60.7626
+      ],
+      "p_value": 0.001,
+      "latency_ms": 170.02
+    },
+    {
+      "context_tokens": 24000,
+      "constraint_position": "end",
+      "mitigation": "recency_reordering",
+      "target_needle": "Patient has severe anaphylactic allergy to Penicillin.",
+      "attention_z_score": 51.2701,
+      "classification": "SUFFICIENTLY_ATTENDED",
+      "mitigation_triggered": false,
+      "z_ci_95": [
+        50.8296,
+        51.6992
+      ],
+      "p_value": 0.001,
+      "latency_ms": 197.17
+    }
+  ]
+}
