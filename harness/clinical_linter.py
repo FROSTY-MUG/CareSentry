@@ -269,11 +269,19 @@ def find_drugs_in_summary(summary_text: str, drug_list: List[str]) -> List[Dict[
 
 
 def audit_clinical_safety(
-    raw_ehr: str,
-    summary_content: str,
-    rules: Dict[str, Any],
+    raw_ehr: str = "",
+    summary_content: str = "",
+    rules: Optional[Dict[str, Any]] = None,
+    **kwargs: Any,
 ) -> Dict[str, Any]:
     """Execute complete deterministic invariant evaluation with character span evidence."""
+    if not summary_content and "summary_text" in kwargs:
+        summary_content = kwargs["summary_text"]
+    if not raw_ehr and "patient_record_text" in kwargs:
+        raw_ehr = kwargs["patient_record_text"]
+    if rules is None:
+        rules = load_clinical_rules()
+
     start_time = time.perf_counter()
     violations: List[Dict[str, Any]] = []
     passed_checks: List[str] = []
@@ -379,7 +387,7 @@ def audit_clinical_safety(
     elapsed_ms = (time.perf_counter() - start_time) * 1000.0
     status = "FAIL" if violations else "PASS"
 
-    return {
+    out = {
         "status": status,
         "total_violations": len(violations),
         "violations": violations,
@@ -390,6 +398,8 @@ def audit_clinical_safety(
         "schema_version": "1.1.0",
         "standard": "agent-skills.io/v1",
     }
+    from harness.plugins import get_plugin_manager
+    return get_plugin_manager().apply_post_lint_hooks(out)
 
 
 def parse_summary_payload(summary_raw: str) -> str:

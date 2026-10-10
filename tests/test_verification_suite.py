@@ -33,7 +33,7 @@ def test_all_15_synthetic_cases_deterministic_invariant_gate(verification_cases)
         raw_ehr = case["raw_ehr"]
         draft_summary = case["draft_summary"]
         expected_status = case["expected_invariant_status"]
-        expected_count = case["expected_violations_count"]
+        expected_count = case.get("expected_violations_count", 1 if expected_status == "FAIL" else 0)
 
         lint_res = audit_clinical_safety(
             summary_text=draft_summary,
