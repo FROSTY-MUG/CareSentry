@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caresentry.org/schemas/rule_pack.v1.json",
+  "title": "RulePackV1",
+  "description": "Schema for CareSentry-AI Plus clinical invariant rule packs",
+  "type": "object",
+  "required": ["pack_id", "version", "description", "rules"],
+  "properties": {
+    "pack_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "default_reviewer_status": {
+      "type": "string",
+      "enum": ["unreviewed", "reviewed", "clinical_expert_validated"]
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "trigger",
+          "condition",
+          "severity",
+          "message",
+          "provenance"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^PLUS-[A-Z0-9_-]+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "cross_reactivity",
+              "dose_aware_renal",
+              "geriatric_beers",
+              "drug_drug_interaction",
+              "duplicate_therapy",
+              "anticholinergic_burden"
+            ]
+          },
+          "trigger": {
+            "type": "object",
+            "description": "Trigger parameters defining when rule evaluates",
+            "properties": {
+              "drug_class": { "type": "string" },
+              "target_drugs": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "patient_conditions": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "age_min": { "type": "number" },
+              "age_max": { "type": "number" }
+            },
+            "additionalProperties": true
+          },
+          "condition": {
+            "type": "object",
+            "description": "Deterministic condition to test against summary or parameters",
+            "properties": {
+              "contraindicated_drugs": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "caution_drugs": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "crcl_cutoff_ml_min": { "type": "number" },
+              "egfr_cutoff_ml_min": { "type": "number" },
+              "max_dose_mg_day": { "type": "number" },
+              "interacting_pairs": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "additionalProperties": true
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["CRITICAL", "HIGH", "MODERATE", "LOW", "WARNING", "INFO"]
+          },
+          "message": {
+            "type": "string"
+          },
+          "provenance": {
+            "type": "object",
+            "required": ["source", "version", "retrieved_on", "reviewer_status"],
+            "properties": {
+              "source": { "type": "string" },
+              "version": { "type": "string" },
+              "retrieved_on": { "type": "string" },
+              "reviewer_status": {
+                "type": "string",
+                "enum": ["unreviewed", "reviewed", "clinical_expert_validated"]
+              },
+              "citations": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

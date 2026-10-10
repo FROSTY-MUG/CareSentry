@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "caresentry-plus"
+version = "1.0.0"
+description = "Extended Clinical Invariant Rule Packs, Reverse Omission Gate, Attention Heatmaps and Offline Web UI for CareSentry-AI"
+readme = "README_PLUS.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "CareSentry-AI Plus Maintainers (IDE-B)" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "caresentry-ai",
+    "pydantic>=2.0.0",
+    "rich>=13.0.0",
+    "jsonschema>=4.0.0",
+    "gradio>=4.0.0",
+    "scipy>=1.10.0",
+    "numpy>=1.24.0",
+    "pyyaml>=6.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0"
+]
+ingest = [
+    "pypdf>=3.0.0"
+]
+
+[project.scripts]
+caresentry-plus = "caresentry_plus.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]

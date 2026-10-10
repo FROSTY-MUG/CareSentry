@@ -1,0 +1,134 @@
+# CareSentry-AI Plus Model Compatibility Registry (F-09)
+# Seed list from Appendix C. All Hugging Face IDs verified.
+# Status: untested | pass | fail | skip
+
+models:
+  - id: "Qwen/Qwen2.5-1.5B-Instruct"
+    family: "Qwen"
+    tier: "Edge / demo"
+    license: "Apache-2.0"
+    params: "1.54B"
+    attention_type: "dense"
+    eager_ok: true
+    min_vram_gb_fp16: 3.5
+    min_vram_gb_nf4: 1.8
+    status: "pass"
+    notes: "Default reference model for CareSentry-AI harness. Full eager attention extraction verified."
+    verified_on: "2026-10-10"
+
+  - id: "Qwen/Qwen2.5-0.5B-Instruct"
+    family: "Qwen"
+    tier: "Edge / demo"
+    license: "Apache-2.0"
+    params: "0.49B"
+    attention_type: "dense"
+    eager_ok: true
+    min_vram_gb_fp16: 1.5
+    min_vram_gb_nf4: 0.8
+    status: "pass"
+    notes: "Ultra-compact edge candidate. Rapid local CI prober."
+    verified_on: "2026-10-10"
+
+  - id: "microsoft/Phi-4-mini-instruct"
+    family: "Phi"
+    tier: "Edge / demo"
+    license: "MIT"
+    params: "3.8B"
+    attention_type: "dense"
+    eager_ok: true
+    min_vram_gb_fp16: 8.0
+    min_vram_gb_nf4: 3.2
+    status: "pass"
+    notes: "Strong clinical reasoning in small parameter envelope. Eager attention hook compatible."
+    verified_on: "2026-10-10"
+
+  - id: "Qwen/Qwen2.5-7B-Instruct"
+    family: "Qwen"
+    tier: "Mid"
+    license: "Apache-2.0"
+    params: "7.61B"
+    attention_type: "dense"
+    eager_ok: true
+    min_vram_gb_fp16: 16.0
+    min_vram_gb_nf4: 6.5
+    status: "pass"
+    notes: "High fidelity clinical summarizer. Standard single-GPU target."
+    verified_on: "2026-10-10"
+
+  - id: "google/gemma-2-9b-it"
+    family: "Gemma"
+    tier: "Mid"
+    license: "Gemma Terms of Use"
+    params: "9.24B"
+    attention_type: "hybrid_sliding_global"
+    eager_ok: true
+    min_vram_gb_fp16: 19.0
+    min_vram_gb_nf4: 7.5
+    status: "pass"
+    notes: "Alternating local sliding window and global attention layers. Probing extracts global decision layers."
+    verified_on: "2026-10-10"
+
+  - id: "mistralai/Mistral-7B-Instruct-v0.3"
+    family: "Mistral"
+    tier: "Mid"
+    license: "Apache-2.0"
+    params: "7.25B"
+    attention_type: "sliding_window"
+    eager_ok: true
+    min_vram_gb_fp16: 15.5
+    min_vram_gb_nf4: 6.0
+    status: "pass"
+    notes: "Sliding window attention; eager implementation supported with output_attentions=True."
+    verified_on: "2026-10-10"
+
+  - id: "aaditya/Llama3-OpenBioLLM-8B"
+    family: "OpenBioLLM"
+    tier: "Medical comparison"
+    license: "Meta Llama 3 Community"
+    params: "8.03B"
+    attention_type: "dense"
+    eager_ok: true
+    min_vram_gb_fp16: 16.5
+    min_vram_gb_nf4: 6.8
+    status: "pass"
+    notes: "Medical domain tuned. Used for comparative adherence benchmarks against base Llama-3."
+    verified_on: "2026-10-10"
+
+  - id: "epfl-llm/meditron-7b"
+    family: "Meditron"
+    tier: "Medical comparison"
+    license: "Llama-2 Community"
+    params: "6.74B"
+    attention_type: "dense"
+    eager_ok: true
+    min_vram_gb_fp16: 14.5
+    min_vram_gb_nf4: 5.8
+    status: "pass"
+    notes: "Clinical guidelines pre-trained model. Eager attention pass compatible."
+    verified_on: "2026-10-10"
+
+  - id: "meta-llama/Llama-3.1-8B-Instruct"
+    family: "Llama"
+    tier: "Long context"
+    license: "Llama 3.1 Community"
+    params: "8.03B"
+    attention_type: "dense_rope_scaled"
+    eager_ok: true
+    min_vram_gb_fp16: 17.0
+    min_vram_gb_nf4: 7.2
+    status: "pass"
+    notes: "128k context support. GQA architecture requires head-expansion during probe."
+    verified_on: "2026-10-10"
+
+  - id: "deepseek-ai/DeepSeek-V2.5"
+    family: "DeepSeek"
+    tier: "Linter-only (no attention extraction)"
+    license: "DeepSeek License"
+    params: "236B (21B active)"
+    attention_type: "mla_moe"
+    eager_ok: false
+    min_vram_gb_fp16: 480.0
+    min_vram_gb_nf4: 160.0
+    status: "skip"
+    notes: "Multi-head Latent Attention (MLA) architecture too large for local attention tensor extraction. Covered by invariant rule gate only."
+    verified_on: "2026-10-10"

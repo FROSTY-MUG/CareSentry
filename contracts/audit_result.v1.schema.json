@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caresentry.org/schemas/audit_result.v1.json",
+  "title": "AuditResultV1",
+  "description": "Output schema of Track A clinical contraindication linter",
+  "type": "object",
+  "required": ["status", "violations"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL"]
+    },
+    "total_violations": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "rule_id": { "type": "string" },
+          "type": { "type": "string" },
+          "severity": { "type": "string" },
+          "offending_drug": { "type": "string" },
+          "drug": { "type": "string" },
+          "allergy_class": { "type": "string" },
+          "evidence": { "type": "string" },
+          "evidence_in_summary": { "type": "string" },
+          "patient_allergy_evidence": { "type": "string" },
+          "mechanism": { "type": "string" },
+          "rationale": { "type": "string" },
+          "recommendation": { "type": "string" },
+          "egfr_observed": { "type": ["number", "null"] },
+          "egfr_cutoff": { "type": ["number", "null"] },
+          "interacting_pair": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "passed_checks_count": { "type": "integer" },
+    "passed_checks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "renal_metrics": {
+      "type": "object",
+      "properties": {
+        "egfr": { "type": ["number", "null"] },
+        "creatinine": { "type": ["number", "null"] },
+        "raw_matches": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "execution_time_ms": { "type": "number" },
+    "standard": { "type": "string" }
+  },
+  "additionalProperties": true
+}

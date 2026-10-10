@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareSentry-AI Attention Heatmap Viewer</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --border-color: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-red: #ef4444;
+            --accent-green: #22c55e;
+            --accent-amber: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-title h1 {
+            font-size: 1.4rem;
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .safety-disclaimer {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .panes-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .split-view .trace-pane {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .single-view .trace-pane {
+            width: 100%;
+        }
+
+        .trace-pane {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .pane-header {
+            background: #273549;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-success { background: #15803d; color: #dcfce7; }
+        .badge-danger { background: #b91c1c; color: #fee2e2; }
+        .badge-warning { background: #b45309; color: #fef3c7; }
+        .badge-info { background: #0369a1; color: #e0f2fe; }
+        .badge-strategy { background: #6d28d9; color: #ede9fe; }
+        .badge-neutral { background: #475569; color: #f1f5f9; }
+
+        .stats-bar {
+            background: #1e293b;
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 16px;
+        }
+
+        .document-viewer {
+            padding: 16px;
+            max-height: 700px;
+            overflow-y: auto;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            background: #0f172a;
+            color: #e2e8f0;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .tok {
+            display: inline-block;
+            padding: 1px 3px;
+            margin: 1px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .tok:hover {
+            transform: scale(1.15);
+            outline: 1px solid var(--accent-blue);
+            z-index: 10;
+            position: relative;
+        }
+
+        .needle-tok {
+            border: 2px solid var(--accent-amber);
+            font-weight: bold;
+            box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+        }
+
+        .control-tok {
+            border-bottom: 2px dashed #38bdf8;
+        }
+
+        .legend {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            font-size: 0.85rem;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+        }
+
+        #token-tooltip {
+            position: fixed;
+            background: #020617;
+            border: 1px solid var(--accent-blue);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <h1>CareSentry-AI Plus — Attention Heatmap Viewer</h1>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Interactive Empirical Attention Sentry & Invariant Observability</p>
+        </div>
+        <div class="safety-disclaimer">
+            RESEARCH & OBSERVABILITY TOOL ONLY — NOT FOR CLINICAL DECISION-MAKING
+        </div>
+    </header>
+
+    
+        <div class="panes-container split-view">
+            
+    <div class="trace-pane">
+        <div class="pane-header">
+            <h3>Baseline (Before Mitigation)</h3>
+            <div class="header-tags">
+                <span class="badge badge-danger">NEGLECTED</span>
+                <span class="badge badge-info">Z-Score: -1.595</span>
+                <span class="badge badge-neutral">Tokens: 520</span>
+                <span class="badge badge-strategy">Mitigation: None</span>
+            </div>
+        </div>
+        <div class="stats-bar">
+            <span><strong>Target Mean:</strong> 0.000180</span>
+            <span><strong>Control Mean:</strong> 0.000850</span>
+            <span><strong>Control Std:</strong> 0.000420</span>
+        </div>
+        <div class="document-viewer">
+            <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="0" data-att="0.000700">Patient</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="1" data-att="0.000800">is</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.85);" data-idx="2" data-att="0.000900">a</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="3" data-att="0.000800">68</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="4" data-att="0.000800">yo</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="5" data-att="0.000700">female</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.666);" data-idx="6" data-att="0.000600">admitted</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="7" data-att="0.000700">for</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="8" data-att="0.000800">acute</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.85);" data-idx="9" data-att="0.000900">decompensation</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="10" data-att="0.000800">.</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="11" data-att="0.000700">Medical</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.666);" data-idx="12" data-att="0.000600">history</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="13" data-att="0.000700">notable</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="14" data-att="0.000800">for</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="15" data-att="0.000700">CKD</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="16" data-att="0.000800">stage</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.85);" data-idx="17" data-att="0.000900">3</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="18" data-att="0.000800">and</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="19" data-att="0.000700">hypertension</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.324);" data-idx="20" data-att="0.000180">.</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.313);" data-idx="21" data-att="0.000170">ALLERGY</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.334);" data-idx="22" data-att="0.000190">:</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.324);" data-idx="23" data-att="0.000180">Patient</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.324);" data-idx="24" data-att="0.000180">has</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.313);" data-idx="25" data-att="0.000170">severe</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.334);" data-idx="26" data-att="0.000190">anaphylaxis</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.324);" data-idx="27" data-att="0.000180">to</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.324);" data-idx="28" data-att="0.000180">Penicillin</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.313);" data-idx="29" data-att="0.000170">and</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="30" data-att="0.000800">Amoxicillin</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.85);" data-idx="31" data-att="0.000900">.</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="32" data-att="0.000800">Discharged</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="33" data-att="0.000700">on</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="34" data-att="0.000800">stable</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.85);" data-idx="35" data-att="0.000900">condition</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="36" data-att="0.000800">with</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.731);" data-idx="37" data-att="0.000700">follow</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.792);" data-idx="38" data-att="0.000800">up</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.85);" data-idx="39" data-att="0.000900">scheduled</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.0);" data-idx="40" data-att="0.000000">.</span>
+        </div>
+    </div>
+    
+            
+    <div class="trace-pane">
+        <div class="pane-header">
+            <h3>Mitigated (After Intervention)</h3>
+            <div class="header-tags">
+                <span class="badge badge-success">ATTENDED</span>
+                <span class="badge badge-info">Z-Score: +7.143</span>
+                <span class="badge badge-neutral">Tokens: 520</span>
+                <span class="badge badge-strategy">Mitigation: system_anchor_pinning</span>
+            </div>
+        </div>
+        <div class="stats-bar">
+            <span><strong>Target Mean:</strong> 0.003850</span>
+            <span><strong>Control Mean:</strong> 0.000850</span>
+            <span><strong>Control Std:</strong> 0.000420</span>
+        </div>
+        <div class="document-viewer">
+            <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="0" data-att="0.000700">Patient</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="1" data-att="0.000800">is</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.352);" data-idx="2" data-att="0.000900">a</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="3" data-att="0.000800">68</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="4" data-att="0.000800">yo</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="5" data-att="0.000700">female</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.276);" data-idx="6" data-att="0.000600">admitted</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="7" data-att="0.000700">for</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="8" data-att="0.000800">acute</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.352);" data-idx="9" data-att="0.000900">decompensation</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="10" data-att="0.000800">.</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="11" data-att="0.000700">Medical</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.276);" data-idx="12" data-att="0.000600">history</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="13" data-att="0.000700">notable</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="14" data-att="0.000800">for</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="15" data-att="0.000700">CKD</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="16" data-att="0.000800">stage</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.352);" data-idx="17" data-att="0.000900">3</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="18" data-att="0.000800">and</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="19" data-att="0.000700">hypertension</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.841);" data-idx="20" data-att="0.003850">.</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.847);" data-idx="21" data-att="0.003900">ALLERGY</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.837);" data-idx="22" data-att="0.003820">:</span> <span class="tok control-tok" style="background-color: rgba(220, 38, 38, 0.841);" data-idx="23" data-att="0.003850">Patient</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.845);" data-idx="24" data-att="0.003880">has</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.84);" data-idx="25" data-att="0.003840">severe</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.85);" data-idx="26" data-att="0.003920">anaphylaxis</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.841);" data-idx="27" data-att="0.003850">to</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.836);" data-idx="28" data-att="0.003810">Penicillin</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.843);" data-idx="29" data-att="0.003870">and</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="30" data-att="0.000800">Amoxicillin</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.352);" data-idx="31" data-att="0.000900">.</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="32" data-att="0.000800">Discharged</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="33" data-att="0.000700">on</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="34" data-att="0.000800">stable</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.352);" data-idx="35" data-att="0.000900">condition</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="36" data-att="0.000800">with</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.302);" data-idx="37" data-att="0.000700">follow</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.328);" data-idx="38" data-att="0.000800">up</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.352);" data-idx="39" data-att="0.000900">scheduled</span> <span class="tok" style="background-color: rgba(220, 38, 38, 0.0);" data-idx="40" data-att="0.000000">.</span>
+        </div>
+    </div>
+    
+        </div>
+        
+
+    <div class="legend">
+        <strong>Legend:</strong>
+        <div class="legend-item">
+            <span class="legend-box" style="border: 2px solid var(--accent-amber); background: rgba(245, 158, 11, 0.4);"></span>
+            <span>Target Constraint (Needle)</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-box" style="border-bottom: 2px dashed #38bdf8; background: rgba(56, 189, 248, 0.2);"></span>
+            <span>Control Spans (Background Context)</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-box" style="background: rgba(220, 38, 38, 0.8);"></span>
+            <span>High Relative Attention Density</span>
+        </div>
+    </div>
+
+    <div id="token-tooltip"></div>
+
+    <script>
+        const tooltip = document.getElementById('token-tooltip');
+        document.querySelectorAll('.tok').forEach(el => {
+            el.addEventListener('mouseenter', (e) => {
+                const idx = el.getAttribute('data-idx');
+                const att = el.getAttribute('data-att');
+                tooltip.innerHTML = `<strong>Token Index:</strong> ${idx}<br><strong>Attention Mass:</strong> ${att}`;
+                tooltip.style.display = 'block';
+            });
+            el.addEventListener('mousemove', (e) => {
+                tooltip.style.left = (e.clientX + 12) + 'px';
+                tooltip.style.top = (e.clientY + 12) + 'px';
+            });
+            el.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

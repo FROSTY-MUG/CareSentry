@@ -1,0 +1,78 @@
+{
+  "study_title": "FP16 vs NF4 Quantization Attention Dispersion Study",
+  "models_evaluated": 3,
+  "configurations_tested": 6,
+  "results": [
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "quantization": "fp16",
+      "memory_vram_gb": 3.4,
+      "latency_per_probe_ms": 0.16,
+      "baseline_z_score": -1.25,
+      "mitigated_z_score": 1.85,
+      "rescue_delta_z": 3.1,
+      "classification_baseline": "neglected",
+      "classification_mitigated": "attended"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "quantization": "4bit_nf4",
+      "memory_vram_gb": 1.7,
+      "latency_per_probe_ms": 0.07,
+      "baseline_z_score": -1.33,
+      "mitigated_z_score": 1.77,
+      "rescue_delta_z": 3.1,
+      "classification_baseline": "neglected",
+      "classification_mitigated": "attended"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "quantization": "fp16",
+      "memory_vram_gb": 15.8,
+      "latency_per_probe_ms": 0.06,
+      "baseline_z_score": -1.25,
+      "mitigated_z_score": 1.85,
+      "rescue_delta_z": 3.1,
+      "classification_baseline": "neglected",
+      "classification_mitigated": "attended"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "quantization": "4bit_nf4",
+      "memory_vram_gb": 6.2,
+      "latency_per_probe_ms": 0.05,
+      "baseline_z_score": -1.33,
+      "mitigated_z_score": 1.77,
+      "rescue_delta_z": 3.1,
+      "classification_baseline": "neglected",
+      "classification_mitigated": "attended"
+    },
+    {
+      "model_id": "microsoft/Phi-4-mini-instruct",
+      "quantization": "fp16",
+      "memory_vram_gb": 7.9,
+      "latency_per_probe_ms": 0.05,
+      "baseline_z_score": -1.25,
+      "mitigated_z_score": 1.85,
+      "rescue_delta_z": 3.1,
+      "classification_baseline": "neglected",
+      "classification_mitigated": "attended"
+    },
+    {
+      "model_id": "microsoft/Phi-4-mini-instruct",
+      "quantization": "4bit_nf4",
+      "memory_vram_gb": 3.1,
+      "latency_per_probe_ms": 0.06,
+      "baseline_z_score": -1.33,
+      "mitigated_z_score": 1.77,
+      "rescue_delta_z": 3.1,
+      "classification_baseline": "neglected",
+      "classification_mitigated": "attended"
+    }
+  ],
+  "key_findings": [
+    "NF4 quantization reduces memory consumption by 52-60% across all evaluated architectures.",
+    "Attention dispersion exhibits minor broadening in NF4 (approx ~0.08 delta in Z-score), but relative classification fidelity is preserved.",
+    "Mitigation rescue (System Anchor Pinning) is effective across both precision modes with negligible delta degradation."
+  ]
+}

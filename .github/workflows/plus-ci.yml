@@ -1,0 +1,46 @@
+name: CareSentry-AI Plus CI (Track B)
+
+on:
+  push:
+    paths:
+      - "plus/**"
+      - ".agents/skills/caresentry-plus/**"
+      - "contracts/**"
+      - ".github/workflows/plus-*.yml"
+  pull_request:
+    paths:
+      - "plus/**"
+      - ".agents/skills/caresentry-plus/**"
+      - "contracts/**"
+      - ".github/workflows/plus-*.yml"
+
+jobs:
+  test-plus:
+    name: Track B Plus Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . --no-deps
+          pip install -r plus/requirements-plus.txt
+
+      - name: Ownership Boundary Guard
+        env:
+          CARESENTRY_AGENT: "B"
+        run: |
+          python plus/tools/check_ownership.py
+
+      - name: Run Track B Test Suite
+        env:
+          PYTHONPATH: ".:plus/src"
+        run: |
+          pytest plus/tests -v

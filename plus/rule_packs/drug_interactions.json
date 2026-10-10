@@ -1,0 +1,92 @@
+{
+  "pack_id": "drug_interactions_v1",
+  "version": "1.0.0",
+  "description": "High-risk, life-threatening drug-drug interaction invariant rules",
+  "default_reviewer_status": "unreviewed",
+  "rules": [
+    {
+      "id": "PLUS-DDI-01",
+      "type": "drug_drug_interaction",
+      "trigger": {
+        "target_drugs": ["warfarin", "coumadin", "jantoven"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["ibuprofen", "naproxen", "ketorolac", "toradol", "meloxicam", "diclofenac", "indomethacin", "celecoxib", "aspirin"]
+      },
+      "severity": "CRITICAL",
+      "message": "High-risk bleeding interaction: Concurrent prescription of warfarin with systemic NSAIDs or high-dose aspirin causes marked platelet dysfunction and gastric mucosal ulceration, dramatically increasing major GI haemorrhage risk.",
+      "provenance": {
+        "source": "CHEST Guideline: Antithrombotic Therapy and Prevention of Thrombosis",
+        "version": "2012.9",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Holbrook A, et al. Evidence-based management of anticoagulant therapy: Antithrombotic Therapy and Prevention of Thrombosis. CHEST. 2012;141(2 Suppl):e152S-e184S."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-DDI-02",
+      "type": "drug_drug_interaction",
+      "trigger": {
+        "target_drugs": ["lisinopril", "prinivil", "zestril", "enalapril", "ramipril", "losartan", "valsartan"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["spironolactone", "aldactone", "carospir", "eplerenone", "triamterene"]
+      },
+      "severity": "HIGH",
+      "message": "Hyperkalemia synergism: Co-administration of ACE inhibitors or ARBs with potassium-sparing aldosterone antagonists risks severe, asymptomatic hyperkalemia and fatal cardiac dysrhythmia without serial potassium monitoring.",
+      "provenance": {
+        "source": "AHA/ACC/HFSA Guideline for the Management of Heart Failure",
+        "version": "2022.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Heidenreich PA, et al. 2022 AHA/ACC/HFSA Guideline for the Management of Heart Failure. Circulation. 2022;145:e895-e1032."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-DDI-03",
+      "type": "drug_drug_interaction",
+      "trigger": {
+        "target_drugs": ["clopidogrel", "plavix"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["omeprazole", "prilosec", "esomeprazole", "nexium"]
+      },
+      "severity": "HIGH",
+      "message": "Pharmacokinetic activation blockade: Omeprazole and esomeprazole competitively inhibit hepatic CYP2C19 bioactivation of clopidogrel, significantly diminishing platelet inhibition and raising ischemic stent thrombosis risk.",
+      "provenance": {
+        "source": "FDA Drug Safety Communication",
+        "version": "2009.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "FDA Drug Safety Communication: Updated information on the interaction between clopidogrel and omeprazole (November 2009)."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-DDI-04",
+      "type": "drug_drug_interaction",
+      "trigger": {
+        "target_drugs": ["methotrexate", "trexall", "rasuvo"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["ibuprofen", "naproxen", "ketorolac", "meloxicam", "indomethacin"]
+      },
+      "severity": "CRITICAL",
+      "message": "Methotrexate clearance inhibition: NSAIDs reduce renal clearance of methotrexate via competitive inhibition of organic anion transporters, provoking severe bone marrow suppression and pancytopenia.",
+      "provenance": {
+        "source": "American College of Rheumatology (ACR) Guideline for Rheumatoid Arthritis",
+        "version": "2021.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Fraenkel L, et al. 2021 American College of Rheumatology Guideline for the Treatment of Rheumatoid Arthritis. Arthritis Rheumatol. 2021;73(7):1108-1123."
+        ]
+      }
+    }
+  ]
+}

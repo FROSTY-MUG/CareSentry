@@ -1,0 +1,50 @@
+{
+  "pack_id": "duplicate_therapy_v1",
+  "version": "1.0.0",
+  "description": "Redundant therapeutic class duplication invariants",
+  "default_reviewer_status": "unreviewed",
+  "rules": [
+    {
+      "id": "PLUS-DUP-01",
+      "type": "duplicate_therapy",
+      "trigger": {
+        "drug_class": "nsaid"
+      },
+      "condition": {
+        "contraindicated_drugs": []
+      },
+      "severity": "HIGH",
+      "message": "Duplicate NSAID therapy detected: Prescribing two or more systemic NSAIDs concurrently offers no additional analgesic benefit while exponentially compounding gastrointestinal bleed, renal impairment, and cardiovascular event risk.",
+      "provenance": {
+        "source": "WHO Guidelines on the Pharmacological Treatment of Persisting Pain",
+        "version": "2020.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "World Health Organization. WHO Guidelines for the Pharmacological and Radiotherapeutic Management of Cancer Pain in Adults and Adolescents. Geneva: WHO; 2018."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-DUP-02",
+      "type": "duplicate_therapy",
+      "trigger": {
+        "drug_class": "benzodiazepine"
+      },
+      "condition": {
+        "contraindicated_drugs": []
+      },
+      "severity": "HIGH",
+      "message": "Duplicate Benzodiazepine therapy detected: Concurrent administration of multiple benzodiazepines produces additive central nervous system and respiratory depression.",
+      "provenance": {
+        "source": "FDA Boxed Warning on Benzodiazepine Use",
+        "version": "2020.2",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "FDA Drug Safety Communication: FDA requiring boxed warning updated to improve safe use of benzodiazepine drug class (September 2020)."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "pack_id": "geriatric_beers_v1",
+  "version": "1.0.0",
+  "description": "AGS Beers Criteria 2023 for Potentially Inappropriate Medication Use in Older Adults",
+  "default_reviewer_status": "unreviewed",
+  "rules": [
+    {
+      "id": "PLUS-BEERS-01",
+      "type": "geriatric_beers",
+      "trigger": {
+        "age_min": 65,
+        "target_drugs": ["diphenhydramine", "benadryl", "sominex", "unisom", "hydroxyzine", "atarax", "vistaril"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["diphenhydramine", "benadryl", "sominex", "unisom", "hydroxyzine", "atarax", "vistaril"]
+      },
+      "severity": "HIGH",
+      "message": "AGS Beers Criteria: First-generation antihistamines should be avoided in older adults (>=65). Highly anticholinergic; clearance reduced; severe risk of cognitive decline, acute confusion, delirium, urinary retention, and falls.",
+      "provenance": {
+        "source": "American Geriatrics Society (AGS) Beers Criteria",
+        "version": "2023.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "By the 2023 American Geriatrics Society Beers Criteria Update Expert Panel. American Geriatrics Society 2023 updated AGS Beers Criteria for potentially inappropriate medication use in older adults. J Am Geriatr Soc. 2023;71(7):2052-2081."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-BEERS-02",
+      "type": "geriatric_beers",
+      "trigger": {
+        "age_min": 65,
+        "target_drugs": ["amitriptyline", "elavil", "endep", "doxepin", "imipramine"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["amitriptyline", "elavil", "endep", "doxepin", "imipramine"]
+      },
+      "severity": "HIGH",
+      "message": "AGS Beers Criteria: Tertiary amine tricyclic antidepressants (TCAs) should be avoided in older adults (>=65). Potent anticholinergic and alpha-adrenergic blockade causes profound sedation, syncope, and orthostatic falls.",
+      "provenance": {
+        "source": "American Geriatrics Society (AGS) Beers Criteria",
+        "version": "2023.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "American Geriatrics Society 2023 updated AGS Beers Criteria. J Am Geriatr Soc. 2023;71(7):2052-2081."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-BEERS-03",
+      "type": "geriatric_beers",
+      "trigger": {
+        "age_min": 65,
+        "target_drugs": ["oxybutynin", "ditropan", "tolterodine", "detrol"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["oxybutynin", "ditropan", "tolterodine", "detrol"]
+      },
+      "severity": "MODERATE",
+      "message": "AGS Beers Criteria: Oral antimuscarinics for overactive bladder carry significant anticholinergic burden in older adults (>=65), aggravating dementia symptoms and precipitating urinary retention.",
+      "provenance": {
+        "source": "American Geriatrics Society (AGS) Beers Criteria",
+        "version": "2023.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "American Geriatrics Society 2023 updated AGS Beers Criteria. J Am Geriatr Soc. 2023;71(7):2052-2081."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-BEERS-04",
+      "type": "geriatric_beers",
+      "trigger": {
+        "age_min": 65,
+        "target_drugs": ["diazepam", "valium", "flurazepam", "quazepam", "clonazepam"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["diazepam", "valium", "flurazepam", "quazepam", "clonazepam"]
+      },
+      "severity": "HIGH",
+      "message": "AGS Beers Criteria: Benzodiazepines should be avoided in older adults (>=65). Older adults have increased sensitivity and decreased metabolism, leading to prolonged ataxia, motor vehicle crashes, and fractures.",
+      "provenance": {
+        "source": "American Geriatrics Society (AGS) Beers Criteria",
+        "version": "2023.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "American Geriatrics Society 2023 updated AGS Beers Criteria. J Am Geriatr Soc. 2023;71(7):2052-2081."
+        ]
+      }
+    }
+  ]
+}
