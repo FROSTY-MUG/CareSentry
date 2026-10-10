@@ -50,3 +50,9 @@ hf_cache/
 .DS_Store
 Thumbs.db
 *.log
+.env
+
+# Private Hackathon Guides & Local Teaching Docs (DO NOT PUSH TO GITHUB)
+HACKATHON_WINNING_SYSTEM_GUIDE.md
+PRIVATE_*.md
+*SYSTEM_GUIDE*.md

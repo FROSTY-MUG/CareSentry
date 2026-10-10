@@ -144,3 +144,49 @@ def test_all_10_synthetic_geriatric_cases(rules, synthetic_cases):
             # Control case (e.g. Case 10)
             report_control = audit_clinical_safety(ehr, safe, rules)
             assert report_control["status"] == "PASS"
+
+
+def test_character_span_evidence_offsets(rules):
+    """Verify K-10 character span offsets in summary and patient EHR."""
+    ehr = "Patient with documented severe allergy to Penicillin."
+    summary = "Discharge orders: Prescribe Amoxicillin 500 mg PO TID."
+    report = audit_clinical_safety(ehr, summary, rules)
+    assert report["status"] == "FAIL"
+    v = report["violations"][0]
+    assert "summary_span" in v
+    span = v["summary_span"]
+    # Check that slice exactly matches the drug
+    assert summary[span[0]:span[1]].lower() == "amoxicillin"
+    assert "rule_id" in v
+    assert v["rule_id"] == "CS-ALLERGY-PENICILLIN"
+
+
+def test_serial_lab_tracking_picks_most_recent(rules):
+    """Verify K-10 serial tracking picks the discharge/latest lab measurement."""
+    ehr = (
+        "Admission Labs (2026-09-10): BUN 55, Creatinine 3.8 mg/dL, eGFR: 18.2 mL/min.\n"
+        "Hospital Day 4 (2026-09-14): Creatinine 2.4 mg/dL, eGFR: 28.0 mL/min.\n"
+        "Discharge Renal Panel (2026-09-18): Creatinine 1.2 mg/dL, eGFR: 48.5 mL/min/1.73m2. Recovery observed."
+    )
+    metrics = extract_renal_metrics(ehr)
+    # Most recent value is 48.5, not 18.2
+    assert metrics["egfr"] == 48.5
+    assert metrics["serial_measurements_found"] >= 3
+    # Metformin is safe at eGFR 48.5
+    summary = "Discharge on Metformin 500 mg PO daily."
+    report = audit_clinical_safety(ehr, summary, rules)
+    assert report["status"] == "PASS"
+
+
+def test_validate_rules_schema_functionality(rules):
+    """Verify K-10 validate_rules_schema function."""
+    from harness.clinical_linter import validate_rules_schema
+    is_valid, errs = validate_rules_schema(rules)
+    assert is_valid is True
+    assert len(errs) == 0
+
+    # Test invalid schema
+    invalid = {"allergies": [{"no_class": True}]}
+    is_valid_bad, errs_bad = validate_rules_schema(invalid)
+    assert is_valid_bad is False
+    assert len(errs_bad) >= 1

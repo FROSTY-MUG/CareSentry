@@ -98,3 +98,65 @@ def test_classification_thresholds(probe):
     assert res_pinned.z_score >= 1.0
     assert res_pinned.classification == "SUFFICIENTLY_ATTENDED"
     assert res_pinned.mitigation_triggered is False
+
+
+def test_z_method_v2_bootstrap_and_stratification(probe):
+    prompt = (
+        "Patient Eleanor Vance admitted for geriatric rehabilitation. "
+        "Medical records show: Severe allergy to Penicillin with prior anaphylaxis. "
+        "Discharge planned with physical therapy."
+    )
+    needle = "Severe allergy to Penicillin"
+
+    res_v2 = probe.probe(prompt=prompt, needle=needle, z_method="v2")
+
+    assert res_v2.z_method == "v2"
+    assert res_v2.z_ci_95 is not None
+    assert len(res_v2.z_ci_95) == 2
+    assert res_v2.z_ci_95[0] <= res_v2.z_ci_95[1]
+    assert res_v2.p_value is not None
+    assert 0.0 <= res_v2.p_value <= 1.0
+    assert res_v2.stratification_info is not None
+    assert res_v2.stratification_info["stratified_controls"] is True
+
+
+def test_probe_all_constraints(probe):
+    prompt = (
+        "Patient has documented allergy: Penicillin. "
+        "Lab chemistry shows eGFR is 22 mL/min. "
+        "Clinical instructions: avoid Metformin."
+    )
+    all_res = probe.probe_all_constraints(prompt=prompt)
+
+    assert "total_probed" in all_res
+    assert all_res["total_probed"] >= 2
+    assert "weakest_constraint" in all_res
+    assert "min_z_score" in all_res
+    assert "mean_z_score" in all_res
+    assert all_res["overall_status"] in ["PASS", "FAIL", "WARN"]
+
+
+def test_dump_trace_contract_compliance(probe, tmp_path):
+    import json
+    import jsonschema
+    from pathlib import Path
+
+    prompt = (
+        "Patient Eleanor Vance admitted for geriatric rehabilitation. "
+        "Medical records show: Severe allergy to Penicillin with prior anaphylaxis. "
+        "Discharge planned with physical therapy."
+    )
+    needle = "Severe allergy to Penicillin"
+
+    res = probe.probe(prompt=prompt, needle=needle)
+    trace_dict = res.to_trace_dict(dtype="fp16", attn_impl="simulated")
+
+    schema_path = Path("contracts/attention_trace.v1.schema.json")
+    assert schema_path.exists()
+
+    with open(schema_path, "r", encoding="utf-8") as f:
+        schema = json.load(f)
+
+    # Validate against actual JSON Schema
+    jsonschema.validate(instance=trace_dict, schema=schema)
+

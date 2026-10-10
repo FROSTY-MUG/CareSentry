@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caresentry.org/schemas/plus_audit_result.v1.json",
+  "title": "PlusAuditResultV1",
+  "description": "CareSentry-AI Plus comprehensive audit payload combining Track A base audit and Track B invariant expansions",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "base",
+    "plus_violations",
+    "omissions",
+    "context_flags",
+    "normalized_entities",
+    "provenance"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "plus_audit_result.v1"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL"]
+    },
+    "base": {
+      "type": "object",
+      "description": "Track A C-01 output embedded verbatim"
+    },
+    "plus_violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "type", "severity", "message"],
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "pattern": "^PLUS-"
+          },
+          "type": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["CRITICAL", "HIGH", "MODERATE", "LOW", "WARNING", "INFO"]
+          },
+          "message": { "type": "string" },
+          "offending_drug": { "type": "string" },
+          "interacting_drug": { "type": "string" },
+          "evidence": { "type": "string" },
+          "calculated_metric": { "type": ["number", "string", "null"] },
+          "threshold": { "type": ["number", "string", "null"] },
+          "provenance": {
+            "type": "object",
+            "required": ["source", "version", "retrieved_on", "reviewer_status"],
+            "properties": {
+              "source": { "type": "string" },
+              "version": { "type": "string" },
+              "retrieved_on": { "type": "string" },
+              "reviewer_status": { "type": "string" }
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "omissions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "constraint", "record_evidence", "severity"],
+        "properties": {
+          "category": { "type": "string" },
+          "constraint": { "type": "string" },
+          "record_evidence": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["CRITICAL", "HIGH", "MODERATE", "LOW"]
+          },
+          "remediation": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "context_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phrase", "status", "rationale"],
+        "properties": {
+          "phrase": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["NEGATED", "AFFIRMED", "HISTORICAL", "FAMILY_HISTORY", "AMBIGUOUS"]
+          },
+          "entity": { "type": "string" },
+          "rationale": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "normalized_entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["raw_term", "canonical_name", "drug_class"],
+        "properties": {
+          "raw_term": { "type": "string" },
+          "canonical_name": { "type": "string" },
+          "drug_class": { "type": "string" },
+          "rxcui": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["rule_packs", "ontology_version"],
+      "properties": {
+        "rule_packs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "ontology_version": { "type": "string" },
+        "engine_version": { "type": "string" }
+      }
+    },
+    "audit_log_ref": {
+      "type": "string"
+    },
+    "execution_time_ms": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": true
+}

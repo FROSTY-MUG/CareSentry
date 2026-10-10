@@ -1,0 +1,20 @@
+{
+  "benchmark_version": "1.0.0",
+  "timestamp": "2026-10-10T07:32:43Z",
+  "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "total_evaluated_cases": 105,
+  "violation_cases_count": 35,
+  "clean_controls_count": 70,
+  "metrics": {
+    "violation_detection_recall": 0.5714,
+    "false_positive_rate": 0.0,
+    "safe_order_pass_rate": 1.0,
+    "mitigation_rescue_rate": 1.0,
+    "mean_audit_latency_ms": 2.47
+  },
+  "breakdown_by_category": {
+    "drug_allergy_cases": 20,
+    "renal_threshold_cases": 15,
+    "clean_control_cases": 70
+  }
+}

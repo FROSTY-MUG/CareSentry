@@ -1,0 +1,42 @@
+{
+  "schema": "attention_trace.v1",
+  "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "dtype": "fp16",
+  "attn_impl": "eager",
+  "layers_used": [24, 25, 26, 27],
+  "doc_token_count": 520,
+  "needle_text": "ALLERGY: Patient has severe anaphylaxis to Penicillin and Amoxicillin.",
+  "needle_span": [180, 192],
+  "control_spans": [
+    [20, 24], [45, 49], [70, 74], [95, 99], [120, 124],
+    [145, 149], [210, 214], [235, 239], [260, 264], [285, 289],
+    [310, 314], [335, 339], [360, 364], [385, 389], [410, 414],
+    [435, 439], [460, 464], [480, 484], [495, 499], [505, 509]
+  ],
+  "target_attention_mean": 0.00018,
+  "control_attention_mean": 0.00085,
+  "control_attention_std": 0.00042,
+  "z_score": -1.595,
+  "classification": "neglected",
+  "per_token_attention": [
+    0.0007, 0.0008, 0.0009, 0.0008, 0.0008, 0.0007, 0.0006, 0.0007, 0.0008, 0.0009,
+    0.0008, 0.0007, 0.0006, 0.0007, 0.0008, 0.0007, 0.0008, 0.0009, 0.0008, 0.0007,
+    0.00018, 0.00017, 0.00019, 0.00018, 0.00018, 0.00017, 0.00019, 0.00018, 0.00018, 0.00017,
+    0.0008, 0.0009, 0.0008, 0.0007, 0.0008, 0.0009, 0.0008, 0.0007, 0.0008, 0.0009
+  ],
+  "per_head_attention": {
+    "24.0": 0.00015, "24.1": 0.00018, "24.2": 0.00021, "24.3": 0.00017,
+    "25.0": 0.00016, "25.1": 0.00019, "25.2": 0.00020, "25.3": 0.00018,
+    "26.0": 0.00017, "26.1": 0.00020, "26.2": 0.00019, "26.3": 0.00016,
+    "27.0": 0.00018, "27.1": 0.00022, "27.2": 0.00017, "27.3": 0.00019
+  },
+  "tokens": [
+    "Patient", "is", "a", "68", "yo", "female", "admitted", "for", "acute", "decompensation",
+    ".", "Medical", "history", "notable", "for", "CKD", "stage", "3", "and", "hypertension",
+    ".", "ALLERGY", ":", "Patient", "has", "severe", "anaphylaxis", "to", "Penicillin", "and",
+    "Amoxicillin", ".", "Discharged", "on", "stable", "condition", "with", "follow", "up", "scheduled", "."
+  ],
+  "mitigation_applied": false,
+  "mitigation_strategy": null,
+  "timestamp": "2026-10-10T12:00:00Z"
+}

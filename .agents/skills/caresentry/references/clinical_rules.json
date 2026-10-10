@@ -1,8 +1,10 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "schema_version": "1.1.0",
   "name": "CareSentry Clinical Safety Invariants Matrix",
   "allergies": [
     {
+      "rule_id": "CS-ALLERGY-PENICILLIN",
       "allergy_class": "penicillin",
       "aliases": ["penicillin", "penicillins", "pcn", "penicillin-vk", "penicillin g", "amoxicillin", "ampicillin"],
       "contraindicated_drugs": [
@@ -34,6 +36,7 @@
       "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk"
     },
     {
+      "rule_id": "CS-ALLERGY-SULFA",
       "allergy_class": "sulfa",
       "aliases": ["sulfa", "sulfonamide", "sulfonamides", "bactrim", "septra", "tmp-smx"],
       "contraindicated_drugs": [
@@ -55,6 +58,7 @@
       "mechanism": "Stevens-Johnson Syndrome (SJS) / Toxic Epidermal Necrolysis (TEN) and severe hypersensitivity"
     },
     {
+      "rule_id": "CS-ALLERGY-NSAIDS",
       "allergy_class": "nsaids",
       "aliases": ["nsaids", "nsaid", "non-steroidal anti-inflammatory", "aspirin allergy", "ibuprofen allergy"],
       "contraindicated_drugs": [
@@ -83,6 +87,7 @@
       "mechanism": "Pseudo-allergic bronchospasm / angioedema / anaphylactoid reaction"
     },
     {
+      "rule_id": "CS-ALLERGY-QUINOLONES",
       "allergy_class": "fluoroquinolones",
       "aliases": ["fluoroquinolones", "fluoroquinolone", "quinolones", "quinolone", "cipro allergy"],
       "contraindicated_drugs": [
@@ -101,6 +106,7 @@
   ],
   "renal_clearance_thresholds": [
     {
+      "rule_id": "CS-RENAL-METFORMIN",
       "drug_name": "metformin",
       "aliases": ["metformin", "glucophage", "fortamet", "glumetza", "riomet"],
       "egfr_cutoff_ml_min": 30,
@@ -110,6 +116,7 @@
       "rationale": "High risk of life-threatening metformin-associated lactic acidosis (MALA) when eGFR < 30 mL/min/1.73m²"
     },
     {
+      "rule_id": "CS-RENAL-SPIRONOLACTONE",
       "drug_name": "spironolactone",
       "aliases": ["spironolactone", "aldactone", "carospir"],
       "egfr_cutoff_ml_min": 30,
@@ -119,6 +126,7 @@
       "rationale": "Severe risk of fatal hyperkalemia and acute kidney injury worsening in advanced renal impairment"
     },
     {
+      "rule_id": "CS-RENAL-NSAIDS",
       "drug_name": "high-dose nsaids",
       "aliases": ["ibuprofen", "advil", "motrin", "naproxen", "aleve", "meloxicam", "ketorolac", "toradol", "indomethacin", "diclofenac"],
       "egfr_cutoff_ml_min": 30,
@@ -128,6 +136,7 @@
       "rationale": "Inhibits renal prostaglandin synthesis, causing afferent arteriolar vasoconstriction and precipitating acute-on-chronic renal failure"
     },
     {
+      "rule_id": "CS-RENAL-NITROFURANTOIN",
       "drug_name": "nitrofurantoin",
       "aliases": ["nitrofurantoin", "macrobid", "macrodantin"],
       "egfr_cutoff_ml_min": 30,
@@ -137,6 +146,7 @@
       "rationale": "Ineffective urinary concentrations and increased risk of peripheral neuropathy toxicity"
     },
     {
+      "rule_id": "CS-RENAL-COLCHICINE",
       "drug_name": "colchicine",
       "aliases": ["colchicine", "colcrys", "mitigare"],
       "egfr_cutoff_ml_min": 30,
@@ -148,12 +158,14 @@
   ],
   "drug_drug_interactions": [
     {
+      "rule_id": "CS-DDI-WARFARIN-NSAID",
       "drug_a": ["warfarin", "coumadin", "jantoven"],
       "drug_b": ["ibuprofen", "advil", "motrin", "naproxen", "aleve", "meloxicam", "ketorolac", "diclofenac", "aspirin"],
       "severity": "CRITICAL",
       "rationale": "Synergistic elevation of major gastrointestinal and intracerebral bleeding risk"
     },
     {
+      "rule_id": "CS-DDI-ACEI-SPIRONOLACTONE",
       "drug_a": ["lisinopril", "enalapril", "losartan", "valsartan"],
       "drug_b": ["spironolactone", "aldactone", "potassium chloride", "k-dur"],
       "severity": "HIGH",

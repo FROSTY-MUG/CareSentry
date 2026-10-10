@@ -1,0 +1,102 @@
+{
+  "pack_id": "dose_aware_renal_v1",
+  "version": "1.0.0",
+  "description": "Calculated clearance (Cockcroft-Gault / CKD-EPI) and renal dosage threshold invariants",
+  "default_reviewer_status": "unreviewed",
+  "rules": [
+    {
+      "id": "PLUS-RENAL-01",
+      "type": "dose_aware_renal",
+      "trigger": {
+        "target_drugs": ["metformin", "glucophage", "fortamet", "glumetza", "riomet", "janumet", "synjardy"]
+      },
+      "condition": {
+        "egfr_cutoff_ml_min": 30.0,
+        "crcl_cutoff_ml_min": 30.0,
+        "contraindicated_drugs": ["metformin", "glucophage", "fortamet", "glumetza", "riomet", "janumet", "synjardy"]
+      },
+      "severity": "CRITICAL",
+      "message": "Metformin contraindicated in severe renal impairment (eGFR/CrCl < 30 mL/min/1.73m2): Substantial risk of fatal Metformin-Associated Lactic Acidosis (MALA) due to diminished renal drug clearance.",
+      "provenance": {
+        "source": "FDA Drug Safety Communication & ADA Standards of Care",
+        "version": "2024.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "FDA Drug Safety Communication: FDA revises warnings regarding use of the diabetes medicine metformin in certain patients with reduced kidney function (April 2016).",
+          "American Diabetes Association. 11. Chronic Kidney Disease and Risk Management: Standards of Care in Diabetes—2024. Diabetes Care 2024;47(Suppl. 1):S219-S230."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-RENAL-02",
+      "type": "dose_aware_renal",
+      "trigger": {
+        "target_drugs": ["spironolactone", "aldactone", "carospir", "eplerenone", "inspra"]
+      },
+      "condition": {
+        "egfr_cutoff_ml_min": 30.0,
+        "crcl_cutoff_ml_min": 30.0,
+        "contraindicated_drugs": ["spironolactone", "aldactone", "carospir", "eplerenone", "inspra"]
+      },
+      "severity": "CRITICAL",
+      "message": "Aldosterone antagonists contraindicated in advanced renal failure (eGFR/CrCl < 30 mL/min): Severe risk of life-threatening hyperkalemia and cardiac arrest.",
+      "provenance": {
+        "source": "KDIGO Clinical Practice Guideline for Diabetes Management in CKD",
+        "version": "2023.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Kidney Disease: Improving Global Outcomes (KDIGO) Diabetes Work Group. KDIGO 2023 Clinical Practice Guideline for the Management of Diabetes in CKD. Kidney Int. 2023."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-RENAL-03",
+      "type": "dose_aware_renal",
+      "trigger": {
+        "target_drugs": ["ibuprofen", "naproxen", "ketorolac", "toradol", "meloxicam", "diclofenac", "indomethacin"]
+      },
+      "condition": {
+        "egfr_cutoff_ml_min": 30.0,
+        "crcl_cutoff_ml_min": 30.0,
+        "contraindicated_drugs": ["ibuprofen", "naproxen", "ketorolac", "toradol", "meloxicam", "diclofenac", "indomethacin"]
+      },
+      "severity": "CRITICAL",
+      "message": "Systemic NSAIDs contraindicated in severe renal impairment (eGFR/CrCl < 30 mL/min): Prostaglandin inhibition triggers acute renal vasoconstriction, precipitating acute kidney injury (AKI).",
+      "provenance": {
+        "source": "KDIGO Clinical Practice Guideline for Acute Kidney Injury",
+        "version": "2024.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "KDIGO Clinical Practice Guideline for Acute Kidney Injury. Kidney Int Suppl. 2012;2(1):1-138."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-RENAL-04",
+      "type": "dose_aware_renal",
+      "trigger": {
+        "target_drugs": ["apixaban", "eliquis", "rivaroxaban", "xarelto", "dabigatran", "pradaxa"]
+      },
+      "condition": {
+        "crcl_cutoff_ml_min": 25.0,
+        "egfr_cutoff_ml_min": 25.0,
+        "contraindicated_drugs": ["rivaroxaban", "dabigatran"],
+        "caution_drugs": ["apixaban"]
+      },
+      "severity": "HIGH",
+      "message": "DOAC clearance compromise in severe renal insufficiency (CrCl < 25 mL/min): Increased systemic drug exposure markedly elevates major haemorrhage risk. Dose adjustment or unfractionated heparin transition required.",
+      "provenance": {
+        "source": "CHEST Guideline and Expert Panel Report on Antithrombotic Therapy",
+        "version": "2021.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Stevens SM, et al. Antithrombotic Therapy for VTE Disease: Second Update of the CHEST Guideline. CHEST. 2021;160(6):e545-e608."
+        ]
+      }
+    }
+  ]
+}

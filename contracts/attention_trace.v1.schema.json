@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caresentry.org/schemas/attention_trace.v1.json",
+  "title": "AttentionTraceV1",
+  "description": "Attention probe trace dump format emitted by attention probe harness",
+  "type": "object",
+  "required": [
+    "schema",
+    "model_id",
+    "layers_used",
+    "doc_token_count",
+    "needle_span",
+    "control_spans",
+    "z_score",
+    "classification"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "attention_trace.v1"
+    },
+    "model_id": {
+      "type": "string"
+    },
+    "dtype": {
+      "type": "string",
+      "enum": ["fp16", "nf4", "float32", "bfloat16"]
+    },
+    "attn_impl": {
+      "type": "string"
+    },
+    "layers_used": {
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "doc_token_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "needle_text": {
+      "type": "string"
+    },
+    "needle_span": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "type": "integer" }
+    },
+    "control_spans": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": { "type": "integer" }
+      }
+    },
+    "target_attention_mean": {
+      "type": "number"
+    },
+    "control_attention_mean": {
+      "type": "number"
+    },
+    "control_attention_std": {
+      "type": "number"
+    },
+    "z_score": {
+      "type": "number"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "attended",
+        "neutral",
+        "neglected",
+        "SUFFICIENTLY_ATTENDED",
+        "NEUTRAL",
+        "DILUTED"
+      ]
+    },
+    "per_token_attention": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "per_head_attention": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "tokens": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "mitigation_applied": {
+      "type": "boolean"
+    },
+    "mitigation_strategy": {
+      "type": ["string", "null"]
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

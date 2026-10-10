@@ -1,0 +1,76 @@
+{
+  "pack_id": "cross_reactivity_v1",
+  "version": "1.0.0",
+  "description": "Cross-reactivity and shared immunogenic epitope safety invariants",
+  "default_reviewer_status": "unreviewed",
+  "rules": [
+    {
+      "id": "PLUS-CROSS-01",
+      "type": "cross_reactivity",
+      "trigger": {
+        "drug_class": "penicillin",
+        "target_drugs": ["penicillin", "amoxicillin", "ampicillin", "augmentin", "zosyn"]
+      },
+      "condition": {
+        "caution_drugs": ["cephalexin", "cefazolin", "keflex", "ancef"],
+        "contraindicated_drugs": []
+      },
+      "severity": "HIGH",
+      "message": "Potential beta-lactam cross-reactivity: Documented penicillin hypersensitivity presents shared 1st-generation cephalosporin risk (1-3% cross-reactivity). Clinician evaluation recommended before ordering.",
+      "provenance": {
+        "source": "JAMA Review of Beta-Lactam Allergies & AAAAI Guidelines",
+        "version": "2019.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Blumenthal KG, et al. Evaluation and Management of Penicillin Allergy: A Review. JAMA. 2019;321(2):188-199.",
+          "Khan DA, et al. Cephalosporin Allergy Practice Parameters. J Allergy Clin Immunol. 2022."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-CROSS-02",
+      "type": "cross_reactivity",
+      "trigger": {
+        "drug_class": "sulfonamide",
+        "target_drugs": ["bactrim", "septra", "sulfamethoxazole", "tmp-smx"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["sulfadiazine", "sulfasalazine", "sulfisoxazole"]
+      },
+      "severity": "CRITICAL",
+      "message": "Sulfonamide antimicrobial cross-reactivity: Patient has documented allergy to sulfonamide antibiotics. Cross-reactivity between antimicrobial sulfonamides carries severe hypersensitivity risk.",
+      "provenance": {
+        "source": "New England Journal of Medicine (NEJM) Sulfonamide Review",
+        "version": "2003.1",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Strom BL, et al. Absence of Cross-Reactivity between Sulfonamide Antibiotics and Others. N Engl J Med. 2003;349:1628-1635."
+        ]
+      }
+    },
+    {
+      "id": "PLUS-CROSS-03",
+      "type": "cross_reactivity",
+      "trigger": {
+        "drug_class": "nsaid",
+        "target_drugs": ["aspirin", "acetylsalicylic acid", "asa"]
+      },
+      "condition": {
+        "contraindicated_drugs": ["ibuprofen", "naproxen", "ketorolac", "meloxicam", "indomethacin", "diclofenac"]
+      },
+      "severity": "CRITICAL",
+      "message": "Cross-sensitivity in Aspirin/NSAID hypersensitivity: Patients with severe aspirin sensitivity or AERD cross-react with non-selective COX-inhibiting NSAIDs, risking acute bronchospasm.",
+      "provenance": {
+        "source": "Journal of Allergy and Clinical Immunology (JACI)",
+        "version": "2006.2",
+        "retrieved_on": "2026-10-10",
+        "reviewer_status": "unreviewed",
+        "citations": [
+          "Stevenson DD, Szczeklik A. Clinical and pathologic perspectives on aspirin-exacerbated respiratory disease. J Allergy Clin Immunol. 2006;118(4):773-786."
+        ]
+      }
+    }
+  ]
+}

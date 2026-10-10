@@ -1,0 +1,43 @@
+name: CareSentry Guard CI
+
+on:
+  push:
+    branches: [ "track-c/guard", "main" ]
+  pull_request:
+    branches: [ "track-c/guard", "main" ]
+
+jobs:
+  guard-verification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r guard/requirements-guard.txt
+          pip install -e ./guard
+
+      - name: Verify Track C Ownership Boundaries
+        run: |
+          python guard/tools/check_ownership.py
+
+      - name: Run Track A Regression Suite (Must Remain 100% Green)
+        run: |
+          pytest tests/
+
+      - name: Run Track C Adapter & Defense Tests
+        run: |
+          pytest guard/tests/
+
+      - name: Run Deterministic Benchmark Evaluation
+        run: |
+          python guard/bench/run_bench.py

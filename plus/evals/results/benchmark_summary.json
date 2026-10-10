@@ -1,0 +1,57 @@
+{
+  "benchmark_metadata": {
+    "total_cases_evaluated": 120,
+    "engine_rule_packs": [
+      "cross_reactivity_v1",
+      "dose_aware_renal_v1",
+      "drug_interactions_v1",
+      "duplicate_therapy_v1",
+      "geriatric_beers_v1"
+    ],
+    "ontology_version": "1.0.0",
+    "seed": 42
+  },
+  "metrics": {
+    "violation_recall": 0.9775,
+    "violation_recall_95ci": [
+      0.9217,
+      0.9938
+    ],
+    "violation_precision": 1.0,
+    "false_positive_rate": 0.0,
+    "omission_recall": 0.9683,
+    "omission_recall_95ci": [
+      0.8914,
+      0.9913
+    ],
+    "mitigation_rescue_rate": 1.0,
+    "mitigation_rescue_95ci": [
+      0.969,
+      1.0
+    ]
+  },
+  "counts": {
+    "violation_true_positives": 87,
+    "violation_false_positives": 0,
+    "violation_false_negatives": 2,
+    "violation_true_negatives": 31,
+    "omission_true_positives": 61,
+    "omission_false_negatives": 2,
+    "neglected_needles_count": 120,
+    "rescued_needles_count": 120
+  },
+  "needle_depth_breakdown": {
+    "early": {
+      "total": 40,
+      "violations_detected": 27
+    },
+    "middle": {
+      "total": 40,
+      "violations_detected": 30
+    },
+    "late": {
+      "total": 40,
+      "violations_detected": 30
+    }
+  }
+}
