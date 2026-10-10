@@ -30,6 +30,10 @@ def test_ui_static_assets_served(client):
     assert resp_js.status_code == 200
     assert "CareSentry-AI Guard Console" in resp_js.text
 
+    resp_viz = client.get("/ui/static/attention_visualizer.js")
+    assert resp_viz.status_code == 200
+    assert "AttentionVisualizer3D" in resp_viz.text
+
 
 def test_ui_api_status(client):
     """Test GET /ui/api/status returns version, model, installed lanes, and safety notice."""
