@@ -1,0 +1,163 @@
+{
+  "version": "1.0.0",
+  "name": "CareSentry Clinical Safety Invariants Matrix",
+  "allergies": [
+    {
+      "allergy_class": "penicillin",
+      "aliases": ["penicillin", "penicillins", "pcn", "penicillin-vk", "penicillin g", "amoxicillin", "ampicillin"],
+      "contraindicated_drugs": [
+        "amoxicillin",
+        "amoxil",
+        "ampicillin",
+        "augmentin",
+        "amoxicillin-clavulanate",
+        "piperacillin",
+        "piperacillin-tazobactam",
+        "zosyn",
+        "unasyn",
+        "penicillin",
+        "penicillin vk",
+        "dicloxacillin",
+        "nafcillin",
+        "oxacillin"
+      ],
+      "cross_reactive_drugs": [
+        "cephalexin",
+        "keflex",
+        "cefazolin",
+        "ancef",
+        "ceftriaxone",
+        "rocephin",
+        "cefepime"
+      ],
+      "severity": "CRITICAL",
+      "mechanism": "Type I IgE-mediated hypersensitivity / Anaphylaxis risk"
+    },
+    {
+      "allergy_class": "sulfa",
+      "aliases": ["sulfa", "sulfonamide", "sulfonamides", "bactrim", "septra", "tmp-smx"],
+      "contraindicated_drugs": [
+        "bactrim",
+        "bactrim ds",
+        "septra",
+        "septra ds",
+        "sulfamethoxazole",
+        "trimethoprim-sulfamethoxazole",
+        "tmp-smx",
+        "sulfasalazine",
+        "sulfadiazine",
+        "sulfisoxazole",
+        "zonegran",
+        "zonisamide"
+      ],
+      "cross_reactive_drugs": [],
+      "severity": "CRITICAL",
+      "mechanism": "Stevens-Johnson Syndrome (SJS) / Toxic Epidermal Necrolysis (TEN) and severe hypersensitivity"
+    },
+    {
+      "allergy_class": "nsaids",
+      "aliases": ["nsaids", "nsaid", "non-steroidal anti-inflammatory", "aspirin allergy", "ibuprofen allergy"],
+      "contraindicated_drugs": [
+        "ibuprofen",
+        "advil",
+        "motrin",
+        "naproxen",
+        "aleve",
+        "naprosyn",
+        "meloxicam",
+        "mobic",
+        "celecoxib",
+        "celebrex",
+        "ketorolac",
+        "toradol",
+        "indomethacin",
+        "indocin",
+        "diclofenac",
+        "voltaren",
+        "aspirin",
+        "nabumetone",
+        "piroxicam"
+      ],
+      "cross_reactive_drugs": [],
+      "severity": "HIGH",
+      "mechanism": "Pseudo-allergic bronchospasm / angioedema / anaphylactoid reaction"
+    },
+    {
+      "allergy_class": "fluoroquinolones",
+      "aliases": ["fluoroquinolones", "fluoroquinolone", "quinolones", "quinolone", "cipro allergy"],
+      "contraindicated_drugs": [
+        "ciprofloxacin",
+        "cipro",
+        "levofloxacin",
+        "levaquin",
+        "moxifloxacin",
+        "avelox",
+        "ofloxacin"
+      ],
+      "cross_reactive_drugs": [],
+      "severity": "HIGH",
+      "mechanism": "Severe cutaneous hypersensitivity, tendon rupture risk"
+    }
+  ],
+  "renal_clearance_thresholds": [
+    {
+      "drug_name": "metformin",
+      "aliases": ["metformin", "glucophage", "fortamet", "glumetza", "riomet"],
+      "egfr_cutoff_ml_min": 30,
+      "operator": "lt",
+      "action": "CONTRAINDICATED",
+      "severity": "CRITICAL",
+      "rationale": "High risk of life-threatening metformin-associated lactic acidosis (MALA) when eGFR < 30 mL/min/1.73m²"
+    },
+    {
+      "drug_name": "spironolactone",
+      "aliases": ["spironolactone", "aldactone", "carospir"],
+      "egfr_cutoff_ml_min": 30,
+      "operator": "lt",
+      "action": "CONTRAINDICATED",
+      "severity": "CRITICAL",
+      "rationale": "Severe risk of fatal hyperkalemia and acute kidney injury worsening in advanced renal impairment"
+    },
+    {
+      "drug_name": "high-dose nsaids",
+      "aliases": ["ibuprofen", "advil", "motrin", "naproxen", "aleve", "meloxicam", "ketorolac", "toradol", "indomethacin", "diclofenac"],
+      "egfr_cutoff_ml_min": 30,
+      "operator": "lt",
+      "action": "CONTRAINDICATED",
+      "severity": "CRITICAL",
+      "rationale": "Inhibits renal prostaglandin synthesis, causing afferent arteriolar vasoconstriction and precipitating acute-on-chronic renal failure"
+    },
+    {
+      "drug_name": "nitrofurantoin",
+      "aliases": ["nitrofurantoin", "macrobid", "macrodantin"],
+      "egfr_cutoff_ml_min": 30,
+      "operator": "lt",
+      "action": "CONTRAINDICATED",
+      "severity": "HIGH",
+      "rationale": "Ineffective urinary concentrations and increased risk of peripheral neuropathy toxicity"
+    },
+    {
+      "drug_name": "colchicine",
+      "aliases": ["colchicine", "colcrys", "mitigare"],
+      "egfr_cutoff_ml_min": 30,
+      "operator": "lt",
+      "action": "CONTRAINDICATED",
+      "severity": "HIGH",
+      "rationale": "Cumulative toxicity resulting in severe neuromyopathy and bone marrow suppression"
+    }
+  ],
+  "drug_drug_interactions": [
+    {
+      "drug_a": ["warfarin", "coumadin", "jantoven"],
+      "drug_b": ["ibuprofen", "advil", "motrin", "naproxen", "aleve", "meloxicam", "ketorolac", "diclofenac", "aspirin"],
+      "severity": "CRITICAL",
+      "rationale": "Synergistic elevation of major gastrointestinal and intracerebral bleeding risk"
+    },
+    {
+      "drug_a": ["lisinopril", "enalapril", "losartan", "valsartan"],
+      "drug_b": ["spironolactone", "aldactone", "potassium chloride", "k-dur"],
+      "severity": "HIGH",
+      "rationale": "Potassium retention risk; causes severe arrhythmogenic hyperkalemia in patients with reduced eGFR"
+    }
+  ]
+}

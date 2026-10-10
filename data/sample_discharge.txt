@@ -1,0 +1,31 @@
+HOSPITAL DISCHARGE SUMMARY & CLINICAL PROGRESS REPORT
+PATIENT: Eleanor Vance | AGE: 82 | MRN: SYN-88219
+ADMISSION DATE: 2026-09-14 | DISCHARGE DATE: 2026-09-22
+SERVICE: Geriatric Medicine & Pulmonary Care
+
+PRIMARY DIAGNOSIS:
+Community-Acquired Lobar Pneumonia (Right Lower Lobe), Frailty Syndrome, Mild Dehydration.
+
+CHIEF COMPLAINT & PRESENTATION:
+An 82-year-old female resident of an assisted living facility was admitted via the emergency department after 4 days of progressive productive cough with rust-colored sputum, fever to 38.8 C, tachypnea, and worsening functional decline. Patient was unable to mobilize out of bed on the day of presentation.
+
+HOSPITAL COURSE & CLINICAL PROGRESSION:
+Upon arrival, patient was initiated on supplemental oxygen via nasal cannula at 2 L/min maintaining SpO2 > 94%. Serial chest imaging revealed a dense consolidation in the right lung base with small reactive parapneumonic pleural effusion. Sputum cultures and blood cultures were drawn. Empirical therapy was guided by clinical response and defervescence was achieved by hospital day 3. Physical therapy and occupational therapy were consulted on hospital day 4 for gentle gait retraining.
+
+ALLERGIES & ADVERSE DRUG REACTIONS:
+Severe allergy to Penicillin (anaphylactic reaction with airway compromise and ICU admission).
+All beta-lactam antibiotics, penicillins, and aminopenicillins are strictly contraindicated.
+
+LABORATORY & DIAGNOSTIC VALUES:
+Complete Blood Count (Hospital Day 7):
+WBC: 7.2 k/uL, RBC: 4.10 M/uL, Hgb: 12.1 g/dL, Hct: 36.8%, Platelets: 230 k/uL.
+Basic Metabolic Profile:
+Sodium: 139 mEq/L, Potassium: 4.2 mEq/L, Chloride: 102 mEq/L, Bicarbonate: 24 mEq/L, BUN: 22 mg/dL, Creatinine: 1.10 mg/dL.
+Estimated Glomerular Filtration Rate (eGFR): 56.0 mL/min/1.73m2.
+
+DISCHARGE MEDICATIONS & POST-ACUTE CARE PLAN:
+1. Acetaminophen 500 mg PO every 8 hours as needed for musculoskeletal discomfort.
+2. Atorvastatin 20 mg PO at bedtime for cardiovascular risk reduction.
+3. Omeprazole 20 mg PO every morning before breakfast.
+4. Continue oral hydration goal of 1.5 liters per day.
+5. Follow-up appointment scheduled with primary geriatrician Dr. Marcus Reed in 10 business days.

@@ -1,0 +1,57 @@
+[
+  {
+    "context_window": 2000,
+    "baseline_tokens": 1988,
+    "baseline_attn_m": 0.058,
+    "baseline_z_score": -4.1423,
+    "baseline_gate": "FAIL (Constraint Missed)",
+    "pinned_z_score": 38.2702,
+    "pinned_gate": "PASS",
+    "reordered_z_score": 38.4065,
+    "reordered_gate": "PASS"
+  },
+  {
+    "context_window": 4000,
+    "baseline_tokens": 3933,
+    "baseline_attn_m": 0.021,
+    "baseline_z_score": -3.9693,
+    "baseline_gate": "FAIL (Constraint Missed)",
+    "pinned_z_score": 38.2395,
+    "pinned_gate": "PASS",
+    "reordered_z_score": 37.6663,
+    "reordered_gate": "PASS"
+  },
+  {
+    "context_window": 8000,
+    "baseline_tokens": 7860,
+    "baseline_attn_m": 0.007,
+    "baseline_z_score": -4.5425,
+    "baseline_gate": "FAIL (Constraint Missed)",
+    "pinned_z_score": 40.6334,
+    "pinned_gate": "PASS",
+    "reordered_z_score": 36.4199,
+    "reordered_gate": "PASS"
+  },
+  {
+    "context_window": 16000,
+    "baseline_tokens": 15685,
+    "baseline_attn_m": 0.003,
+    "baseline_z_score": -3.7138,
+    "baseline_gate": "FAIL (Constraint Missed)",
+    "pinned_z_score": 34.1584,
+    "pinned_gate": "PASS",
+    "reordered_z_score": 30.63,
+    "reordered_gate": "PASS"
+  },
+  {
+    "context_window": 24000,
+    "baseline_tokens": 23513,
+    "baseline_attn_m": 0.001,
+    "baseline_z_score": -4.5229,
+    "baseline_gate": "FAIL (Constraint Missed)",
+    "pinned_z_score": 33.9655,
+    "pinned_gate": "PASS",
+    "reordered_z_score": 30.6631,
+    "reordered_gate": "PASS"
+  }
+]

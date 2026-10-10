@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CareSentryAttentionScoreOutput",
+  "description": "Output schema for CareSentry-AI attention probe Z-score auditing",
+  "type": "object",
+  "required": [
+    "model_id",
+    "context_length_tokens",
+    "target_needle",
+    "target_attention_mean",
+    "control_spans_count",
+    "control_attention_mean",
+    "control_attention_std",
+    "z_score",
+    "classification",
+    "layers_analyzed",
+    "mitigation_triggered"
+  ],
+  "properties": {
+    "model_id": {
+      "type": "string",
+      "description": "Identifier of the target language model evaluated"
+    },
+    "context_length_tokens": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total prompt token length"
+    },
+    "target_needle": {
+      "type": "string",
+      "description": "The exact clinical constraint substring probed"
+    },
+    "target_span_tokens": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "description": "Token indices spanning the target needle"
+    },
+    "target_attention_mean": {
+      "type": "number",
+      "description": "Mean cross-head attention received by target span across evaluated layers"
+    },
+    "control_spans_count": {
+      "type": "integer",
+      "minimum": 20,
+      "description": "Number of randomized control spans sampled (minimum 20)"
+    },
+    "control_attention_mean": {
+      "type": "number",
+      "description": "Mean attention weight across all control spans"
+    },
+    "control_attention_std": {
+      "type": "number",
+      "description": "Standard deviation of attention weights across control spans"
+    },
+    "z_score": {
+      "type": "number",
+      "description": "Empirical attention Z-score normalized against control distribution"
+    },
+    "classification": {
+      "type": "string",
+      "enum": ["SUFFICIENTLY_ATTENDED", "NEUTRAL", "DILUTED"],
+      "description": "Attention categorization based on Z thresholds (+1.0, -0.5)"
+    },
+    "layers_analyzed": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "description": "Transformer layer indices included in the decision window (e.g. final 4 layers)"
+    },
+    "mitigation_triggered": {
+      "type": "boolean",
+      "description": "True if Z < -0.5 necessitating automated context remediation"
+    },
+    "mitigation_strategy": {
+      "type": ["string", "null"],
+      "enum": ["SYSTEM_ANCHOR_PINNING", "RECENCY_REORDERING", null],
+      "description": "Applied prompt remediation strategy if triggered"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
