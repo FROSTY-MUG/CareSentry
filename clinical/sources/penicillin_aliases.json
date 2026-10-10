@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "name": "Penicillin Aliases",
+  "description": "Brand, generic, abbreviation and misspelling aliases for penicillin-class drugs.",
+  "source": "penicillin_aliases.json",
+  "retrieval_date": "2026-10-10",
+  "license": "Public domain - compiled from FDA ATC codes and WHO Drug Dictionary",
+  "entries": [
+    {"alias": "penicillin", "canonical": "penicillin", "class": "penicillin", "source_ref": "FDA ATC J01CE"},
+    {"alias": "penicillins", "canonical": "penicillin", "class": "penicillin", "source_ref": "FDA ATC J01CE"},
+    {"alias": "pcn", "canonical": "penicillin", "class": "penicillin", "source_ref": "Abbreviation"},
+    {"alias": "penicillin-vk", "canonical": "penicillin V potassium", "class": "penicillin", "source_ref": "FDA label"},
+    {"alias": "penicillin g", "canonical": "penicillin G", "class": "penicillin", "source_ref": "FDA label"},
+    {"alias": "amoxicillin", "canonical": "amoxicillin", "class": "penicillin", "source_ref": "FDA ATC J01CA04"},
+    {"alias": "ampicillin", "canonical": "ampicillin", "class": "penicillin", "source_ref": "FDA ATC J01CA01"},
+    {"alias": "amoxil", "canonical": "amoxicillin", "class": "penicillin", "source_ref": "Brand name"},
+    {"alias": "augmentin", "canonical": "amoxicillin-clavulanate", "class": "penicillin", "source_ref": "Brand name"},
+    {"alias": "picillin", "canonical": "penicillin", "class": "penicillin", "source_ref": "Common misspelling"},
+    {"alias": "penicllin", "canonical": "penicillin", "class": "penicillin", "source_ref": "Common misspelling"},
+    {"alias": "pen g", "canonical": "penicillin G", "class": "penicillin", "source_ref": "Abbreviation"},
+    {"alias": "pen-vk", "canonical": "penicillin V potassium", "class": "penicillin", "source_ref": "Abbreviation"}
+  ]
+}

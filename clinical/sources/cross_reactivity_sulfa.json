@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "Sulfonamide Cross-Reactivity",
+  "description": "Cross-reactivity data within sulfonamide drug families.",
+  "source": "cross_reactivity_sulfa.json",
+  "retrieval_date": "2026-10-10",
+  "license": "CC-BY 4.0 - curated from FDA drug labels",
+  "entries": [
+    {"sulfonamide": "sulfamethoxazole", "related_drugs": ["sulfisoxazole", "sulfasalazine"], "cross_reaction": "High risk of SJS/TEN"},
+    {"sulfonamide": "sulfasalazine", "related_drugs": ["sulfamethoxazole"], "cross_reaction": "Shared aromatic ring structure"},
+    {"sulfonamide": "sulfisoxazole", "related_drugs": ["sulfamethoxazole"], "cross_reaction": "Structural similarity"},
+    {"sulfonamide": "tmp-smx", "related_drugs": ["bactrim", "septra"], "cross_reaction": "Contains sulfonamide moiety"},
+    {"source_note": "Cross-reactivity based on shared chemical structure and clinical reports"}
+  ]
+}

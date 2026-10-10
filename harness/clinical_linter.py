@@ -24,6 +24,10 @@ from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger("caresentry.linter")
 
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
 # Precompiled negation patterns
 NEGATION_ORDER_PATTERN = re.compile(
     r"\b(withhold|hold|stop|discontinue|avoid|cease|do\s+not\s+(?:give|order|prescribe|administer)|no\s+|contraindicated|prohibited|taper\s+off)\b",

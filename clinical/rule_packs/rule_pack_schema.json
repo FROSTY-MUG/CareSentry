@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CareSentry Clinical Rule Pack v1",
+  "type": "object",
+  "required": ["version", "name", "rules"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Rule pack version string, e.g. 'v1.0.0'"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the rule pack"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description of the rule pack"
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "provenance", "applies_to"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CLIN-",
+            "description": "Unique rule identifier, CLIN- prefix required"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable rule name"
+          },
+          "provenance": {
+            "type": "object",
+            "required": ["source", "date"],
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Path or identifier of the source file"
+              },
+              "date": {
+                "type": "string",
+                "format": "date",
+                "description": "Date the rule was sourced/reviewed"
+              },
+              "reviewer": {
+                "type": "string",
+                "description": "Name of reviewer (if clinician-reviewed)"
+              },
+              "reviewer_status": {
+                "type": "string",
+                "enum": ["UNVERIFIED", "SOURCE_CHECKED", "CLINICIAN_REVIEWED"],
+                "description": "Review status of the rule"
+              }
+            }
+          },
+          "applies_to": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": ["Drug names, classes, or patterns this rule applies to"]
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["CRITICAL", "HIGH", "MODERATE", "MINOR"],
+            "description": "Severity of the rule violation"
+          },
+          "action": {
+            "type": "string",
+            "description": "Recommended action when rule triggers"
+          },
+          "condition": {
+            "type": "object",
+            "description": "JSON logic or DSL for evaluating the rule condition"
+          },
+          "merge_behavior": {
+            "type": "string",
+            "enum": ["strict", "override"],
+            "description": "How to merge with core linter results: 'strict' keeps the stricter verdict, 'override' replaces it"
+          }
+        }
+      }
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the rule pack was created"
+    },
+    "updated_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the rule pack was last updated"
+    }
+  }
+}

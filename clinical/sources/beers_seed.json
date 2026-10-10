@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "Beers Criteria Seed Set",
+  "description": "Geriatric Beers criteria seed set potentially inappropriate medications for older adults.",
+  "source": "beers_seed.json",
+  "retrieval_date": "2026-10-10",
+  "license": "Public domain - adapted from AGS Beers Criteria 2023",
+  "entries": [
+    {"drug_class": "antidiabetic", "specific_drug": "metformin", "egfr_threshold": 30, "condition": "advanced_renal_impairment", "severity": "CRITICAL", "rationale": "Risk of metformin-associated lactic acidosis"},
+    {"drug_class": "antipsychotic", "specific_drug": "benzodiazepines", "condition": "use in dementia", "severity": "HIGH", "rationale": "Increased risk of cerebrovascular events and mortality"},
+    {"drug_class": "anticholinergic", "specific_drug": "first-generation antihistamines", "condition": "use in elderly", "severity": "MODERATE", "rationale": "Cognitive impairment and fall risk"},
+    {"drug_class": "NSAID", "specific_drug": "high-dose NSAIDs", "condition": "eGFR < 30", "severity": "CRITICAL", "rationale": "Risk of acute-on-chronic renal failure"},
+    {"drug_class": "antiparkinsonian", "specific_drug": "tolcapone", "condition": "use in elderly", "severity": "HIGH", "rationale": "Liver toxicity risk"}
+  ]
+}

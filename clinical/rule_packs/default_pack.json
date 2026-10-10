@@ -1,0 +1,147 @@
+{
+  "version": "v1.0.0",
+  "name": "CareSentry Clinical Default Rule Pack",
+  "description": "Default rule pack for clinical safety evaluation. Contains cross-reactivity, renal threshold, and geriatric criteria.",
+  "created_date": "2026-10-10",
+  "updated_date": "2026-10-10",
+  "rules": [
+    {
+      "id": "CLIN-CRCL-001",
+      "name": "Penicillin-Cephalosporin Cross-Reactivity",
+      "provenance": {
+        "source": "cross_reactivity_pen_ceph.json",
+        "date": "2026-10-10",
+        "reviewer": "STUDIO",
+        "reviewer_status": "SOURCE_CHECKED"
+      },
+      "applies_to": ["cephalexin", "cefazolin", "ceftriaxone", "cefepime"],
+      "severity": "HIGH",
+      "action": "Use alternative antibiotic class; if cephalosporin is necessary, perform desensitization",
+      "condition": {
+        "type": "cross_reactivity",
+        "source_class": "penicillin",
+        "target_classes": ["cephalosporin"]
+      },
+      "merge_behavior": "strict"
+    },
+    {
+      "id": "CLIN-CRCL-002",
+      "name": "Sulfonamide Allergy - Bactrim",
+      "provenance": {
+        "source": "cross_reactivity_sulfa.json",
+        "date": "2026-10-10",
+        "reviewer": "STUDIO",
+        "reviewer_status": "SOURCE_CHECKED"
+      },
+      "applies_to": ["bactrim", "septra", "sulfamethoxazole"],
+      "severity": "CRITICAL",
+      "action": "Avoid Bactrim/Septra in patients with documented sulfa allergy",
+      "condition": {
+        "type": "allergy_to_class",
+        "allergy_class": "sulfa",
+        "includes": ["bactrim", "septra", "sulfamethoxazole", "sulfasalazine"]
+      },
+      "merge_behavior": "strict"
+    },
+    {
+      "id": "CLIN-CRCL-003",
+      "name": "Aspirin-NSAID Cross-Reactivity",
+      "provenance": {
+        "source": "nsaids_alias.json",
+        "date": "2026-10-10",
+        "reviewer": "STUDIO",
+        "reviewer_status": "SOURCE_CHECKED"
+      },
+      "applies_to": ["ibuprofen", "naproxen", "meloxicam", "ketorolac"],
+      "severity": "HIGH",
+      "action": "Avoid non-steroidal anti-inflammatory drugs if aspirin-sensitive",
+      "condition": {
+        "type": "cross_reactivity",
+        "source_class": "aspirin",
+        "target_classes": ["nsaid"]
+      },
+      "merge_behavior": "strict"
+    },
+    {
+      "id": "CLIN-REN-001",
+      "name": "Metformin Renal Threshold",
+      "provenance": {
+        "source": "renal_thresholds.json",
+        "date": "2026-10-10",
+        "reviewer": "STUDIO",
+        "reviewer_status": "SOURCE_CHECKED"
+      },
+      "applies_to": ["metformin", "glucophage", "fortamet", "glumetza"],
+      "severity": "CRITICAL",
+      "action": "Withhold metformin; consider alternative antidiabetic",
+      "condition": {
+        "type": "renal_threshold",
+        "drug": "metformin",
+        "egfr_cutoff_ml_min": 30,
+        "operator": "lt"
+      },
+      "merge_behavior": "strict"
+    },
+    {
+      "id": "CLIN-REN-002",
+      "name": "Spironolactone Renal Threshold",
+      "provenance": {
+        "source": "renal_thresholds.json",
+        "date": "2026-10-10",
+        "reviewer": "STUDIO",
+        "reviewer_status": "SOURCE_CHECKED"
+      },
+      "applies_to": ["spironolactone", "aldactone"],
+      "severity": "CRITICAL",
+      "action": "Withhold spironolactone; monitor potassium and renal function",
+      "condition": {
+        "type": "renal_threshold",
+        "drug": "spironolactone",
+        "egfr_cutoff_ml_min": 30,
+        "operator": "lt"
+      },
+      "merge_behavior": "strict"
+    },
+    {
+      "id": "CLIN-BEE-001",
+      "name": "Beers: Metformin in Renal Impairment",
+      "provenance": {
+        "source": "beers_seed.json",
+        "date": "2026-10-10",
+        "reviewer": "STUDIO",
+        "reviewer_status": "SOURCE_CHECKED"
+      },
+      "applies_to": ["metformin"],
+      "severity": "CRITICAL",
+      "action": "Metformin is contraindicated when eGFR < 30 mL/min",
+      "condition": {
+        "type": "beers_criteria",
+        "drug_class": "antidiabetic",
+        "specific_drug": "metformin",
+        "egfr_threshold": 30,
+        "condition": "advanced_renal_impairment"
+      },
+      "merge_behavior": "strict"
+    },
+    {
+      "id": "CLIN-DDI-001",
+      "name": "Warfarin-NSAID Interaction",
+      "provenance": {
+        "source": "ddi_seed.json",
+        "date": "2026-10-10",
+        "reviewer": "STUDIO",
+        "reviewer_status": "SOURCE_CHECKED"
+      },
+      "applies_to": ["warfarin", "ibuprofen", "naproxen", "aspirin"],
+      "severity": "CRITICAL",
+      "action": "Avoid concurrent warfarin and NSAID prescribing; use alternative pain agent",
+      "condition": {
+        "type": "drug_interaction",
+        "drug_a": "warfarin",
+        "drug_b": ["ibuprofen", "naproxen", "aspirin"],
+        "severity": "critical_gastrointestinal_bleeding"
+      },
+      "merge_behavior": "strict"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "name": "NSAID Aliases",
+  "description": "Brand, generic and abbreviation aliases for non-steroidal anti-inflammatory drugs.",
+  "source": "nsaid_aliases.json",
+  "retrieval_date": "2026-10-10",
+  "license": "Public domain - compiled from FDA Orange Book",
+  "entries": [
+    {"alias": "nsaids", "canonical": "nsaid", "class": "nsaid", "source_ref": "Drug class"},
+    {"alias": "nsaid", "canonical": "nsaid", "class": "nsaid", "source_ref": "Short form"},
+    {"alias": "non-steroidal anti-inflammatory", "canonical": "nsaid", "class": "nsaid", "source_ref": "Full name"},
+    {"alias": "non-steroidal anti-inflammatory drug", "canonical": "nsaid", "class": "nsaid", "source_ref": "Full name"},
+    {"alias": "aspirin allergy", "canonical": "aspirin", "class": "nsaid", "source_ref": "Allergy context"},
+    {"alias": "ibuprofen", "canonical": "ibuprofen", "class": "nsaid", "source_ref": "FDA ATC B01AC01"},
+    {"alias": "advil", "canonical": "ibuprofen", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "motrin", "canonical": "ibuprofen", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "naproxen", "canonical": "naproxen", "class": "nsaid", "source_ref": "FDA ATC M01AE02"},
+    {"alias": "aleve", "canonical": "naproxen", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "meloxicam", "canonical": "meloxicam", "class": "nsaid", "source_ref": "FDA ATC M01AC06"},
+    {"alias": "mobic", "canonical": "meloxicam", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "celecoxib", "canonical": "celecoxib", "class": "nsaid", "source_ref": "FDA ATC M01CB07"},
+    {"alias": "celebrex", "canonical": "celecoxib", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "ketorolac", "canonical": "ketorolac", "class": "nsaid", "source_ref": "FDA ATC M01AH02"},
+    {"alias": "toradol", "canonical": "ketorolac", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "indomethacin", "canonical": "indomethacin", "class": "nsaid", "source_ref": "FDA ATC M01AB02"},
+    {"alias": "indocin", "canonical": "indomethacin", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "diclofenac", "canonical": "diclofenac", "class": "nsaid", "source_ref": "FDA ATC M01A B01"},
+    {"alias": "voltaren", "canonical": "diclofenac", "class": "nsaid", "source_ref": "Brand name"},
+    {"alias": "nabumetone", "canonical": "nabumetone", "class": "nsaid", "source_ref": "FDA ATC M01AA54"}
+  ]
+}
